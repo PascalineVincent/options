@@ -1,0 +1,2470 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Portail Options Pédagogiques 2026-2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",system-ui,sans-serif!important;background:#f1f5f9!important;color:#0f172a}
+.quarto-title-block{display:none!important}
+#quarto-content{padding:0!important;max-width:100%!important}
+main.content{max-width:100%!important;padding:0!important}
+p{margin:0}
+.pf-shell{display:flex;min-height:100vh}
+.pf-sidebar{width:232px;flex-shrink:0;background:#0f2942;display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:200;box-shadow:2px 0 16px rgba(0,0,0,.2)}
+.pf-main{margin-left:232px;flex:1;min-width:0}
+.pf-logo{padding:26px 22px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.pf-logo h1{font-family:"DM Serif Display",serif;color:#fff;font-size:19px;line-height:1.2;font-weight:400}
+.pf-logo .yr{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.08em;text-transform:uppercase;display:block;margin-top:4px}
+.pf-nav{flex:1;padding:10px 0;overflow-y:auto}
+.pf-nav-sect{padding:14px 20px 4px;font-size:10px;font-weight:600;color:rgba(255,255,255,.28);letter-spacing:.1em;text-transform:uppercase}
+.pf-nav-btn{display:flex;align-items:center;gap:11px;padding:10px 20px;cursor:pointer;border:none;background:none;width:100%;color:rgba(255,255,255,.55);font-size:13px;font-family:inherit;text-align:left;border-left:3px solid transparent;transition:all .14s}
+.pf-nav-btn:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.88)}
+.pf-nav-btn.active{background:rgba(59,130,196,.18);color:#fff;border-left-color:#3b82c4;font-weight:500}
+.pf-nav-btn .ni{width:17px;opacity:.65;flex-shrink:0}
+.pf-nav-btn.active .ni{opacity:1}
+.pf-nav-badge{margin-left:auto;font-size:10px;background:rgba(255,255,255,.14);color:rgba(255,255,255,.7);border-radius:20px;padding:1px 8px}
+.pf-nav-badge.alert{background:#ef4444;color:#fff}
+.pf-sfooter{padding:14px 20px;border-top:1px solid rgba(255,255,255,.07)}
+.pf-sfooter-btn{display:flex;align-items:center;gap:9px;width:100%;border:none;background:none;padding:7px 0;color:rgba(255,255,255,.38);font-size:12px;font-family:inherit;cursor:pointer;transition:color .14s}
+.pf-sfooter-btn:hover{color:rgba(255,255,255,.65)}
+.pf-sfooter-btn+.pf-sfooter-btn{border-top:1px solid rgba(255,255,255,.06);margin-top:4px;padding-top:11px}
+.copy-small{font-size:10px;color:rgba(255,255,255,.2);margin-top:10px}
+/* pages */
+.pf-page{display:none;padding:36px 42px 60px;max-width:920px}
+.pf-page.active{display:block}
+.pf-page-title{font-family:"DM Serif Display",serif;font-size:27px;color:#0f2942;font-weight:400;margin-bottom:4px}
+.pf-page-sub{font-size:13px;color:#64748b;margin-bottom:26px;line-height:1.6}
+.sh{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin:26px 0 13px}
+.sh:first-child{margin-top:0}
+/* banners */
+.banner{border-radius:9px;padding:13px 17px;font-size:13px;margin-bottom:16px;display:flex;gap:11px;align-items:flex-start;line-height:1.55}
+.bw{background:#fef3c7;color:#713f12;border:1px solid #fcd34d}
+.bi{background:#dbeafe;color:#1e3a5f;border:1px solid #93c5fd}
+.be{background:#fee2e2;color:#7f1d1d;border:1px solid #fca5a5}
+.bs{background:#dcfce7;color:#14532d;border:1px solid #86efac}
+.bp{background:#ede9fe;color:#4c1d95;border:1px solid #c4b5fd}
+.banner svg{flex-shrink:0;margin-top:1px}
+/* catalogue */
+.opts-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.opt-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;transition:box-shadow .15s}
+.opt-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.08)}
+.opt-card-inner{display:flex}
+.opt-stripe{width:5px;flex-shrink:0}
+.opt-.opt-.opt-.opt-.opt-body{flex:1;padding:18px 20px}
+.opt-name{font-size:15px;font-weight:500;color:#0f172a;margin-bottom:7px}
+.opt-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
+.opt-desc{font-size:13px;color:#475569;line-height:1.6;margin-bottom:12px}
+.opt-footer{display:flex;align-items:center;gap:14px;padding-top:10px;border-top:1px solid #f1f5f9;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.badge-sem{background:#dbeafe;color:#1e40af}
+.badge-ann{background:#ccfbf1;color:#065f46}
+.badge-test{background:#fef3c7;color:#92400e}
+.badge-tbd{background:#f8fafc;color:#94a3b8;border:1px solid #e2e8f0;font-style:italic}
+.badge-ens{background:#ede9fe;color:#4c1d95}
+.jauge-wrap{flex:1;min-width:140px}
+.jauge-label{font-size:11px;color:#94a3b8;margin-bottom:3px;display:flex;justify-content:space-between}
+.jauge-label strong{color:#334155}
+.jauge-bg{background:#e2e8f0;border-radius:20px;height:6px;overflow:hidden}
+.jauge-bar{height:100%;border-radius:20px;transition:width .6s ease}
+.jg-low{background:#22c55e}
+.jg-mid{background:#f59e0b}
+.jg-high{background:#ef4444}
+.jauge-inf{font-size:11px;color:#94a3b8;font-style:italic}
+/* voeux */
+.gform-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden}
+.gform-card-top{background:linear-gradient(135deg,#1a4068 0%,#0f2942 100%);padding:26px 30px;color:#fff}
+.gform-card-top h2{font-family:"DM Serif Display",serif;font-size:21px;font-weight:400;margin-bottom:5px}
+.gform-card-top p{font-size:13px;opacity:.72;line-height:1.55}
+.gform-card-.gform-card-.gform-card-.gform-card-.gform-card-body{padding:26px 30px}
+.btn-open-form{display:inline-flex;align-items:center;gap:8px;background:#1d4ed8;color:#fff;padding:13px 26px;border-radius:9px;font-size:15px;font-weight:500;font-family:inherit;border:none;cursor:pointer;transition:all .14s}
+.btn-open-form:hover:not(:disabled){background:#1e40af;transform:translateY(-1px);box-shadow:0 4px 14px rgba(29,78,216,.3)}
+.btn-open-form:disabled{opacity:.4;cursor:not-allowed}
+.info-pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.info-pill{display:flex;align-items:center;gap:5px;font-size:12px;color:#475569;background:#f1f5f9;border-radius:20px;padding:3px 10px}
+.steps-list{list-style:none;display:grid;gap:11px}
+.step-item{display:flex;gap:13px;align-items:flex-start}
+.step-num{width:26px;height:26px;border-radius:50%;background:#0f2942;color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-title{font-size:14px;font-weight:500;color:#0f172a;margin-bottom:1px}
+.step-desc{font-size:13px;color:#64748b;line-height:1.5}
+/* tests */
+.test-selector{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px 22px;margin-bottom:14px}
+.test-selector-title{font-size:15px;font-weight:500;margin-bottom:12px}
+.test-check-list{display:grid;gap:7px}
+.tci{display:flex;align-items:center;gap:11px;padding:11px 14px;border:1px solid #e2e8f0;border-radius:9px;cursor:pointer;transition:all .14s;user-select:none}
+.tci:hover{background:#f8fafc;border-color:#cbd5e1}
+.tci.checked{background:#eff6ff;border-color:#3b82c4}
+.tci-box{width:20px;height:20px;border:1.5px solid #cbd5e1;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff;transition:all .14s}
+.tci.checked .tci-box{background:#2563eb;border-color:#2563eb}
+.tci-name{font-size:14px;font-weight:500;color:#0f172a}
+.tci-desc{font-size:12px;color:#64748b;margin-top:1px}
+.tci-badge{margin-left:auto}
+/* declaration niveau */
+.level-declare-block{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;margin-bottom:18px}
+.level-declare-title{font-size:14px;font-weight:500;margin-bottom:5px;color:#0f172a}
+.level-declare-desc{font-size:13px;color:#64748b;margin-bottom:12px;line-height:1.5}
+.level-btns{display:flex;flex-wrap:wrap;gap:8px}
+.level-btn{padding:8px 16px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;cursor:pointer;font-size:13px;font-family:inherit;color:#475569;transition:all .14s}
+.level-btn:hover{background:#f1f5f9;border-color:#cbd5e1}
+.level-btn.sel{background:#eff6ff;border-color:#2563eb;color:#1d4ed8;font-weight:500}
+.debutant-confirm{border-radius:8px;padding:12px 16px;font-size:13px;font-weight:500;margin-top:10px;display:none}
+.debutant-ok{background:#dcfce7;border:1px solid #86efac;color:#14532d}
+.debutant-warn{background:#fee2e2;border:1px solid #fca5a5;color:#7f1d1d}
+/* test block */
+.test-block{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:22px 24px;margin-bottom:14px;display:none}
+.test-block.visible{display:block}
+.test-block-title{font-size:16px;font-weight:500;margin-bottom:2px}
+.test-block-desc{font-size:13px;color:#64748b;margin-bottom:18px}
+.test-lang-header{font-size:14px;font-weight:500;color:#4c1d95;margin-bottom:14px;padding:10px 14px;background:#ede9fe;border-radius:8px}
+.q-block{margin-bottom:18px}
+.q-text{font-size:14px;font-weight:500;color:#1e293b;margin-bottom:9px;line-height:1.5}
+.q-opts{display:grid;gap:6px}
+.q-opt{display:flex;align-items:flex-start;gap:9px;padding:9px 13px;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;font-size:13px;background:#fff;transition:all .14s;line-height:1.4}
+.q-opt:hover{background:#f8fafc;border-color:#cbd5e1}
+.q-opt.chosen{background:#eff6ff;border-color:#3b82c4}
+.q-opt.correct{background:#dcfce7;border-color:#16a34a;pointer-events:none}
+.q-opt.wrong{background:#fee2e2;border-color:#dc2626;pointer-events:none}
+.q-opt.missed{background:#dcfce7;border-color:#16a34a;pointer-events:none;opacity:.7}
+.q-radio{width:15px;height:15px;border-radius:50%;border:1.5px solid #cbd5e1;flex-shrink:0;margin-top:2px;transition:all .14s}
+.q-opt.chosen .q-radio{border-color:#3b82c4;background:#3b82c4}
+.q-opt.correct .q-radio{border-color:#16a34a;background:#16a34a}
+.q-opt.wrong .q-radio{border-color:#dc2626;background:#dc2626}
+.score-box{border-radius:8px;padding:12px 16px;margin-top:12px;font-size:14px;font-weight:500}
+.score-box.good{background:#dcfce7;color:#14532d}
+.score-box.mid{background:#fef3c7;color:#713f12}
+.score-box.low{background:#fee2e2;color:#7f1d1d}
+/* enseignant */
+.ens-table-wrap{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;overflow-x:auto}
+.ens-table{width:100%;border-collapse:collapse;font-size:13px}
+.ens-table th{background:#f8fafc;padding:9px 13px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #e2e8f0;white-space:nowrap}
+.ens-table td{padding:9px 13px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+.ens-table tr:last-child td{border-bottom:none}
+.ens-table tr:hover td{background:#f8fafc}
+.lvl-select{padding:4px 7px;border:1px solid #e2e8f0;border-radius:6px;font-size:12px;font-family:inherit;background:#fff;cursor:pointer;outline:none}
+.lvl-select:focus{border-color:#3b82c4}
+.sp{font-size:12px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.sp-g{background:#dcfce7;color:#166534}
+.sp-m{background:#fef3c7;color:#713f12}
+.sp-l{background:#fee2e2;color:#991b1b}
+.sp-n{background:#f1f5f9;color:#94a3b8}
+.filter-row{display:flex;gap:9px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.fsel{padding:6px 11px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-family:inherit;background:#fff;cursor:pointer;outline:none}
+.fsel:focus{border-color:#3b82c4}
+/* form inputs */
+.pf-field{margin-bottom:14px}
+.pf-label{font-size:12px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;display:block}
+.pf-input{width:100%;padding:8px 11px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;font-family:inherit;color:#0f172a;background:#fff;outline:none;transition:border-color .14s}
+.pf-input:focus{border-color:#3b82c4;box-shadow:0 0 0 3px rgba(59,130,196,.1)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;border-radius:8px;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .14s;border:none}
+.btn-primary{background:#1d4ed8;color:#fff}
+.btn-primary:hover{background:#1e40af}
+.btn-secondary{background:#fff;color:#334155;border:1px solid #e2e8f0}
+.btn-secondary:hover{background:#f8fafc}
+.btn-success{background:#16a34a;color:#fff}
+.btn-success:hover{background:#15803d}
+.btn-teal{background:#0f766e;color:#fff}
+.btn-teal:hover{background:#0d5e57}
+.btn-lg{padding:11px 26px;font-size:15px}
+.btn-sm{padding:5px 12px;font-size:12px}
+/* admin */
+.login-wrap{min-height:80vh;display:flex;align-items:center;justify-content:center}
+.login-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:36px;width:380px}
+.login-card h2{font-family:"DM Serif Display",serif;font-size:22px;color:#0f2942;margin-bottom:5px;font-weight:400}
+.admin-tabs{display:flex;border-bottom:1px solid #e2e8f0;margin-bottom:24px;flex-wrap:wrap}
+.atab{padding:8px 16px;border:none;background:none;cursor:pointer;font-size:13px;font-family:inherit;color:#64748b;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .14s}
+.atab.active{color:#1d4ed8;border-bottom-color:#1d4ed8;font-weight:500}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:22px}
+.stat-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px}
+.stat-label{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.stat-value{font-size:27px;font-weight:400;font-family:"DM Serif Display",serif;color:#0f172a}
+.stat-sub{font-size:12px;color:#64748b;margin-top:1px}
+.adm-tw{background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:18px;overflow-x:auto}
+.adm-t{width:100%;border-collapse:collapse;font-size:13px}
+.adm-t th{background:#f8fafc;padding:9px 13px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #e2e8f0;white-space:nowrap}
+.adm-t td{padding:9px 13px;border-bottom:1px solid #f1f5f9;white-space:nowrap}
+.adm-t tr:last-child td{border-bottom:none}
+.adm-t tr:hover td{background:#f8fafc}
+.upload-zone{border:2px dashed #cbd5e1;border-radius:10px;padding:28px;text-align:center;background:#f8fafc;cursor:pointer;transition:all .15s}
+.upload-zone:hover,.upload-zone.dragover{border-color:#3b82c4;background:#eff6ff}
+.prog-wrap{background:#e2e8f0;border-radius:20px;height:6px;overflow:hidden;margin-top:10px}
+.prog-bar{height:100%;background:#2563eb;border-radius:20px;transition:width .3s}
+.opt-pill{font-size:11px;font-weight:500;padding:2px 7px;border-radius:20px}
+/* combinaisons groupes */
+.combis-grid{display:grid;gap:12px}
+.combi-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px}
+.combi-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.combi-num{width:28px;height:28px;border-radius:6px;background:#0f2942;color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.combi-name-input{flex:1;padding:6px 10px;border:1px solid #e2e8f0;border-radius:7px;font-size:14px;font-family:inherit;font-weight:500;outline:none}
+.combi-name-input:focus{border-color:#3b82c4}
+.combi-places-input{width:70px;padding:6px 10px;border:1px solid #e2e8f0;border-radius:7px;font-size:14px;font-family:inherit;outline:none;text-align:center}
+.combi-places-input:focus{border-color:#3b82c4}
+.combi-places-label{font-size:12px;color:#64748b;white-space:nowrap}
+.combi-opts-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.combi-opt-sel{width:100%;padding:6px 28px 6px 10px;border:1px solid #e2e8f0;border-radius:7px;font-size:13px;font-family:inherit;background:#fff;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center}
+.combi-opt-sel:focus{border-color:#3b82c4}
+.combi-opt-sel.has-val{border-color:#3b82c4;background-color:#eff6ff;color:#1d4ed8;font-weight:500}
+.combi-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.combi-tag{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:#f1f5f9;color:#475569}
+.btn-add-combi{display:flex;align-items:center;gap:6px;padding:10px 14px;border:2px dashed #cbd5e1;border-radius:9px;background:none;cursor:pointer;font-size:13px;color:#64748b;font-family:inherit;transition:all .14s;width:100%;justify-content:center;margin-top:8px}
+.btn-add-combi:hover{border-color:#3b82c4;color:#1d4ed8;background:#f8fafc}
+.btn-del-combi{padding:3px 8px;border:1px solid #fee2e2;border-radius:6px;background:none;cursor:pointer;color:#dc2626;font-size:12px;font-family:inherit;line-height:1.4}
+.btn-del-combi:hover{background:#fee2e2}
+/* timeline */
+.tl{display:flex;flex-direction:column}
+.tl-item{display:flex;gap:17px;padding-bottom:20px;position:relative}
+.tl-item:not(:last-child)::before{content:"";position:absolute;left:18px;top:38px;bottom:0;width:1px;background:#e2e8f0}
+.tl-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.tl-past{background:#dcfce7}
+.tl-now{background:#dbeafe}
+.tl-future{background:#f1f5f9}
+.tl-.tl-item{padding-top:6px}
+.tl-date{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;margin-bottom:1px}
+.tl-name{font-size:14px;font-weight:500;color:#0f172a}
+.tl-desc{font-size:13px;color:#64748b;line-height:1.5;margin-top:2px}
+.res-hidden{display:none!important}.show-results .res-hidden{display:block!important}.show-results #res-noaffect{display:none!important}
+
+html,body{height:100%;margin:0;padding:0}
+body{display:flex!important;flex-direction:row!important}
+</style>
+</head>
+<body>
+<div class="pf-shell">
+<nav class="pf-sidebar">
+  <div class="pf-logo">
+    <h1>Options<br>Pedagogiques</h1>
+    <span class="yr">Portail 2026&#8209;2027</span>
+  </div>
+  <div class="pf-nav">
+    <div class="pf-nav-sect">Etudiant</div>
+    <button class="pf-nav-btn active" onclick="goTo('accueil')">
+      <svg class="ni" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+      Accueil
+    </button>
+    <button class="pf-nav-btn" onclick="goTo('catalogue')">
+      <svg class="ni" viewBox="0 0 20 20" fill="currentColor"><path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/></svg>
+      Catalogue des options
+    </button>
+    <button class="pf-nav-btn" onclick="goTo('voeux')">
+      <svg class="ni" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+      Saisir mes voeux
+    </button>
+    <button class="pf-nav-btn" onclick="goTo('tests')">
+      <svg class="ni" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 000-2h-3z" clip-rule="evenodd"/></svg>
+      Tests de niveau
+      <span class="pf-nav-badge alert" id="badge-tests" style="display:none">!</span>
+    </button>
+  </div>
+  <div class="pf-sfooter">
+    <button class="pf-sfooter-btn" onclick="goTo('ens-login')">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/></svg>
+      Espace enseignant
+    </button>
+    <button class="pf-sfooter-btn" onclick="goTo('admin-login')">
+      <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+      Administration
+    </button>
+    <p class="copy-small">Universite 2026-2027</p>
+  </div>
+</nav>
+<main class="pf-main">
+<!-- ACCUEIL -->
+<div class="pf-page active" id="page-accueil">
+  <p class="pf-page-title">Portail des options pedagogiques</p>
+  <p class="pf-page-sub">Consultez le catalogue, soumettez vos voeux via Google Form, puis passez les tests de niveau requis ici.</p>
+  <div class="banner bw">
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+    <div><strong>Non concernes</strong> &mdash; Etudiants en <strong>Parcours International, Parcours Accompagne (1 ou 2 ans), LAS et MIASHS</strong> : ce portail ne vous concerne pas.</div>
+  </div>
+  <div class="sh">En 3 etapes</div>
+  <div class="tl">
+    <div class="tl-item"><div class="tl-dot tl-past">&#128214;</div><div class="tl-body"><div class="tl-date">Etape 1</div><div class="tl-name">Consulter le catalogue</div><div class="tl-desc">Lisez la presentation de chaque option, ses places et sa temporalite avant de choisir.</div></div></div>
+    <div class="tl-item"><div class="tl-dot tl-now">&#128203;</div><div class="tl-body"><div class="tl-date">Etape 2 &mdash; avant le 10 septembre</div><div class="tl-name">Soumettre vos voeux via Google Form</div><div class="tl-desc">Cliquez sur le bouton dans <strong>Saisir mes voeux</strong>. Classez jusqu'a 3 options. L'horodatage determine la priorite (1er arrive / 1er servi).</div></div></div>
+    <div class="tl-item"><div class="tl-dot tl-now">&#9998;</div><div class="tl-body"><div class="tl-date">Etape 3 &mdash; avant le 10 septembre</div><div class="tl-name">Passer les tests de niveau requis</div><div class="tl-desc">Si vous avez choisi <strong>Maths, Business Spanish ou LV2</strong> : allez dans <strong>Tests de niveau</strong>, cochez le test et suivez les instructions. Si vous etes debutant complet, declarez-le simplement &mdash; aucune question ne s'affichera.</div></div></div>
+    <div class="tl-item"><div class="tl-dot tl-future">&#9881;</div><div class="tl-body"><div class="tl-date">J2-J4 de la rentree</div><div class="tl-name">Affectation et communication des groupes</div><div class="tl-desc">Chaque etudiant est place dans un groupe selon ses voeux et les combinaisons d'options configurees par l'administration.</div></div></div>
+  </div>
+  <div style="margin-top:24px;display:flex;gap:11px;flex-wrap:wrap">
+    <button class="btn btn-primary btn-lg" onclick="goTo('catalogue')">Voir le catalogue &#8594;</button>
+    <button class="btn btn-secondary btn-lg" onclick="goTo('voeux')">Saisir mes voeux</button>
+  </div>
+</div>
+
+<!-- CATALOGUE -->
+<div class="pf-page" id="page-catalogue">
+  <p class="pf-page-title">Catalogue des options</p>
+  <p class="pf-page-sub">Toutes les options 2026-2027 avec leurs places, temporalite et conditions d'acces.</p>
+  <div class="sh">Options au semestre</div>
+  <div class="opts-grid">
+    <div class="opt-card" style="background:#eff6ff;border-color:transparent"><div class="opt-card-inner"><div class="opt-stripe" style="background:#3b82c4"></div><div class="opt-body"><div class="opt-name">Certification Voltaire</div><div class="opt-badges"><span class="badge badge-sem">Semestre</span></div><div class="opt-desc">Preparation a la certification d'orthographe et grammaire Voltaire, reconnue par les recruteurs. Aucun prerequis.</div><div class="opt-footer"><div class="jauge-wrap"><div class="jauge-label"><span>Places restantes</span><strong id="jt-voltaire">— / —</strong></div><div class="jauge-bg"><div class="jauge-bar jg-low" id="jb-voltaire" style="width:0%"></div></div></div></div></div></div></div>
+    <div class="opt-card" style="background:#f0fdf4;border-color:transparent"><div class="opt-card-inner"><div class="opt-stripe" style="background:#22c55e"></div><div class="opt-body"><div class="opt-name">Economie contemporaine</div><div class="opt-badges"><span class="badge badge-sem">Semestre</span></div><div class="opt-desc">Analyse des grands enjeux economiques : mondialisation, transitions, politiques publiques, inegalites. Aucun prerequis.</div><div class="opt-footer"><div class="jauge-wrap"><div class="jauge-label"><span>Places restantes</span><strong id="jt-eco">100 / 100</strong></div><div class="jauge-bg"><div class="jauge-bar jg-low" id="jb-eco" style="width:0%"></div></div></div></div></div></div></div>
+    <div class="opt-card" style="background:#fffbeb;border-color:transparent"><div class="opt-card-inner"><div class="opt-stripe" style="background:#f59e0b"></div><div class="opt-body"><div class="opt-name">Remise a niveau &mdash; Mathematiques</div><div class="opt-badges"><span class="badge badge-sem">Semestre</span><span class="badge badge-test">&#9998; Test en ligne requis</span></div><div class="opt-desc">Renforcement des bases en algebre, fonctions, statistiques. Passez le test sur ce portail, imprimez votre resultat et remettez-le a l'enseignant.</div><div class="opt-footer"><div class="jauge-wrap"><div class="jauge-label"><span>Places restantes</span><strong id="jt-maths">40 / 40</strong></div><div class="jauge-bg"><div class="jauge-bar jg-low" id="jb-maths" style="width:0%"></div></div></div></div></div></div></div>
+    <!-- Cartes sports dynamiques — mises à jour par saveConfig() -->
+    <div id="sport-cards-container">
+      <div class="banner bw" id="sport-not-configured" style="margin-bottom:0">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92z" clip-rule="evenodd"/></svg>
+        <div>Les disciplines sportives seront confirmees a la rentree. L'administration mettra a jour les noms et le nombre de places dans l'espace Administration.</div>
+      </div>
+    </div>
+  </div>
+  <div class="sh" style="margin-top:28px">Options a l'annee entiere</div>
+  <div class="opts-grid">
+    <div class="opt-card" style="background:#fff7ed;border-color:transparent"><div class="opt-card-inner"><div class="opt-stripe" style="background:#f97316"></div><div class="opt-body"><div class="opt-name">Business Spanish</div><div class="opt-badges"><span class="badge badge-ann">Annee entiere</span><span class="badge badge-test">&#9998; Test en ligne requis</span></div><div class="opt-desc">Cours dispense <strong>entierement en espagnol</strong>. Vocabulaire des affaires, negociation, redaction professionnelle. Niveau B1 minimum requis. Passez le test sur ce portail, imprimez votre resultat et remettez-le a l'enseignant.</div><div class="opt-footer"><div class="jauge-wrap"><div class="jauge-label"><span>Places restantes</span><strong id="jt-spanish">40 / 40</strong></div><div class="jauge-bg"><div class="jauge-bar jg-low" id="jb-spanish" style="width:0%"></div></div></div></div></div></div></div>
+    <div class="opt-card" style="background:#f5f3ff;border-color:transparent"><div class="opt-card-inner"><div class="opt-stripe" style="background:#8b5cf6"></div><div class="opt-body"><div class="opt-name">LV2 &mdash; Langue vivante 2</div><div class="opt-badges"><span class="badge badge-ann">Annee entiere</span><span class="badge badge-test">&#9998; Test en ligne indicatif</span><span class="badge badge-ens">&#128101; Niveau confirme par enseignant</span></div><div class="opt-desc">Trois langues : <strong>Allemand</strong> (debutant / debutant 2 / intermediaire), <strong>Chinois</strong>, <strong>Espagnol</strong> (debutant / intermediaire / avance). Vous choisissez la langue dans le formulaire. Le test en ligne (5 questions par langue) est indicatif ; <strong>l'enseignant confirme ou ajuste le niveau</strong>. Declaration debutant possible.</div><div class="opt-footer"><div class="jauge-inf">Places selon niveaux &mdash; a confirmer</div></div></div></div></div>
+  </div>
+  <div style="margin-top:22px"><button class="btn btn-primary" onclick="goTo('voeux')">Saisir mes voeux &#8594;</button></div>
+</div>
+<!-- VOEUX -->
+<div class="pf-page" id="page-voeux">
+  <p class="pf-page-title">Saisir mes voeux</p>
+  <p class="pf-page-sub">Vos voeux sont collectes via Google Form. Cliquez sur le bouton ci-dessous pour acceder au formulaire.</p>
+  <div class="gform-card">
+    <div class="gform-card-top">
+      <h2>Formulaire de voeux 2026-2027</h2>
+      <p>Classez jusqu'a 3 options par ordre de preference. L'horodatage determine la priorite.</p>
+    </div>
+    <div class="gform-card-body">
+      <div id="gform-config-zone" style="display:none">
+        <div class="banner bw" style="margin-bottom:14px">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92z" clip-rule="evenodd"/></svg>
+          <div><strong>Formulaire non configure</strong> &mdash; L'administrateur doit renseigner l'URL du Google Form dans Administration &rarr; Configuration.</div>
+        </div>
+      </div>
+      <div style="margin-bottom:22px">
+        <button class="btn-open-form" id="btn-open-form" onclick="openForm()" disabled>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"/></svg>
+          Acceder au Google Form
+        </button>
+        <div class="info-pills">
+          <div class="info-pill"><svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg> Horodatage enregistre</div>
+          <div class="info-pill"><svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg> 1 seule soumission</div>
+          <div class="info-pill"><svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/></svg> Nouvel onglet</div>
+        </div>
+      </div>
+      <hr style="border:none;border-top:1px solid #f1f5f9;margin:18px 0">
+      <div style="font-size:13px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Apres soumission</div>
+      <ul class="steps-list">
+        <li class="step-item"><div class="step-num">1</div><div><div class="step-title">Verifiez la confirmation Google</div><div class="step-desc">Un email de confirmation vous est envoye. Conservez-le comme preuve.</div></div></li>
+        <li class="step-item"><div class="step-num">2</div><div><div class="step-title">Passez les tests de niveau si necessaire</div><div class="step-desc">Si vous avez choisi Maths, Business Spanish ou LV2 : allez dans <strong>Tests de niveau</strong>, cochez le test et suivez les instructions avant le 10 septembre.</div></div></li>
+        <li class="step-item"><div class="step-num">3</div><div><div class="step-title">Attendez votre affectation</div><div class="step-desc">Communication par email universitaire en J4 de la rentree.</div></div></li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:18px"><button class="btn btn-primary" onclick="goTo('tests')">Aller aux tests de niveau &#8594;</button></div>
+</div>
+<!-- TESTS -->
+<div class="pf-page" id="page-tests">
+  <p class="pf-page-title">Tests de niveau</p>
+  <p class="pf-page-sub">Cochez les tests correspondant a vos voeux, declarez votre niveau, puis repondez aux questions si necessaire.</p>
+
+  <!-- Bloc infos pratiques par discipline — rempli dynamiquement par saveConfig() -->
+  <div id="tests-info-bloc" style="display:none;margin-bottom:18px">
+    <div style="font-size:13px;font-weight:600;color:#0f2942;margin-bottom:12px">&#128204; Informations pratiques par discipline</div>
+    <div style="display:grid;gap:10px">
+
+      <!-- Maths -->
+      <div id="ti-bloc-maths" style="display:none;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 18px">
+        <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:8px">&#9998; Remise a niveau — Mathematiques</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px">
+          <div id="ti-ens-maths" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#92400e;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Enseignant</span>
+            <span id="ti-ens-maths-val" style="color:#0f172a"></span>
+          </div>
+          <div id="ti-date-maths" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#92400e;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Date limite</span>
+            <span id="ti-date-maths-val" style="color:#0f172a;font-weight:500"></span>
+          </div>
+          <div id="ti-salle-maths" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#92400e;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Salle / Creneau</span>
+            <span id="ti-salle-maths-val" style="color:#0f172a"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Business Spanish -->
+      <div id="ti-bloc-spanish" style="display:none;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:14px 18px">
+        <div style="font-size:12px;font-weight:700;color:#9a3412;margin-bottom:8px">&#9998; Business Spanish</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px">
+          <div id="ti-ens-spanish" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#9a3412;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Enseignant</span>
+            <span id="ti-ens-spanish-val" style="color:#0f172a"></span>
+          </div>
+          <div id="ti-date-spanish" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#9a3412;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Date limite</span>
+            <span id="ti-date-spanish-val" style="color:#0f172a;font-weight:500"></span>
+          </div>
+          <div id="ti-salle-spanish" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#9a3412;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Salle / Creneau</span>
+            <span id="ti-salle-spanish-val" style="color:#0f172a"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- LV2 -->
+      <div id="ti-bloc-lv2" style="display:none;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:10px;padding:14px 18px">
+        <div style="font-size:12px;font-weight:700;color:#4c1d95;margin-bottom:8px">&#9998; LV2 — Langue vivante 2</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px">
+          <div id="ti-ens-lv2" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#4c1d95;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Enseignants</span>
+            <span id="ti-ens-lv2-val" style="color:#0f172a"></span>
+          </div>
+          <div id="ti-date-lv2" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#4c1d95;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Date limite</span>
+            <span id="ti-date-lv2-val" style="color:#0f172a;font-weight:500"></span>
+          </div>
+          <div id="ti-salle-lv2" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#4c1d95;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Salle / Creneau</span>
+            <span id="ti-salle-lv2-val" style="color:#0f172a"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="banner bi" style="margin-bottom:18px">
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+    <div>Si vous etes <strong>debutant complet</strong>, declarez-le : aucune question ne s'affichera. Votre declaration suffit et vous serez affecte au groupe debutant correspondant.</div>
+  </div>
+  <div class="test-selector">
+    <div class="test-selector-title">Quels tests devez-vous passer ?</div>
+    <div class="test-check-list">
+      <div class="tci" id="tci-maths" onclick="toggleTest('maths')">
+        <div class="tci-box" id="tcibox-maths"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1"><div class="tci-name">Remise a niveau Mathematiques</div><div class="tci-desc">7 questions a imprimer et remettre a l'enseignantes &middot; declaration debutant possible</div></div>
+        <div class="tci-badge"><span class="badge badge-test">Maths</span></div>
+      </div>
+      <div class="tci" id="tci-spanish" onclick="toggleTest('spanish')">
+        <div class="tci-box" id="tcibox-spanish"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1"><div class="tci-name">Business Spanish</div><div class="tci-desc">5 questions en espagnol &middot; niveau B1 minimum requis &middot; declaration obligatoire</div></div>
+        <div class="tci-badge"><span class="badge badge-test">Espagnol</span></div>
+      </div>
+      <div class="tci" id="tci-lv2" onclick="toggleTest('lv2')">
+        <div class="tci-box" id="tcibox-lv2"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1"><div class="tci-name">LV2 &mdash; Positionnement langue</div><div class="tci-desc">Test par langue (Allemand / Chinois / Espagnol) &middot; 5 questions indicatives &middot; declaration debutant possible</div></div>
+        <div class="tci-badge"><span class="badge badge-ens">LV2</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEST MATHS -->
+  <div class="test-block" id="test-maths">
+    <div class="test-block-title">Test de positionnement &mdash; Mathematiques</div>
+    <div class="test-block-desc">7 questions &middot; imprimez votre resultat &middot; remettez-le a l'enseignant</div>
+    <div class="level-declare-block">
+      <div class="level-declare-title">Quel est votre niveau actuel en mathematiques ?</div>
+      <div class="level-declare-desc">Si vous etes debutant complet, aucune question ne s'affichera. Votre declaration est enregistree et transmise.</div>
+      <div class="level-btns" id="lvl-btns-maths">
+        <button class="level-btn" onclick="setLevelMaths(this,'debutant')">Debutant complet (aucune base)</button>
+        <button class="level-btn" onclick="setLevelMaths(this,'bases')">Quelques bases (lycee general)</button>
+        <button class="level-btn" onclick="setLevelMaths(this,'intermediaire')">Niveau correct (Terminale)</button>
+        <button class="level-btn" onclick="setLevelMaths(this,'avance')">Bon niveau (Maths expertes / sup)</button>
+      </div>
+      <div class="debutant-confirm debutant-ok" id="maths-debutant-msg">&#10003; Declaration enregistree : <strong>Debutant complet</strong>. Vous serez affecte au groupe de renforcement adapte. Aucune question a repondre.</div>
+    </div>
+    <div id="maths-questions" style="display:none">
+      <!-- Questions rendues dynamiquement par renderTestFromConfig("maths") -->
+    </div>
+    <div id="test-maths-actions" style="display:none;margin-top:16px">
+      <div style="margin-top:16px;display:flex;gap:9px;align-items:center">
+        <button class="btn btn-primary" onclick="submitTest('maths')">Valider le test</button>
+        <span id="ok-maths" style="display:none;font-size:13px;color:#16a34a;font-weight:500">&#10003; Test valide</span>
+        <button class="btn btn-secondary btn-sm" id="btn-print-maths" style="display:none;margin-left:8px" onclick="printTestResult('maths')">&#128424; Imprimer / PDF</button>
+      </div>
+      <div id="score-maths" class="score-box" style="display:none;margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- TEST BUSINESS SPANISH -->
+  <div class="test-block" id="test-spanish">
+    <div class="test-block-title">Test de positionnement &mdash; Business Spanish</div>
+    <div class="test-block-desc">5 questions en espagnol &middot; niveau B1 minimum requis</div>
+    <div class="level-declare-block">
+      <div class="level-declare-title">Quel est votre niveau en espagnol ?</div>
+      <div class="level-declare-desc">Business Spanish requiert un niveau B1 minimum. Un niveau insuffisant declare entrainera le rejet automatique de cette option par l'algorithme.</div>
+      <div class="level-btns" id="lvl-btns-spanish">
+        <button class="level-btn" onclick="setLevelSpanish(this,'debutant')">Debutant (A1) &mdash; aucune base</button>
+        <button class="level-btn" onclick="setLevelSpanish(this,'a2')">Elementaire (A2)</button>
+        <button class="level-btn" onclick="setLevelSpanish(this,'b1')">Intermediaire (B1) &mdash; niveau requis</button>
+        <button class="level-btn" onclick="setLevelSpanish(this,'b2plus')">Avance (B2 / C1+)</button>
+      </div>
+      <div class="debutant-confirm debutant-warn" id="spanish-insuf-msg">&#9888; Niveau insuffisant pour Business Spanish. Ce voeu sera rejete par l'algorithme d'affectation. Votre voeu suivant sera traite.</div>
+      <div class="debutant-confirm debutant-ok" id="spanish-ok-msg">&#10003; Niveau suffisant. Repondez maintenant aux questions de positionnement ci-dessous.</div>
+    </div>
+    <div id="spanish-questions" style="display:none">
+      <!-- Questions rendues dynamiquement par renderTestFromConfig("spanish") -->
+    </div>
+    <div id="test-spanish-actions" style="display:none;margin-top:16px">
+      <div style="margin-top:16px;display:flex;gap:9px;align-items:center">
+        <button class="btn btn-primary" onclick="submitTest('spanish')">Valider le test</button>
+        <span id="ok-spanish" style="display:none;font-size:13px;color:#16a34a;font-weight:500">&#10003; Test valide</span>
+        <button class="btn btn-secondary btn-sm" id="btn-print-spanish" style="display:none;margin-left:8px" onclick="printTestResult('spanish')">&#128424; Imprimer / PDF</button>
+      </div>
+      <div id="score-spanish" class="score-box" style="display:none;margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- TEST LV2 -->
+  <div class="test-block" id="test-lv2">
+    <div class="test-block-title">Test de positionnement &mdash; LV2</div>
+    <div class="test-block-desc">Test indicatif par langue &middot; l'enseignant confirme ou ajuste le niveau apres la pre-rentree</div>
+    <div class="level-declare-block">
+      <div class="level-declare-title">Etape 1 &mdash; Selectionnez votre langue</div>
+      <div class="level-declare-desc">Choisissez la langue que vous avez indiquee dans le Google Form, puis declarez votre niveau.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <button class="level-btn" id="lv2-lang-de" onclick="selectLang('de',this)">&#127465;&#127466; Allemand</button>
+        <button class="level-btn" id="lv2-lang-zh" onclick="selectLang('zh',this)">&#127464;&#127475; Chinois</button>
+        <button class="level-btn" id="lv2-lang-es" onclick="selectLang('es',this)">&#127466;&#127480; Espagnol</button>
+      </div>
+      <div id="lv2-level-zone" style="display:none">
+        <div class="level-declare-title" style="margin-bottom:8px">Etape 2 &mdash; Quel est votre niveau en <span id="lv2-lang-label">cette langue</span> ?</div>
+        <div class="level-btns" id="lvl-btns-lv2">
+          <button class="level-btn" onclick="setLevelLV2(this,'debutant')">Debutant complet (jamais etudie)</button>
+          <button class="level-btn" onclick="setLevelLV2(this,'debutant2')">Debutant 2 (quelques bases)</button>
+          <button class="level-btn" onclick="setLevelLV2(this,'intermediaire')">Intermediaire (B1-B2)</button>
+          <button class="level-btn lv2-avance-btn" onclick="setLevelLV2(this,'avance')" style="display:none">Avance (C1+) &mdash; Espagnol uniquement</button>
+        </div>
+        <div class="debutant-confirm debutant-ok" id="lv2-debutant-msg">&#10003; Declaration enregistree : <strong>Debutant complet</strong>. Vous serez affecte au groupe debutant de votre langue. Aucune question a repondre.</div>
+      </div>
+    </div>
+    <!-- Questions Allemand -->
+    <div id="lv2-de-questions" style="display:none">
+      <!-- Questions rendues dynamiquement par renderTestFromConfig("lv2_de") -->
+    </div>
+    <div id="test-lv2-de-actions" style="display:none;margin-top:16px">
+      <div style="margin-top:16px;display:flex;gap:9px;align-items:center">
+        <button class="btn btn-primary" onclick="submitLV2Test('de')">Valider &mdash; Allemand</button>
+        <span id="ok-lv2-de" style="display:none;font-size:13px;color:#16a34a;font-weight:500">&#10003; Valide (indicatif)</span>
+        <button class="btn btn-secondary btn-sm" id="btn-print-lv2-de" style="display:none;margin-left:8px" onclick="printTestResult('lv2-de')">&#128424; Imprimer / PDF</button>
+      </div>
+      <div id="score-lv2-de" class="score-box" style="display:none;margin-top:12px"></div>
+    </div>
+    <!-- Questions Chinois -->
+    <div id="lv2-zh-questions" style="display:none">
+      <!-- Questions rendues dynamiquement par renderTestFromConfig("lv2_zh") -->
+    </div>
+    <div id="test-lv2-zh-actions" style="display:none;margin-top:16px">
+      <div style="margin-top:16px;display:flex;gap:9px;align-items:center">
+        <button class="btn btn-primary" onclick="submitLV2Test('zh')">Valider &mdash; Chinois</button>
+        <span id="ok-lv2-zh" style="display:none;font-size:13px;color:#16a34a;font-weight:500">&#10003; Valide (indicatif)</span>
+        <button class="btn btn-secondary btn-sm" id="btn-print-lv2-zh" style="display:none;margin-left:8px" onclick="printTestResult('lv2-zh')">&#128424; Imprimer / PDF</button>
+      </div>
+      <div id="score-lv2-zh" class="score-box" style="display:none;margin-top:12px"></div>
+    </div>
+    <!-- Questions Espagnol LV2 -->
+    <div id="lv2-es-questions" style="display:none">
+      <!-- Questions rendues dynamiquement par renderTestFromConfig("lv2_es") -->
+    </div>
+    <div id="test-lv2-es-actions" style="display:none;margin-top:16px">
+      <div style="margin-top:16px;display:flex;gap:9px;align-items:center">
+        <button class="btn btn-primary" onclick="submitLV2Test('es')">Valider &mdash; Espagnol</button>
+        <span id="ok-lv2-es" style="display:none;font-size:13px;color:#16a34a;font-weight:500">&#10003; Valide (indicatif)</span>
+        <button class="btn btn-secondary btn-sm" id="btn-print-lv2-es" style="display:none;margin-left:8px" onclick="printTestResult('lv2-es')">&#128424; Imprimer / PDF</button>
+      </div>
+      <div id="score-lv2-es" class="score-box" style="display:none;margin-top:12px"></div>
+    </div>
+  </div>
+</div>
+<!-- ENS LOGIN -->
+<!-- ENS LOGIN -->
+<div class="pf-page" id="page-ens-login">
+  <div class="login-wrap"><div class="login-card">
+    <h2>Espace enseignant</h2>
+    <p style="font-size:13px;color:#64748b;margin-bottom:22px">Informations &middot; Instructions de retour des evaluations</p>
+    <div class="pf-field"><label class="pf-label">Mot de passe</label><input class="pf-input" id="ens-pwd" type="password" onkeydown="if(event.key==='Enter')checkEns()"></div>
+    <div id="ens-err" class="banner be" style="display:none;margin-top:8px">Mot de passe incorrect.</div>
+    <button class="btn btn-teal" style="width:100%;margin-top:8px;justify-content:center" onclick="checkEns()">Acceder</button>
+    <button class="btn btn-secondary" style="width:100%;margin-top:8px;justify-content:center" onclick="goTo('accueil')">&#8592; Retour</button>
+  </div></div>
+</div>
+
+<!-- ENS : page d'informations -->
+<div class="pf-page" id="page-enseignant">
+  <p class="pf-page-title">Espace enseignant</p>
+  <p class="pf-page-sub" id="ens-sub-date">Instructions pour le retour des evaluations de niveau &middot; Annee 2026-2027</p>
+
+  <!-- Infos pratiques (injectées par saveConfig) -->
+  <div id="ens-infos-bloc" style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px 24px;margin-bottom:20px">
+    <div style="font-size:13px;font-weight:600;color:#0f2942;margin-bottom:14px">&#128204; Informations pratiques</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:13px">
+      <div>
+        <div style="font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Date limite de retour du fichier</div>
+        <div id="ens-info-date" style="color:#0f172a;font-weight:500;font-size:15px">&#8212; Non renseignee</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Contact administration</div>
+        <div id="ens-info-admin" style="color:#0f172a">Contacter le secretariat pedagogique</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 blocs discipline -->
+  <div style="display:grid;gap:14px">
+
+    <!-- Maths -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden">
+      <div style="background:#fef3c7;border-bottom:1px solid #fde68a;padding:14px 20px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">&#9998;</span>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#713f12">Remise a niveau — Mathematiques</div>
+          <div id="ens-resp-maths" style="font-size:12px;color:#92400e;margin-top:2px">Responsable : non renseigne</div>
+        </div>
+      </div>
+      <div style="padding:18px 20px">
+        <div style="font-size:13px;color:#475569;line-height:1.8;margin-bottom:16px">
+          <strong>Ce que vous recevez :</strong> un fichier Excel listant les etudiants ayant choisi cette option (nom, prenom, email, rang du voeu).<br>
+          L'etudiant vous apporte son <strong>test imprime depuis la plateforme</strong>. Apres evaluation, remplir la colonne <code style="background:#f1f5f9;padding:1px 6px;border-radius:4px;font-size:12px">VALIDATION_MATHS</code> : <strong>OUI</strong> (etudiant accepte) ou <strong>NON</strong> (renvoye vers son voeu suivant).
+        </div>
+        <div class="banner bw" style="margin-bottom:0">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92z" clip-rule="evenodd"/></svg>
+          <div>Les etudiants ayant declare etre <strong>debutants complets</strong> sont deja identifies — pas besoin de les evaluer, ils sont affectes automatiquement au groupe de renforcement.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Spanish -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden">
+      <div style="background:#ffedd5;border-bottom:1px solid #fed7aa;padding:14px 20px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">&#9998;</span>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#7c2d12">Business Spanish</div>
+          <div id="ens-resp-spanish" style="font-size:12px;color:#9a3412;margin-top:2px">Responsable : non renseigne</div>
+        </div>
+      </div>
+      <div style="padding:18px 20px">
+        <div style="font-size:13px;color:#475569;line-height:1.8;margin-bottom:16px">
+          <strong>Ce que vous recevez :</strong> liste des etudiants ayant choisi Business Spanish (nom, prenom, email, rang du voeu).<br>
+          L'etudiant vous apporte son <strong>test imprime depuis la plateforme</strong>. Apres evaluation, remplir la colonne <code style="background:#f1f5f9;padding:1px 6px;border-radius:4px;font-size:12px">VALIDATION_SPANISH</code> : <strong>OUI</strong> (niveau B1 suffisant) ou <strong>NON</strong>. Les etudiants ayant declare un niveau A1/A2 sont deja exclus automatiquement, vous ne les recevez pas.
+        </div>
+        <div class="banner bi" style="margin-bottom:0">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+          <div>Le cours etant dispense <strong>entierement en espagnol</strong>, le seuil recommande est B1. Un etudiant valide (oui) avec un score faible sera tout de meme affecte — a votre discretion.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LV2 -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden">
+      <div style="background:#ede9fe;border-bottom:1px solid #ddd6fe;padding:14px 20px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">&#9998;</span>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#4c1d95">LV2 — Langue vivante 2</div>
+          <div id="ens-resp-lv2" style="font-size:12px;color:#5b21b6;margin-top:2px">Responsable : non renseigne</div>
+        </div>
+      </div>
+      <div style="padding:18px 20px">
+        <div style="font-size:13px;color:#475569;line-height:1.8;margin-bottom:16px">
+          <strong>Ce que vous recevez :</strong> liste des etudiants ayant choisi votre langue (nom, prenom, email).<br>
+          L'etudiant vous apporte son <strong>test imprime depuis la plateforme</strong> (ou passe un test presentiel selon votre organisation). Saisir le code de groupe dans la colonne <code style="background:#f1f5f9;padding:1px 6px;border-radius:4px;font-size:12px">NIVEAU_LV2</code>.
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px 16px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Codes a saisir dans la colonne NIVEAU_LV2</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px">
+            <div>
+              <div style="font-weight:600;color:#0f172a;margin-bottom:4px">&#127465;&#127466; Allemand</div>
+              <div style="line-height:2">
+                <code style="background:#f5f3ff;padding:1px 7px;border-radius:4px;display:block;margin-bottom:2px">lv2_de_debut</code>
+                <code style="background:#ede9fe;padding:1px 7px;border-radius:4px;display:block;margin-bottom:2px">lv2_de_debut2</code>
+                <code style="background:#ddd6fe;padding:1px 7px;border-radius:4px;display:block">lv2_de_inter</code>
+              </div>
+            </div>
+            <div>
+              <div style="font-weight:600;color:#0f172a;margin-bottom:4px">&#127464;&#127475; Chinois</div>
+              <div style="line-height:2">
+                <code style="background:#fdf4ff;padding:1px 7px;border-radius:4px;display:block">lv2_chinois</code>
+              </div>
+            </div>
+            <div>
+              <div style="font-weight:600;color:#0f172a;margin-bottom:4px">&#127466;&#127480; Espagnol</div>
+              <div style="line-height:2">
+                <code style="background:#fff1f2;padding:1px 7px;border-radius:4px;display:block;margin-bottom:2px">lv2_es_debut</code>
+                <code style="background:#ffe4e6;padding:1px 7px;border-radius:4px;display:block;margin-bottom:2px">lv2_es_inter</code>
+                <code style="background:#fecdd3;padding:1px 7px;border-radius:4px;display:block">lv2_es_avance</code>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="banner bp" style="margin-bottom:0">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/></svg>
+          <div>Les etudiants ayant declare etre <strong>debutants complets</strong> figurent tout de meme dans votre liste. Affectez-les au groupe debutant (<code>lv2_de_debut</code>, <code>lv2_chinois</code> ou <code>lv2_es_debut</code>) — ils n'ont pas de test imprime a vous apporter.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- fin grid -->
+
+  <!-- Onglet configuration questions enseignant -->
+  <div style="margin-top:20px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 22px">
+    <div style="font-size:13px;font-weight:600;color:#4c1d95;margin-bottom:4px">&#9998; Adapter les questions de mon test</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:14px;line-height:1.6">
+      Modifiez les questions de votre discipline ci-dessous. L'administrateur vous a transmis un fichier JSON de base — importez-le ou saisissez directement.
+      Exportez ensuite le JSON mis a jour pour le renvoyer a l'administration.
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+      <button class="btn btn-secondary btn-sm" onclick="showQEditorEns('maths')" id="qedit-ens-tab-maths">Maths</button>
+      <button class="btn btn-secondary btn-sm" onclick="showQEditorEns('spanish')" id="qedit-ens-tab-spanish">Business Spanish</button>
+      <button class="btn btn-secondary btn-sm" onclick="showQEditorEns('lv2_de')" id="qedit-ens-tab-lv2_de">LV2 Allemand</button>
+      <button class="btn btn-secondary btn-sm" onclick="showQEditorEns('lv2_zh')" id="qedit-ens-tab-lv2_zh">LV2 Chinois</button>
+      <button class="btn btn-secondary btn-sm" onclick="showQEditorEns('lv2_es')" id="qedit-ens-tab-lv2_es">LV2 Espagnol</button>
+    </div>
+    <div id="q-editor-ens-container"></div>
+    <div style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap">
+      <button class="btn btn-success btn-sm" onclick="saveQEditorEns()">&#10003; Enregistrer</button>
+      <button class="btn btn-secondary btn-sm" onclick="addQuestionEns()">+ Ajouter une question</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportConfigJSON()">&#8595; Exporter JSON (pour l'admin)</button>
+      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('json-import-ens-inp').click()">&#8593; Importer JSON (de l'admin)</button>
+      <input type="file" id="json-import-ens-inp" accept=".json" style="display:none" onchange="importConfigJSON(this)">
+    </div>
+    <div id="qedit-ens-ok" class="banner bs" style="display:none;margin-top:10px">Questions enregistrees et mises a jour sur la plateforme.</div>
+  </div>
+
+  <!-- Rappel workflow -->
+  <div style="margin-top:20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:18px 22px">
+    <div style="font-size:13px;font-weight:600;color:#0f2942;margin-bottom:12px">&#128260; Workflow en 3 etapes</div>
+    <ol style="font-size:13px;color:#475569;line-height:2;padding-left:18px">
+      <li>Recevoir le fichier Excel transmis par l'administration (liste des etudiants, un onglet par discipline)</li>
+      <li>Remplir les colonnes <code style="background:#f1f5f9;padding:1px 5px;border-radius:3px">VALIDATION</code> ou <code style="background:#f1f5f9;padding:1px 5px;border-radius:3px">NIVEAU_LV2</code> selon votre discipline</li>
+      <li>Retourner le fichier complete a l'administration <strong>avant la date limite</strong></li>
+    </ol>
+    <div style="margin-top:12px;font-size:12px;color:#94a3b8">
+      L'administration importe ensuite votre fichier dans la plateforme pour lancer l'algorithme d'affectation.
+    </div>
+  </div>
+
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="pf-page" id="page-admin-login">
+  <div class="login-wrap"><div class="login-card">
+    <h2>Administration</h2>
+    <p style="font-size:13px;color:#64748b;margin-bottom:22px">Configuration &middot; groupes &middot; affectation &middot; exports</p>
+    <div class="pf-field"><label class="pf-label">Mot de passe</label><input class="pf-input" id="admin-pwd" type="password" onkeydown="if(event.key==='Enter')checkAdmin()"></div>
+    <div id="admin-err" class="banner be" style="display:none;margin-top:8px">Mot de passe incorrect.</div>
+    <button class="btn btn-primary" style="width:100%;margin-top:8px;justify-content:center" onclick="checkAdmin()">Se connecter</button>
+    <button class="btn btn-secondary" style="width:100%;margin-top:8px;justify-content:center" onclick="goTo('accueil')">&#8592; Retour</button>
+  </div></div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="pf-page" id="page-admin">
+  <p class="pf-page-title">Administration</p>
+  <p class="pf-page-sub">Configurez les places et les groupes <strong>avant</strong> de lancer l'affectation.</p>
+  <div class="admin-tabs">
+    <button class="atab active" id="atab-config"    onclick="adminTab('config')">&#9312; Configuration</button>
+    <button class="atab"        id="atab-groupes"   onclick="adminTab('groupes')">&#9313; Groupes</button>
+    <button class="atab"        id="atab-import"    onclick="adminTab('import')">&#9314; Redoublants &amp; Import</button>
+    <button class="atab"        id="atab-affect"    onclick="adminTab('affect')">&#9315; Affectation</button>
+    <button class="atab"        id="atab-resultats" onclick="adminTab('resultats')">&#9316; R&eacute;sultats</button>
+  </div>
+
+  <!-- CONFIG -->
+  <div id="apanel-config">
+    <div class="banner bi" style="margin-bottom:16px">
+      <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+      <div>Renseignez les <strong>places disponibles pour chaque option</strong> — elles alimentent les jauges du catalogue etudiant. Puis configurez les <strong>groupes et combinaisons</strong>.</div>
+    </div>
+
+    <!-- Google Form -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 22px;margin-bottom:14px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px">Lien Google Form (voeux etudiants)</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:10px">URL de partage du Google Form — activee sur la page "Saisir mes voeux".</div>
+      <div style="display:flex;gap:9px"><input class="pf-input" id="adm-gform-url" type="url" placeholder="https://forms.gle/..." style="flex:1"><button class="btn btn-primary" onclick="saveGformUrl()">Enregistrer et activer</button></div>
+      <div id="gform-status" style="font-size:12px;margin-top:7px;color:#94a3b8"></div>
+    </div>
+
+    <!-- Grille des places : toutes les options -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+
+      <!-- Semestre sans test -->
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.07em;padding-bottom:8px;border-bottom:2px solid #dbeafe;margin-bottom:12px">Semestre — sans test</div>
+        <div class="pf-field"><label class="pf-label">Certification Voltaire</label><input class="pf-input" id="adm-voltaire" type="number" value="80" min="0" onchange="updateJaugesFromAdmin()"></div>
+        <div class="pf-field"><label class="pf-label">Economie contemporaine</label><input class="pf-input" id="adm-eco" type="number" value="100" min="0" onchange="updateJaugesFromAdmin()"></div>
+      </div>
+
+      <!-- Semestre avec test -->
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.07em;padding-bottom:8px;border-bottom:2px solid #fde68a;margin-bottom:12px">Semestre — avec test</div>
+        <div class="pf-field"><label class="pf-label">Remise a niveau Maths</label><input class="pf-input" id="adm-maths-pl" type="number" value="40" min="0" onchange="updateJaugesFromAdmin()"></div>
+      </div>
+
+      <!-- Annee avec test -->
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:700;color:#065f46;text-transform:uppercase;letter-spacing:.07em;padding-bottom:8px;border-bottom:2px solid #a7f3d0;margin-bottom:12px">Annee entiere — avec test</div>
+        <div class="pf-field"><label class="pf-label">Business Spanish</label><input class="pf-input" id="adm-spanish" type="number" value="40" min="0" onchange="updateJaugesFromAdmin()"></div>
+        <div class="pf-field"><label class="pf-label">LV2 Allemand Deb.</label><input class="pf-input" id="adm-lv2-de-debut" type="number" value="20" min="0" onchange="updateJaugesFromAdmin()"></div>
+        <div class="pf-field"><label class="pf-label">LV2 Allemand Deb. 2</label><input class="pf-input" id="adm-lv2-de-debut2" type="number" value="20" min="0" onchange="updateJaugesFromAdmin()"></div>
+        <div class="pf-field"><label class="pf-label">LV2 Allemand Inter.</label><input class="pf-input" id="adm-lv2-de-inter" type="number" value="20" min="0" onchange="updateJaugesFromAdmin()"></div>
+        <div class="pf-field"><label class="pf-label">LV2 Chinois</label><input class="pf-input" id="adm-lv2-zh" type="number" value="25" min="0" onchange="updateJaugesFromAdmin()"></div>
+        <div class="pf-field"><label class="pf-label">LV2 Espagnol Deb.</label><input class="pf-input" id="adm-lv2-es-debut" type="number" value="25" min="0" onchange="updateJaugesFromAdmin()"></div>
+        <div class="pf-field"><label class="pf-label">LV2 Espagnol Inter.</label><input class="pf-input" id="adm-lv2-es-inter" type="number" value="25" min="0" onchange="updateJaugesFromAdmin()"></div>
+        <div class="pf-field"><label class="pf-label">LV2 Espagnol Avance</label><input class="pf-input" id="adm-lv2-es-avance" type="number" value="20" min="0" onchange="updateJaugesFromAdmin()"></div>
+      </div>
+
+      <!-- Sports -->
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;grid-column:1/-1">
+        <div style="font-size:11px;font-weight:700;color:#be185d;text-transform:uppercase;letter-spacing:.07em;padding-bottom:8px;border-bottom:2px solid #fbcfe8;margin-bottom:14px">Sport &mdash; semestre</div>
+        <div style="font-size:12px;color:#64748b;margin-bottom:12px">Indiquez le nom de chaque discipline et le nombre de places. Laisser <strong>0 places</strong> masque la discipline dans le catalogue etudiant.</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+          <div><label class="pf-label">Discipline 1</label><input class="pf-input" id="adm-snom1" type="text" placeholder="ex: Natation" value="" style="margin-bottom:6px" oninput="updateSportLabels()"><input class="pf-input" id="adm-s1" type="number" value="0" min="0" placeholder="Places" onchange="updateJaugesFromAdmin()"></div>
+          <div><label class="pf-label">Discipline 2</label><input class="pf-input" id="adm-snom2" type="text" placeholder="ex: Football" value="" style="margin-bottom:6px" oninput="updateSportLabels()"><input class="pf-input" id="adm-s2" type="number" value="0" min="0" placeholder="Places" onchange="updateJaugesFromAdmin()"></div>
+          <div><label class="pf-label">Discipline 3</label><input class="pf-input" id="adm-snom3" type="text" placeholder="ex: Tennis" value="" style="margin-bottom:6px" oninput="updateSportLabels()"><input class="pf-input" id="adm-s3" type="number" value="0" min="0" placeholder="Places" onchange="updateJaugesFromAdmin()"></div>
+          <div><label class="pf-label">Discipline 4</label><input class="pf-input" id="adm-snom4" type="text" placeholder="ex: Yoga" value="" style="margin-bottom:6px" oninput="updateSportLabels()"><input class="pf-input" id="adm-s4" type="number" value="0" min="0" placeholder="Places" onchange="updateJaugesFromAdmin()"></div>
+          <div><label class="pf-label">Discipline 5</label><input class="pf-input" id="adm-snom5" type="text" placeholder="ex: Escalade" value="" style="margin-bottom:6px" oninput="updateSportLabels()"><input class="pf-input" id="adm-s5" type="number" value="0" min="0" placeholder="Places" onchange="updateJaugesFromAdmin()"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Informations pratiques tests -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 22px;margin-top:14px">
+      <div style="font-size:11px;font-weight:700;color:#0891b2;text-transform:uppercase;letter-spacing:.07em;padding-bottom:8px;border-bottom:2px solid #a5f3fc;margin-bottom:14px">Informations pratiques &mdash; Tests de niveau</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:16px">Ces informations s'affichent sur la page <strong>Tests de niveau</strong> de la plateforme etudiant et dans le popup d'impression.</div>
+
+      <!-- Maths -->
+      <div style="border:1px solid #fde68a;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fffbeb">
+        <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:10px">&#9998; Remise a niveau Mathematiques</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+          <div class="pf-field"><label class="pf-label">Enseignant responsable</label><input class="pf-input" id="adm-ens-maths" type="text" placeholder="ex : M. Dupont — m.dupont@univ.fr"></div>
+          <div class="pf-field"><label class="pf-label">Date limite de remise du test</label><input class="pf-input" id="adm-date-maths" type="text" placeholder="ex : 12 septembre 2026"></div>
+          <div class="pf-field" style="grid-column:1/-1"><label class="pf-label">Salle / créneau</label><input class="pf-input" id="adm-salle-maths" type="text" placeholder="ex : Salle B204 — lundi 8h-10h"></div>
+        </div>
+      </div>
+
+      <!-- Business Spanish -->
+      <div style="border:1px solid #fed7aa;border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fff7ed">
+        <div style="font-size:12px;font-weight:700;color:#9a3412;margin-bottom:10px">&#9998; Business Spanish</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+          <div class="pf-field"><label class="pf-label">Enseignant responsable</label><input class="pf-input" id="adm-ens-spanish" type="text" placeholder="ex : Mme Garcia — m.garcia@univ.fr"></div>
+          <div class="pf-field"><label class="pf-label">Date limite de remise du test</label><input class="pf-input" id="adm-date-spanish" type="text" placeholder="ex : 12 septembre 2026"></div>
+          <div class="pf-field" style="grid-column:1/-1"><label class="pf-label">Salle / créneau</label><input class="pf-input" id="adm-salle-spanish" type="text" placeholder="ex : Amphi C — mardi 14h-16h"></div>
+        </div>
+      </div>
+
+      <!-- LV2 -->
+      <div style="border:1px solid #ddd6fe;border-radius:10px;padding:14px 16px;background:#f5f3ff">
+        <div style="font-size:12px;font-weight:700;color:#4c1d95;margin-bottom:10px">&#9998; LV2 &mdash; Langue vivante 2</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+          <div class="pf-field" style="grid-column:1/-1"><label class="pf-label">Enseignants responsables (All. / Chinois / Esp.)</label><input class="pf-input" id="adm-ens-lv2" type="text" placeholder="ex : All. : M. Müller | Zh. : Mme Chen | Esp. : M. Lopez"></div>
+          <div class="pf-field"><label class="pf-label">Date limite de remise du test</label><input class="pf-input" id="adm-date-lv2" type="text" placeholder="ex : 15 septembre 2026"></div>
+          <div class="pf-field"><label class="pf-label">Salle / créneau</label><input class="pf-input" id="adm-salle-lv2" type="text" placeholder="ex : Salle 101 — jeudi 10h-12h"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Éditeur de questions des tests -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 22px;margin-top:14px">
+      <div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.07em;padding-bottom:8px;border-bottom:2px solid #ddd6fe;margin-bottom:14px">&#9998; Questions des tests de niveau</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:14px;line-height:1.6">
+        Chaque question a 3 options (a, b, c). Indiquez la lettre de la bonne reponse dans "Correcte".
+        L'enseignant peut affiner les questions dans son espace.
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+        <button class="btn btn-secondary btn-sm" onclick="showQEditor('maths')" id="qedit-tab-maths">Maths</button>
+        <button class="btn btn-secondary btn-sm" onclick="showQEditor('spanish')" id="qedit-tab-spanish">Business Spanish</button>
+        <button class="btn btn-secondary btn-sm" onclick="showQEditor('lv2_de')" id="qedit-tab-lv2_de">LV2 Allemand</button>
+        <button class="btn btn-secondary btn-sm" onclick="showQEditor('lv2_zh')" id="qedit-tab-lv2_zh">LV2 Chinois</button>
+        <button class="btn btn-secondary btn-sm" onclick="showQEditor('lv2_es')" id="qedit-tab-lv2_es">LV2 Espagnol</button>
+      </div>
+      <div id="q-editor-container"></div>
+      <div style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn btn-success btn-sm" onclick="saveQEditor()">&#10003; Enregistrer les questions</button>
+        <button class="btn btn-secondary btn-sm" onclick="addQuestion()">+ Ajouter une question</button>
+        <button class="btn btn-secondary btn-sm" onclick="exportConfigJSON()">&#8595; Exporter JSON</button>
+        <button class="btn btn-secondary btn-sm" onclick="document.getElementById('json-import-inp').click()">&#8593; Importer JSON</button>
+        <input type="file" id="json-import-inp" accept=".json" style="display:none" onchange="importConfigJSON(this)">
+      </div>
+      <div id="qedit-ok" class="banner bs" style="display:none;margin-top:10px">Questions enregistrees. Les tests etudiants sont mis a jour.</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px">
+      <button class="btn btn-success" onclick="saveConfig()">&#10003; Enregistrer et mettre a jour les jauges</button>
+      <button class="btn btn-secondary" onclick="adminTab('groupes')">Etape suivante : Groupes &amp; combinaisons &#8594;</button>
+    </div>
+  </div>
+  <div id="apanel-groupes" style="display:none">
+    <div class="banner bi" style="margin-bottom:16px">
+      <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+      <div>
+        <strong>Principe :</strong> chaque groupe est constitue d'etudiants partageant <strong>1 a 4 options communes</strong> (ex : G01 = Eco_Co + LV2 Espagnol intermediaire). L'algorithme affecte chaque etudiant dans le groupe dont il possede au moins une option, en privilegiant le groupe le moins rempli. Renseignez le <strong>nom</strong>, la <strong>capacite</strong> et les <strong>options incluses</strong> pour chaque groupe.
+      </div>
+    </div>
+    <div class="combis-grid" id="combis-list"></div>
+    <button class="btn-add-combi" onclick="addCombi()">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+      Ajouter un groupe
+    </button>
+    <div style="margin-top:14px;display:flex;gap:9px;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-success" onclick="saveGroupes()">&#10003; Enregistrer les groupes</button>
+      <button class="btn btn-secondary" onclick="loadGroupesDemo()">Charger exemple (11 groupes)</button>
+      <button class="btn btn-secondary" onclick="adminTab('import')">Etape suivante : Import Excel &#8594;</button>
+      <span id="groupes-save-ok" style="display:none;font-size:13px;color:#16a34a;font-weight:500">&#10003; Enregistre</span>
+    </div>
+  </div>
+
+  <!-- IMPORT -->
+  <div id="apanel-import" style="display:none">
+    <!-- Redoublants -->
+    <div style="padding-bottom:20px;margin-bottom:20px;border-bottom:2px solid #e2e8f0">
+      <div style="font-size:11px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">① Redoublants — option deja validee</div>
+<!-- Redoublants -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 22px;margin-top:14px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px">Redoublants &mdash; option deja validee</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:14px;line-height:1.6">
+        Les etudiants redoublants sont <strong>non concernes par le choix d'option</strong> : leur option est deja validee.
+        Ils sont affectes en <strong>priorite absolue</strong> avant tous les autres voeux.
+        Importez un fichier Excel avec les colonnes : <code>num_etudiant</code>, <code>nom</code>, <code>prenom</code>, <code>option_validee</code>.
+      </div>
+      <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+        <button class="btn btn-primary" onclick="document.getElementById('redoub-xlsx-inp').click()">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+          Importer liste redoublants (.xlsx)
+        </button>
+        <input type="file" id="redoub-xlsx-inp" accept=".xlsx,.xls" style="display:none" onchange="importRedoublantsXlsx(this.files[0])">
+        <button class="btn btn-secondary btn-sm" onclick="clearRedoublants()">Effacer la liste</button>
+      </div>
+      <!-- Apercu -->
+      <div id="redoub-preview" style="display:none;overflow-x:auto">
+        <div id="redoub-ok" class="banner bs" style="margin-bottom:10px"></div>
+        <table style="width:100%;border-collapse:collapse;font-size:13px" id="redoub-table">
+          <thead><tr style="background:#f8fafc">
+            <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #e2e8f0">N&#176; Etudiant</th>
+            <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #e2e8f0">Nom</th>
+            <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #e2e8f0">Prenom</th>
+            <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #e2e8f0">Option validee</th>
+            <th style="padding:8px 12px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #e2e8f0">Code interne</th>
+          </tr></thead>
+          <tbody id="redoub-tbody"></tbody>
+        </table>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:#94a3b8">
+        Codes valides pour option_validee : <code>voltaire | eco | maths | sport1..5 | business_spanish | lv2_de_debut | lv2_de_debut2 | lv2_de_inter | lv2_chinois | lv2_es_debut | lv2_es_inter | lv2_es_avance</code>
+      </div>
+    </div>
+    </div>
+    <!-- Import Google Sheets -->
+    <div>
+      <div style="font-size:11px;font-weight:700;color:#0891b2;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">② Import Google Sheets</div>
+    <div class="banner bi" style="margin-bottom:14px">
+      <div>
+        <strong>Workflow :</strong>
+        <ol style="margin-top:7px;padding-left:16px;font-size:13px;line-height:1.9">
+          <li>Exporter les reponses Google Form (Google Sheets &rarr; Fichier &rarr; Telecharger &rarr; <strong>Microsoft Excel (.xlsx)</strong>)</li>
+          <li>Importer le fichier Excel ci-dessous — les colonnes sont reconnues automatiquement</li>
+          <li>Apres import, generer le fichier enseignant et le transmettre</li>
+          <li>Importer le fichier retour enseignant (encart ci-dessous)</li>
+        </ol>
+        <div style="margin-top:8px;font-size:12px;color:#64748b">Colonnes attendues (export Google Sheets) : <code>Horodateur ; Adresse e-mail ; N° etudiant ; Nom ; Prenom ; Voeu 1 ; Voeu 2 ; Voeu 3</code> — les colonnes de validation sont ajoutees par le fichier retour enseignant.</div>
+      </div>
+    </div>
+
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('xlsx-inp').click()" ondragover="dragOver(event)" ondragleave="dragLeave()" ondrop="dropFile(event)">
+      <div style="font-size:30px;margin-bottom:7px">&#128193;</div>
+      <div style="font-weight:500;color:#334155">Cliquer ou deposer le fichier Excel ici</div>
+      <div style="font-size:12px;color:#94a3b8;margin-top:3px">Fichier Excel (.xlsx) export Google Sheets</div>
+    </div>
+    <input type="file" id="xlsx-inp" accept=".xlsx,.xls" style="display:none" onchange="loadXlsx(this)">
+    <div style="margin-top:11px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-secondary" onclick="loadDemo()">Charger 180 etudiants (demo)</button>
+      <button class="btn btn-secondary" onclick="showAffect()">Etape suivante : Affectation &#8594;</button>
+    </div>
+
+
+    <div id="import-preview" style="display:none;margin-top:18px">
+      <!-- Bannière succès + action immédiate -->
+      <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:16px 20px;display:flex;align-items:flex-start;gap:14px">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="#16a34a" style="flex-shrink:0;margin-top:2px"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        <div style="flex:1">
+          <div id="import-ok" style="font-size:14px;font-weight:600;color:#15803d;margin-bottom:6px"></div>
+          <div style="font-size:12px;color:#166534;margin-bottom:12px">Etape suivante : generez la liste pour les enseignants des etudiants devant passer les tests de niveau, puis transmettez-la.</div>
+          <div style="display:flex;gap:9px;flex-wrap:wrap;align-items:center">
+            <button class="btn btn-success" onclick="exportTestsExcelEnseignant()" style="font-weight:600">
+              <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              Generer liste pour enseignants (.xlsx)
+            </button>
+            <button class="btn btn-secondary" onclick="showAffect()">Etape suivante : Affectation &#8594;</button>
+          </div>
+          <div id="export-tests-ok" class="banner bs" style="display:none;margin-top:10px">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Fichier genere et telecharge.
+          </div>
+        </div>
+      </div>
+<!-- Import fichier retour enseignant -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;margin-top:14px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:3px">&#128203; Import fichier retour enseignant</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:11px;line-height:1.6">Une fois que les enseignants ont rempli les colonnes <strong>Validation</strong> et <strong>Niveau LV2</strong> dans le fichier xlsx, importez-le ici. Les donnees sont fusionnees avec le fichier Google Form deja charge.</div>
+      <!-- Import retour enseignant -->
+    <div style="margin-top:24px;padding-top:20px;border-top:2px solid #e2e8f0">
+      <div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">&#9315; Import retour enseignant</div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 20px">
+        <div style="font-size:12px;color:#64748b;margin-bottom:12px;line-height:1.6">Importez le fichier retour complete par les enseignants. Les colonnes VALIDATION et NIVEAU_LV2 sont fusionnees avec les donnees etudiants.</div>
+      <!-- Formulaire import retour enseignant -->
+      <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
+        <button class="btn btn-success" onclick="document.getElementById('ens-xlsx-inp').click()" style="font-weight:600">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+          Importer retour enseignant et affecter
+        </button>
+        <input type="file" id="ens-xlsx-inp" accept=".xlsx,.xls" style="display:none" onchange="importEnseignantEtAffecter(this.files[0])">
+        <button class="btn btn-secondary" onclick="document.getElementById('ens-xlsx-inp-only').click()">
+          Importer sans affecter
+        </button>
+        <input type="file" id="ens-xlsx-inp-only" accept=".xlsx,.xls" style="display:none" onchange="loadEnseignantXlsx(this.files[0])">
+      </div>
+      <div style="font-size:12px;color:#64748b">
+        Le fichier doit contenir les colonnes <code>N° Etudiant</code>, <code>VALIDATION_MATHS</code>, 
+        <code>VALIDATION_SPANISH</code> et/ou <code>NIVEAU_LV2</code> selon la discipline.
+      </div>
+
+      <div id="ens-import-ok" class="banner bs" style="display:none;margin-top:10px">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        <span>Fusion effectuee.</span>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;gap:10px">
+        <button class="btn btn-success" onclick="showAffect()">Etape suivante : Affectation &#8594;</button>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- AFFECT -->
+  <div id="apanel-affect" style="display:none">
+    <div id="affect-checks"></div>
+    <div id="affect-ready" style="display:none">
+      <div class="banner bs" id="affect-ok" style="margin-bottom:16px"></div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px 18px;margin-bottom:16px">
+        <div style="font-size:12px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Groupes configures</div>
+        <div id="affect-groupes-recap" style="display:flex;flex-wrap:wrap;gap:7px"></div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="runAffectation()">&#9654; Lancer l'affectation</button>
+      <div id="affect-prog" style="display:none;margin-top:14px">
+        <div style="font-size:13px;color:#64748b;margin-bottom:5px">Calcul en cours...</div>
+        <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTATS -->
+  <div id="apanel-resultats" style="display:none">
+    <div id="res-content">
+<div class="stat-grid" id="stat-cards"></div>
+      <div style="display:flex;gap:9px;margin-bottom:20px;flex-wrap:wrap">
+        <button class="btn btn-success" onclick="exportResultatsExcel()">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          Excel affectation (.xlsx)
+        </button>
+        <button class="btn btn-secondary" onclick="exportCSV('aff')">&#8595; Excel affectations (.xlsx)</button>
+        <button class="btn btn-secondary" onclick="exportCSV('na')">&#8595; Excel non affectes (.xlsx)</button>
+        <button class="btn btn-secondary" onclick="exportRapport()">&#8595; Rapport .qmd</button>
+      </div>
+      <div class="sh">Repartition par groupe</div>
+      <div class="adm-tw"><table class="adm-t" id="tbl-grps"><thead><tr><th>Groupe</th><th>Options incluses</th><th>Capacite</th><th>Affectes</th><th>Taux</th></tr></thead><tbody></tbody></table></div>
+      <div class="sh">Total par option</div>
+      <div class="adm-tw"><table class="adm-t" id="tbl-opts"><thead><tr><th>Option</th><th>Etudiants affectes</th></tr></thead><tbody></tbody></table></div>
+      <div class="sh">Non affectes</div>
+      <div class="adm-tw"><table class="adm-t" id="tbl-na"><thead><tr><th>N&#176;</th><th>Nom</th><th>Voeu 1</th><th>Voeu 2</th><th>Voeu 3</th><th>Motif du refus</th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </div>
+    </div>
+  </div>
+
+</main>
+</div>
+<script>
+// ── CONSTANTES ────────────────────────────────────────────────────
+// ── TEST_CONFIG : questions configurables ─────────────────────────
+// Structure : { discipline: [ {id, q, opts:[{a,label}], correct} ] }
+// Modifiable par l'admin (Configuration) et l'enseignant (son espace)
+var TEST_CONFIG = {
+  maths: [
+    {id:"m1", q:"1. Résoudre : 3x + 7 = 22",
+     opts:[{a:"a",l:"x = 3"},{a:"b",l:"x = 5"},{a:"c",l:"x = 7"}], correct:"b"},
+    {id:"m2", q:"2. Factoriser : x² − 9",
+     opts:[{a:"a",l:"(x − 3)(x + 3)"},{a:"b",l:"(x − 9)(x + 1)"},{a:"c",l:"x(x − 9)"}], correct:"a"},
+    {id:"m3", q:"3. Dérivée de f(x) = 4x³ − 2x + 1",
+     opts:[{a:"a",l:"f'(x) = 12x² − 2"},{a:"b",l:"f'(x) = 4x² − 2"},{a:"c",l:"f'(x) = 12x³"}], correct:"a"},
+    {id:"m4", q:"4. Moyenne de {4, 7, 7, 10, 12}",
+     opts:[{a:"a",l:"7"},{a:"b",l:"8"},{a:"c",l:"7,5"}], correct:"b"},
+    {id:"m5", q:"5. Résoudre : 2x − 3 > 5",
+     opts:[{a:"a",l:"x > 4"},{a:"b",l:"x > 1"},{a:"c",l:"x < 4"}], correct:"a"},
+    {id:"m6", q:"6. Développer : (x + 2)²",
+     opts:[{a:"a",l:"x² + 4"},{a:"b",l:"x² + 4x + 4"},{a:"c",l:"x² + 2x + 4"}], correct:"b"},
+    {id:"m7", q:"7. ln(e) = ?",
+     opts:[{a:"a",l:"2"},{a:"b",l:"e"},{a:"c",l:"1"}], correct:"c"}
+  ],
+  spanish: [
+    {id:"s1", q:"1. Complétez : 'Estamos __ el mercado internacional.'",
+     opts:[{a:"a",l:"explorar"},{a:"b",l:"explorando"},{a:"c",l:"explorado"}], correct:"b"},
+    {id:"s2", q:"2. Traduction de 'The board approved the annual budget.'",
+     opts:[{a:"a",l:"El consejo de administración aprobó el presupuesto anual."},{a:"b",l:"El director aprueba el presupuesto del año."},{a:"c",l:"La junta directiva está aprobando el gasto anual."}], correct:"a"},
+    {id:"s3", q:"3. 'Cash flow' en espagnol des affaires ?",
+     opts:[{a:"a",l:"La tesorería"},{a:"b",l:"El beneficio"},{a:"c",l:"El coste"}], correct:"a"},
+    {id:"s4", q:"4. 'Hemos alcanzado nuestros objetivos' signifie ?",
+     opts:[{a:"a",l:"Nous avons atteint nos objectifs"},{a:"b",l:"Nous allons atteindre nos objectifs"},{a:"c",l:"Nous avons fixé nos objectifs"}], correct:"a"},
+    {id:"s5", q:"5. Forme correcte : 'Si hubiera sabido, __'",
+     opts:[{a:"a",l:"lo habría hecho"},{a:"b",l:"lo haría"},{a:"c",l:"lo hice"}], correct:"a"}
+  ],
+  lv2_de: [
+    {id:"de1", q:"1. 'Ich __ gestern ins Büro gegangen.' (sein/haben ?)",
+     opts:[{a:"a",l:"bin"},{a:"b",l:"habe"},{a:"c",l:"war"}], correct:"a"},
+    {id:"de2", q:"2. Traduction de 'La réunion a été annulée.'",
+     opts:[{a:"a",l:"Das Meeting wurde abgesagt."},{a:"b",l:"Das Meeting ist abgesagt."},{a:"c",l:"Das Meeting wird abgesagt."}], correct:"a"},
+    {id:"de3", q:"3. 'Das Unternehmen __ seinen Umsatz verdoppelt.' (haben/sein ?)",
+     opts:[{a:"a",l:"hat"},{a:"b",l:"ist"},{a:"c",l:"wird"}], correct:"a"},
+    {id:"de4", q:"4. Pluriel de 'das Angebot' ?",
+     opts:[{a:"a",l:"die Angeboten"},{a:"b",l:"die Angebote"},{a:"c",l:"die Angebots"}], correct:"b"},
+    {id:"de5", q:"5. 'Könnten Sie mir helfen?' est au niveau ?",
+     opts:[{a:"a",l:"B1/B2 (politesse formelle)"},{a:"b",l:"A1 (débutant)"},{a:"c",l:"C1 (expert)"}], correct:"a"}
+  ],
+  lv2_zh: [
+    {id:"zh1", q:"1. 'Nǐ hǎo' signifie ?",
+     opts:[{a:"a",l:"Bonjour"},{a:"b",l:"Merci"},{a:"c",l:"Au revoir"}], correct:"a"},
+    {id:"zh2", q:"2. Caractère pour 'argent / monnaie' ?",
+     opts:[{a:"a",l:"钱 (qián)"},{a:"b",l:"时 (shí)"},{a:"c",l:"人 (rén)"}], correct:"a"},
+    {id:"zh3", q:"3. 'Wǒ shì lǎoshī' = ?",
+     opts:[{a:"a",l:"Je suis professeur"},{a:"b",l:"Je suis étudiant"},{a:"c",l:"Je travaille"}], correct:"a"},
+    {id:"zh4", q:"4. Ordre syntaxique en mandarin ?",
+     opts:[{a:"a",l:"Sujet + Verbe + Objet"},{a:"b",l:"Sujet + Objet + Verbe"},{a:"c",l:"Verbe + Sujet + Objet"}], correct:"a"},
+    {id:"zh5", q:"5. 'Xièxiè' signifie ?",
+     opts:[{a:"a",l:"Merci"},{a:"b",l:"Pardon"},{a:"c",l:"S'il vous plaît"}], correct:"a"}
+  ],
+  lv2_es: [
+    {id:"es1", q:"1. 'Bonjour' en espagnol ?",
+     opts:[{a:"a",l:"Buenos días"},{a:"b",l:"Buenas noches"},{a:"c",l:"Hola"}], correct:"a"},
+    {id:"es2", q:"2. Conjugaison : 'Ella __ (hablar) bien español.'",
+     opts:[{a:"a",l:"habla"},{a:"b",l:"hablo"},{a:"c",l:"hablan"}], correct:"a"},
+    {id:"es3", q:"3. 'El mercado está creciendo' = ?",
+     opts:[{a:"a",l:"Le marché est en croissance"},{a:"b",l:"Le marché a grandi"},{a:"c",l:"Le marché va croître"}], correct:"a"},
+    {id:"es4", q:"4. Subjonctif : 'Espero que tú __ (venir).'",
+     opts:[{a:"a",l:"vengas"},{a:"b",l:"vienes"},{a:"c",l:"vendrás"}], correct:"a"},
+    {id:"es5", q:"5. 'Hemos incrementado las ventas en un 20%' = ?",
+     opts:[{a:"a",l:"Nous avons augmenté les ventes de 20%"},{a:"b",l:"Nous allons augmenter"},{a:"c",l:"Les ventes ont baissé"}], correct:"a"}
+  ]
+};
+
+// Reconstruit CORRECT et TEST_Q depuis TEST_CONFIG (rétrocompatibilité)
+function rebuildFromConfig(){
+  window.CORRECT={};
+  window.TEST_Q={maths:[],spanish:[],de:[],zh:[],es:[]};
+  var map={maths:"maths",spanish:"spanish",lv2_de:"de",lv2_zh:"zh",lv2_es:"es"};
+  Object.keys(TEST_CONFIG).forEach(function(disc){
+    var key=map[disc]||disc;
+    TEST_CONFIG[disc].forEach(function(q){
+      CORRECT[q.id]=q.correct;
+      if(TEST_Q[key])TEST_Q[key].push(q.id);
+    });
+  });
+}
+rebuildFromConfig();
+var SPORT_SUBS=["sport1","sport2","sport3","sport4","sport5"];
+var SPORT_NAMES={sport1:"Sport 1",sport2:"Sport 2",sport3:"Sport 3",sport4:"Sport 4",sport5:"Sport 5"};
+var SPORT_COLORS=["#ec4899","#f43f5e","#f97316","#8b5cf6","#06b6d4"];
+// Codes Form LV2 (ce que l'étudiant choisit dans le Google Form)
+var LV2_FORM=["lv2_allemand","lv2_espagnol","lv2_chinois"];
+// Codes niveau LV2 (ce que l'enseignant affecte = groupes finaux)
+var LV2_NIVEAUX=["lv2_de_debut","lv2_de_debut2","lv2_de_inter","lv2_chinois","lv2_es_debut","lv2_es_inter","lv2_es_avance"];
+var LV2_SUBS=LV2_NIVEAUX; // alias pour rétrocompatibilité
+// Options disponibles dans les selects de groupes (codes finaux d'affectation)
+var OPT_LIST=[
+  {v:"voltaire",label:"Certification Voltaire"},{v:"eco",label:"Economie contemporaine"},
+  {v:"maths",label:"Maths RaN"},{v:"sport1",get label(){return SPORT_NAMES.sport1;}},{v:"sport2",get label(){return SPORT_NAMES.sport2;}},
+  {v:"sport3",get label(){return SPORT_NAMES.sport3;}},{v:"sport4",get label(){return SPORT_NAMES.sport4;}},{v:"sport5",get label(){return SPORT_NAMES.sport5;}},
+  {v:"business_spanish",label:"Business Spanish"},
+  {v:"lv2_de_debut",label:"All. Debutant"},{v:"lv2_de_debut2",label:"All. Debutant 2"},
+  {v:"lv2_de_inter",label:"All. Intermediaire"},{v:"lv2_chinois",label:"LV2 Chinois"},
+  {v:"lv2_es_debut",label:"Esp. Debutant"},{v:"lv2_es_inter",label:"Esp. Intermediaire"},
+  {v:"lv2_es_avance",label:"Esp. Avance"}
+];
+var OPT_CLR={voltaire:"#dbeafe",eco:"#dcfce7",maths:"#fef9c3",business_spanish:"#ffedd5",sport1:"#fce7f3",sport2:"#ede9fe",sport3:"#fff7ed",sport4:"#ecfdf5",sport5:"#f0f9ff",lv2_de_debut:"#f5f3ff",lv2_de_debut2:"#ede9fe",lv2_de_inter:"#ddd6fe",lv2_chinois:"#fdf4ff",lv2_es_debut:"#fff1f2",lv2_es_inter:"#ffe4e6",lv2_es_avance:"#fecdd3"};
+var OPT_FULL={};
+// Ajouter les codes Form LV2 dans OPT_FULL pour les afficher lisiblement
+OPT_FULL["lv2_allemand"]="LV2 Allemand";
+OPT_FULL["lv2_espagnol"]="LV2 Espagnol";
+OPT_FULL["lv2_chinois"]="LV2 Chinois";
+OPT_LIST.forEach(function(o){OPT_FULL[o.v]=o.label;});
+// ── ETAT ──────────────────────────────────────────────────────────
+var ST={answers:{},testsDone:{},testsChecked:{maths:false,spanish:false,lv2:false},levelMaths:null,levelSpanish:null,levelLV2:null,langLV2:null,rawData:null,results:null,niveaux:{},combis:[],gformUrl:"",redoublants:[]};
+var PLACES={voltaire:{max:80,pris:0},eco:{max:100,pris:0},maths:{max:40,pris:0},sport1:{max:0,pris:0},sport2:{max:0,pris:0},sport3:{max:0,pris:0},sport4:{max:0,pris:0},sport5:{max:0,pris:0},business_spanish:{max:40,pris:0},lv2_de_debut:{max:20,pris:0},lv2_de_debut2:{max:20,pris:0},lv2_de_inter:{max:20,pris:0},lv2_chinois:{max:25,pris:0},lv2_es_debut:{max:25,pris:0},lv2_es_inter:{max:25,pris:0},lv2_es_avance:{max:20,pris:0}};
+
+// ── NAVIGATION ────────────────────────────────────────────────────
+function goTo(id){
+  document.querySelectorAll(".pf-page").forEach(function(p){p.classList.remove("active");});
+  document.querySelectorAll(".pf-nav-btn").forEach(function(b){b.classList.remove("active");});
+  var pg=document.getElementById("page-"+id);if(pg)pg.classList.add("active");
+  var nm={accueil:0,catalogue:1,voeux:2,tests:3};
+  if(nm[id]!==undefined)document.querySelectorAll(".pf-nav-btn")[nm[id]].classList.add("active");
+  if(id==="enseignant"){updateEnsPageFromConfig();}
+  if(id==="admin")refreshAffectTab();
+  window.scrollTo(0,0);
+}
+// ── JAUGES ────────────────────────────────────────────────────────
+function updateJauge(id,pris,max){var bar=document.getElementById("jb-"+id);var txt=document.getElementById("jt-"+id);if(!bar||!txt)return;var pct=max>0?Math.round(100*pris/max):0;bar.style.width=pct+"%";bar.className="jauge-bar "+(pct<50?"jg-low":pct<80?"jg-mid":"jg-high");txt.textContent=(max-pris)+" / "+max;}
+function initJauges(){updateJauge("voltaire",PLACES.voltaire.pris,PLACES.voltaire.max);updateJauge("eco",PLACES.eco.pris,PLACES.eco.max);updateJauge("maths",PLACES.maths.pris,PLACES.maths.max);updateJauge("spanish",PLACES.business_spanish.pris,PLACES.business_spanish.max);updateJauge("s1",PLACES.sport1.pris,PLACES.sport1.max);updateJauge("s2",PLACES.sport2.pris,PLACES.sport2.max);updateJauge("s3",PLACES.sport3.pris,PLACES.sport3.max);updateJauge("s4",PLACES.sport4.pris,PLACES.sport4.max);updateJauge("s5",PLACES.sport5.pris,PLACES.sport5.max);}
+function updateJaugesFromAdmin(){function g(id,def){var el=document.getElementById(id);return el?+el.value||def:def;}PLACES.voltaire.max=g("adm-voltaire",80);PLACES.eco.max=g("adm-eco",100);PLACES.maths.max=g("adm-maths-pl",40);PLACES.business_spanish.max=g("adm-spanish",40);PLACES.sport1.max=g("adm-s1",0);PLACES.sport2.max=g("adm-s2",0);PLACES.sport3.max=g("adm-s3",0);PLACES.sport4.max=g("adm-s4",0);PLACES.sport5.max=g("adm-s5",0);PLACES.lv2_de_debut.max=g("adm-lv2-de-debut",20);PLACES.lv2_de_debut2.max=g("adm-lv2-de-debut2",20);PLACES.lv2_de_inter.max=g("adm-lv2-de-inter",20);PLACES.lv2_chinois.max=g("adm-lv2-zh",25);PLACES.lv2_es_debut.max=g("adm-lv2-es-debut",25);PLACES.lv2_es_inter.max=g("adm-lv2-es-inter",25);PLACES.lv2_es_avance.max=g("adm-lv2-es-avance",20);initJauges();}
+// ── GFORM ─────────────────────────────────────────────────────────
+function applyGformUrl(url){ST.gformUrl=url;localStorage.setItem("gform_url",url);document.getElementById("gform-config-zone").style.display="none";var btn=document.getElementById("btn-open-form");btn.disabled=false;if(document.getElementById("adm-gform-url"))document.getElementById("adm-gform-url").value=url;if(document.getElementById("gform-status")){document.getElementById("gform-status").textContent="Actif : "+url;document.getElementById("gform-status").style.color="#16a34a";}}
+function openForm(){if(!ST.gformUrl){alert("URL non configuree.");return;}window.open(ST.gformUrl,"_blank");}
+function saveGformUrl(){var url=document.getElementById("adm-gform-url").value.trim();if(!url||(!url.includes("google.com/forms")&&!url.includes("forms.gle"))){alert("URL invalide.");return;}applyGformUrl(url);alert("URL enregistree. Le bouton Voeux est maintenant actif.");}
+// ── TESTS : SELECTEUR ─────────────────────────────────────────────
+function toggleTest(type){var checked=!ST.testsChecked[type];ST.testsChecked[type]=checked;var item=document.getElementById("tci-"+type);var box=document.getElementById("tcibox-"+type);item.classList.toggle("checked",checked);box.style.background=checked?"#2563eb":"#fff";box.style.borderColor=checked?"#2563eb":"#cbd5e1";document.getElementById("test-"+type).classList.toggle("visible",checked);var any=Object.values(ST.testsChecked).some(function(v){return v;});document.getElementById("badge-tests").style.display=any?"inline":"none";}
+// ── DECLARATION MATHS ─────────────────────────────────────────────
+function setLevelMaths(el,level){document.querySelectorAll("#lvl-btns-maths .level-btn").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");ST.levelMaths=level;var isDeb=(level==="debutant");document.getElementById("maths-debutant-msg").style.display=isDeb?"block":"none";document.getElementById("maths-questions").style.display=isDeb?"none":"block";if(isDeb){ST.testsDone.maths=true;ST.answers.score_maths="debutant";document.getElementById("ok-maths").style.display="inline";document.getElementById("test-maths-actions").style.display="block";showPrintBtn("maths");}else{renderTestFromConfig("maths","maths-questions");}}
+// ── DECLARATION SPANISH ───────────────────────────────────────────
+function setLevelSpanish(el,level){document.querySelectorAll("#lvl-btns-spanish .level-btn").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");ST.levelSpanish=level;var insuf=(level==="debutant"||level==="a2");var ok=(level==="b1"||level==="b2plus");document.getElementById("spanish-insuf-msg").style.display=insuf?"block":"none";document.getElementById("spanish-ok-msg").style.display=ok?"block":"none";if(ok)renderTestFromConfig("spanish","spanish-questions");else{var sq=document.getElementById("spanish-questions");if(sq){sq.innerHTML="";sq.style.display="none";}}if(insuf){ST.testsDone.spanish=true;ST.answers.score_spanish="insuf_"+level;var okEl=document.getElementById("ok-spanish");okEl.textContent="Declaration enregistree (niveau insuffisant)";okEl.style.color="#dc2626";okEl.style.display="inline";}}
+// ── DECLARATION LV2 ───────────────────────────────────────────────
+function selectLang(lang,el){document.querySelectorAll("#test-lv2 .level-btn[id^='lv2-lang']").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");ST.langLV2=lang;var labels={de:"Allemand",zh:"Chinois",es:"Espagnol"};document.getElementById("lv2-lang-label").textContent=labels[lang];document.getElementById("lv2-level-zone").style.display="block";document.querySelectorAll("#lvl-btns-lv2 .level-btn").forEach(function(b){b.classList.remove("sel");});["de","zh","es"].forEach(function(l){document.getElementById("lv2-"+l+"-questions").style.display="none";});document.getElementById("lv2-debutant-msg").style.display="none";document.querySelector(".lv2-avance-btn").style.display=lang==="es"?"":"none";}
+function setLevelLV2(el,level){document.querySelectorAll("#lvl-btns-lv2 .level-btn").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");ST.levelLV2=level;var isDeb=(level==="debutant");document.getElementById("lv2-debutant-msg").style.display=isDeb?"block":"none";["de","zh","es"].forEach(function(l){document.getElementById("lv2-"+l+"-questions").style.display="none";});if(!isDeb&&ST.langLV2)renderTestFromConfig("lv2_"+ST.langLV2,"lv2-"+ST.langLV2+"-questions");if(isDeb){ST.testsDone.lv2=true;ST.answers.score_lv2="debutant";}}
+// ── QCM ───────────────────────────────────────────────────────────
+function pick(el){var q=el.getAttribute("data-q");var a=el.getAttribute("data-a");if(el.classList.contains("correct")||el.classList.contains("wrong"))return;ST.answers[q]=a;document.querySelectorAll("[data-q='"+q+"']").forEach(function(o){o.classList.toggle("chosen",o.getAttribute("data-a")===a);});}
+// ── RENDU DYNAMIQUE DES QUESTIONS ─────────────────────────────────
+function renderTestFromConfig(disc, containerId){
+  var container=document.getElementById(containerId);
+  if(!container)return;
+  var qs=TEST_CONFIG[disc];
+  if(!qs||!qs.length){
+    container.innerHTML='<div class="banner bw">Aucune question configuree. L\'administrateur doit saisir les questions dans Configuration.</div>';
+    container.style.display="block";
+    return;
+  }
+  container.innerHTML=qs.map(function(q,i){
+    var optsHtml=q.opts.map(function(o){
+      return '<div class="q-opt" data-q="'+q.id+'" data-a="'+o.a+'" onclick="pick(this)"><div class="q-radio"></div>'+o.l+'</div>';
+    }).join('');
+    return '<div class="q-block"><div class="q-text">'+(i+1)+'. '+q.q+'</div><div class="q-opts">'+optsHtml+'</div></div>';
+  }).join('');
+  container.style.display="block";
+  // Afficher aussi les boutons d'action
+  var actionsId=containerId.replace('-questions','')+'-actions';
+  // Cas LV2 : test-lv2-de-actions etc.
+  var altId="test-"+disc.replace('lv2_','lv2-').replace('_','-')+"-actions";
+  var actions=document.getElementById(actionsId)||document.getElementById(altId);
+  if(actions)actions.style.display="block";
+}
+
+// Recharger les tests depuis config (après modification par admin/enseignant)
+function reloadAllTests(){
+  rebuildFromConfig();
+  // Vider les conteneurs pour forcer le re-rendu au prochain affichage
+  ['maths-questions','spanish-questions','lv2-de-questions','lv2-zh-questions','lv2-es-questions'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){el.innerHTML='';el.style.display='none';}
+  });
+  // Réinitialiser les réponses et états
+  ST.answers={};ST.testsDone={};
+}
+
+function gradeQs(qids){var score=0;qids.forEach(function(q){var ans=ST.answers[q];if(!ans)return;document.querySelectorAll("[data-q='"+q+"']").forEach(function(el){var isC=el.getAttribute("data-a")===CORRECT[q];var isA=el.getAttribute("data-a")===ans;el.classList.remove("chosen");if(isC&&isA){el.classList.add("correct");score++;}else if(!isC&&isA)el.classList.add("wrong");else if(isC&&!isA)el.classList.add("missed");});});return score;}
+function showScore(scoreElId,score,tot,extra){var pct=Math.round(100*score/tot);var cls=pct>=70?"good":pct>=45?"mid":"low";var msgs={good:"Bon niveau",mid:"Niveau intermediaire",low:"Niveau faible"};var el=document.getElementById(scoreElId);if(!el)return;el.className="score-box "+cls;el.textContent="Score : "+score+"/"+tot+" ("+pct+"%) \u2014 "+msgs[cls]+(extra?" "+extra:"");el.style.display="block";}
+function submitTest(type){var qids=TEST_Q[type];if(!qids)return;var score=gradeQs(qids);showScore("score-"+type,score,qids.length,"");ST.testsDone[type]=true;ST.answers["score_"+type]=score+"/"+qids.length;document.getElementById("ok-"+type).style.display="inline";showPrintBtn(type);}
+function submitLV2Test(lang){var qids=TEST_Q[lang];if(!qids)return;var score=gradeQs(qids);showScore("score-lv2-"+lang,score,qids.length,"(indicatif)");ST.testsDone.lv2=true;ST.answers.score_lv2=score+"/"+qids.length;ST.answers.lang_lv2=lang;document.getElementById("ok-lv2-"+lang).style.display="inline";showPrintBtn("lv2-"+lang);}
+// ── ENSEIGNANT ────────────────────────────────────────────────────
+function checkEns(){if((document.getElementById("ens-pwd")||{}).value==="enseignant2026!"){document.getElementById("ens-err").style.display="none";updateEnsPageFromConfig();goTo("enseignant");}else{document.getElementById("ens-err").style.display="flex";}}
+function ensTab(name){["maths","spanish","lv2"].forEach(function(t){document.getElementById("epanel-"+t).style.display=t===name?"block":"none";document.getElementById("etab-"+t).classList.toggle("active",t===name);});renderEns(name);}
+function checkAdmin(){if(document.getElementById("admin-pwd").value==="options2026!"){document.getElementById("admin-err").style.display="none";var saved=localStorage.getItem("gform_url");if(saved&&document.getElementById("adm-gform-url"))document.getElementById("adm-gform-url").value=saved;if(!ST.combis.length)initDefaultCombis();renderCombisUI();renderRedoublants();goTo("admin");}else{document.getElementById("admin-err").style.display="flex";}}
+function adminTab(name){var pageAdmin=document.getElementById("page-admin");if(pageAdmin&&pageAdmin.style.display==="none")pageAdmin.style.display="block";["config","groupes","import","affect","resultats"].forEach(function(t){var p=document.getElementById("apanel-"+t);var b=document.getElementById("atab-"+t);if(p)p.style.display=t===name?"block":"none";if(b)b.classList.toggle("active",t===name);});if(name==="affect")refreshAffectTab();}
+function updateSportLabels(){
+  for(var i=1;i<=5;i++){
+    var el=document.getElementById("adm-snom"+i);
+    if(!el)continue;
+    var nom=el.value.trim()||("Sport "+i);
+    SPORT_NAMES["sport"+i]=nom;
+    OPT_FULL["sport"+i]=nom;
+  }
+  // Mettre à jour les labels dans OPT_LIST
+  OPT_LIST.forEach(function(o){
+    if(o.v&&o.v.startsWith("sport"))o._label=SPORT_NAMES[o.v];
+  });
+}
+function renderSportCatalogue(){
+  var container=document.getElementById("sport-cards-container");
+  if(!container)return;
+  var placeholder=document.getElementById("sport-not-configured");
+  // Vérifier si au moins un sport est configuré (nom saisi ou places > 0)
+  var configured=SPORT_SUBS.some(function(s,i){
+    var nomEl=document.getElementById("adm-snom"+(i+1));
+    var plEl=document.getElementById("adm-s"+(i+1));
+    return (nomEl&&nomEl.value.trim())||(plEl&&+plEl.value>0);
+  });
+  if(placeholder)placeholder.style.display=configured?"none":"flex";
+  // Supprimer les cartes existantes
+  container.querySelectorAll(".opt-card-sport").forEach(function(c){c.remove();});
+  // Créer une carte par discipline configurée
+  SPORT_SUBS.forEach(function(key,i){
+    var idx=i+1;
+    var nomEl=document.getElementById("adm-snom"+idx);
+    var plEl=document.getElementById("adm-s"+idx);
+    var nom=(nomEl&&nomEl.value.trim())||null;
+    var places=plEl?+plEl.value:0;
+    // Masquer si aucun nom ET 0 places
+    if(!nom&&places===0)return;
+    var color=SPORT_COLORS[i];
+    var SPORT_BG=["#fdf2f8","#fff1f2","#fff7ed","#f5f3ff","#ecfeff"];
+    var div=document.createElement("div");
+    div.className="opt-card opt-card-sport";
+    div.style.background=SPORT_BG[i]||"#f8fafc";
+    div.style.borderColor="transparent";
+    var pct=places>0?Math.round(100*PLACES[key].pris/places):0;
+    var jaugeHtml=places===0
+      ? '<div class="jauge-inf">Places a confirmer</div>'
+      : '<div class="jauge-wrap"><div class="jauge-label"><span>Places restantes</span><strong id="jt-'+key+'">'+(places-PLACES[key].pris)+' / '+places+'</strong></div><div class="jauge-bg"><div class="jauge-bar jg-low" id="jb-'+key+'" style="width:'+pct+'%"></div></div></div>';
+    div.innerHTML='<div class="opt-card-inner"><div class="opt-stripe" style="background:'+color+'"></div><div class="opt-body"><div class="opt-name">'+(nom||"Sport "+idx)+'</div><div class="opt-badges"><span class="badge badge-sem">Semestre</span>'+(places===0?'<span class="badge badge-tbd">Places a confirmer</span>':'')+'</div><div class="opt-desc">Activite sportive — semestre. Creneaux communiques a la rentree.</div><div class="opt-footer">'+jaugeHtml+'</div></div></div>';
+    container.appendChild(div);
+  });
+}
+function saveConfig(){
+  updateSportLabels();
+  updateJaugesFromAdmin();
+  renderSportCatalogue();
+  // Mettre à jour OPT_FULL pour les sports dans les selects de groupes
+  SPORT_SUBS.forEach(function(s,i){
+    OPT_FULL[s]=SPORT_NAMES[s];
+  });
+  // Re-rendre l'UI des groupes pour que les labels des selects se mettent à jour
+  if(ST.combis.length)renderCombisUI();
+  // Mettre à jour le bloc infos pratiques sur la page Tests
+  updateTestsInfo();
+  alert("Configuration enregistree. Catalogue, jauges et informations pratiques mis a jour.");
+}
+function updateTestsInfo(){
+  function sf(id,valId,inputId){
+    var el=document.getElementById(inputId);
+    var val=el?el.value.trim():"";
+    var wrap=document.getElementById(id);
+    var span=document.getElementById(valId);
+    if(wrap)wrap.style.display=val?"block":"none";
+    if(span)span.textContent=val;
+  }
+  function showBloc(blocId,fields){
+    var hasAny=fields.some(function(id){var el=document.getElementById(id);return el&&el.value.trim();});
+    var bloc=document.getElementById(blocId);
+    if(bloc)bloc.style.display=hasAny?"block":"none";
+  }
+  // Maths
+  sf("ti-ens-maths","ti-ens-maths-val","adm-ens-maths");
+  sf("ti-date-maths","ti-date-maths-val","adm-date-maths");
+  sf("ti-salle-maths","ti-salle-maths-val","adm-salle-maths");
+  showBloc("ti-bloc-maths",["adm-ens-maths","adm-date-maths","adm-salle-maths"]);
+  // Spanish
+  sf("ti-ens-spanish","ti-ens-spanish-val","adm-ens-spanish");
+  sf("ti-date-spanish","ti-date-spanish-val","adm-date-spanish");
+  sf("ti-salle-spanish","ti-salle-spanish-val","adm-salle-spanish");
+  showBloc("ti-bloc-spanish",["adm-ens-spanish","adm-date-spanish","adm-salle-spanish"]);
+  // LV2
+  sf("ti-ens-lv2","ti-ens-lv2-val","adm-ens-lv2");
+  sf("ti-date-lv2","ti-date-lv2-val","adm-date-lv2");
+  sf("ti-salle-lv2","ti-salle-lv2-val","adm-salle-lv2");
+  showBloc("ti-bloc-lv2",["adm-ens-lv2","adm-date-lv2","adm-salle-lv2"]);
+  // Bloc global
+  var anyDisc=["adm-ens-maths","adm-date-maths","adm-salle-maths",
+               "adm-ens-spanish","adm-date-spanish","adm-salle-spanish",
+               "adm-ens-lv2","adm-date-lv2","adm-salle-lv2"].some(function(id){
+    var el=document.getElementById(id);return el&&el.value.trim();
+  });
+  var bloc=document.getElementById("tests-info-bloc");
+  if(bloc)bloc.style.display=anyDisc?"block":"none";
+}
+// ── COMBINAISONS ──────────────────────────────────────────────────
+function optSelectHtml(val){var o='<option value="">-- Aucune --</option>';OPT_LIST.forEach(function(x){o+='<option value="'+x.v+'"'+(x.v===val?' selected':'')+'> '+x.label+'</option>';});return o;}
+function initDefaultCombis(){ST.combis=[{id:1,nom:"Groupe 1",places:25,opt1:"eco",opt2:"",opt3:"",opt4:""},{id:2,nom:"Groupe 2",places:25,opt1:"maths",opt2:"",opt3:"",opt4:""},{id:3,nom:"Groupe 3",places:25,opt1:"business_spanish",opt2:"",opt3:"",opt4:""}];}
+function renderCombisUI(){
+  var c=document.getElementById("combis-list");c.innerHTML="";
+  ST.combis.forEach(function(g,i){
+    var d=document.createElement("div");d.className="combi-card";
+    d.innerHTML='<div class="combi-header"><div class="combi-num">'+(i+1)+'</div>'+
+      '<input class="combi-name-input" placeholder="Nom du groupe" value="'+g.nom+'" data-ci="'+i+'" data-f="nom">'+
+      '<input class="combi-places-input" type="number" min="1" value="'+g.places+'" placeholder="?" data-ci="'+i+'" data-f="places">'+
+      '<span class="combi-places-label">places</span>'+
+      '<button class="btn-del-combi" onclick="delCombi('+i+')">&#10005;</button></div>'+
+      '<div style="font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px">Options incluses dans ce groupe (1 a 4 maximum)</div>'+
+      '<div class="combi-opts-row">'+
+        '<select class="combi-opt-sel'+(g.opt1?' has-val':'')+'" data-ci="'+i+'" data-f="opt1">'+optSelectHtml(g.opt1)+'</select>'+
+        '<select class="combi-opt-sel'+(g.opt2?' has-val':'')+'" data-ci="'+i+'" data-f="opt2">'+optSelectHtml(g.opt2)+'</select>'+
+        '<select class="combi-opt-sel'+(g.opt3?' has-val':'')+'" data-ci="'+i+'" data-f="opt3">'+optSelectHtml(g.opt3)+'</select>'+
+        '<select class="combi-opt-sel'+(g.opt4?' has-val':'')+'" data-ci="'+i+'" data-f="opt4">'+optSelectHtml(g.opt4)+'</select>'+
+      '</div>'+
+      '<div class="combi-tags">'+[g.opt1,g.opt2,g.opt3,g.opt4].filter(Boolean).map(function(o){return '<span class="combi-tag" style="background:'+(OPT_CLR[o]||'#f1f5f9')+'">'+OPT_FULL[o]+'</span>';}).join('')+'</div>';
+    // live update
+    d.querySelectorAll("[data-ci]").forEach(function(el){
+      el.addEventListener("change",function(){var ci=+el.getAttribute("data-ci");var f=el.getAttribute("data-f");ST.combis[ci][f]=f==="places"?+el.value:el.value;if(f.startsWith("opt"))el.className="combi-opt-sel"+(el.value?" has-val":"");renderTagsForCard(d,ST.combis[ci]);});
+    });
+    c.appendChild(d);
+  });
+}
+function renderTagsForCard(card,g){var tc=card.querySelector(".combi-tags");if(!tc)return;tc.innerHTML=[g.opt1,g.opt2,g.opt3,g.opt4].filter(Boolean).map(function(o){return '<span class="combi-tag" style="background:'+(OPT_CLR[o]||'#f1f5f9')+'">'+OPT_FULL[o]+'</span>';}).join('');}
+function addCombi(){ST.combis.push({id:Date.now(),nom:"Groupe "+(ST.combis.length+1),places:25,opt1:"",opt2:"",opt3:""});renderCombisUI();}
+function delCombi(i){if(ST.combis.length<=1){alert("Il faut au moins un groupe.");return;}ST.combis.splice(i,1);renderCombisUI();}
+function saveGroupes(){var ok=document.getElementById("groupes-save-ok");ok.style.display="inline";setTimeout(function(){ok.style.display="none";},2500);}
+function loadGroupesDemo(){
+  ST.combis=[
+    {id:1, nom:"G01",places:25,opt1:"eco",           opt2:"lv2_es_inter",  opt3:"",              opt4:""},
+    {id:2, nom:"G02",places:25,opt1:"eco",           opt2:"lv2_de_debut",  opt3:"",              opt4:""},
+    {id:3, nom:"G03",places:25,opt1:"eco",           opt2:"lv2_chinois",        opt3:"",              opt4:""},
+    {id:4, nom:"G04",places:20,opt1:"maths",         opt2:"lv2_de_debut",  opt3:"",              opt4:""},
+    {id:5, nom:"G05",places:20,opt1:"maths",         opt2:"lv2_es_debut",  opt3:"",              opt4:""},
+    {id:6, nom:"G06",places:20,opt1:"business_spanish",opt2:"lv2_es_avance",opt3:"",             opt4:""},
+    {id:7, nom:"G07",places:20,opt1:"business_spanish",opt2:"lv2_es_inter", opt3:"",             opt4:""},
+    {id:8, nom:"G08",places:20,opt1:"voltaire",      opt2:"lv2_de_inter",  opt3:"",              opt4:""},
+    {id:9, nom:"G09",places:20,opt1:"sport1",        opt2:"eco",           opt3:"lv2_chinois",        opt4:"voltaire"},
+    {id:10,nom:"G10",places:20,opt1:"sport2",        opt2:"maths",         opt3:"",              opt4:""},
+    {id:11,nom:"G11",places:20,opt1:"sport3",        opt2:"voltaire",      opt3:"lv2_de_debut2", opt4:""}
+  ];
+  renderCombisUI();
+}
+function showAffect(){adminTab("affect");setTimeout(function(){refreshAffectTab();},80);}
+function refreshAffectTab(){
+  var hasData=!!ST.rawData;
+  var hasCombis=ST.combis.length>0&&ST.combis.some(function(c){return c.opt1;});
+  
+  var checks=document.getElementById("affect-checks");checks.innerHTML="";
+  if(!hasData){var d=document.createElement("div");d.className="banner bw";d.style.marginBottom="10px";d.innerHTML='<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92z" clip-rule="evenodd"/></svg><div>Aucune donnee chargee &mdash; <button class="btn btn-secondary btn-sm" onclick="adminTab(\'import\')">Importer un Excel</button></div>';checks.appendChild(d);}
+  if(!hasCombis){var d2=document.createElement("div");d2.className="banner bw";d2.style.marginBottom="10px";d2.innerHTML='<svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92z" clip-rule="evenodd"/></svg><div>Aucun groupe configure &mdash; <button class="btn btn-secondary btn-sm" onclick="adminTab(\'groupes\')">Configurer les groupes</button></div>';checks.appendChild(d2);}
+  document.getElementById("affect-ready").style.display=(hasData&&hasCombis)?"block":"none";
+  if(hasData&&hasCombis){
+    document.getElementById("affect-ok").innerHTML=ST.rawData.length+" etudiants charges &middot; "+ST.combis.length+" groupes configures.";
+    var recap=document.getElementById("affect-groupes-recap");
+    recap.innerHTML=ST.combis.map(function(c){var opts=[c.opt1,c.opt2,c.opt3,c.opt4].filter(Boolean);return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:3px 9px"><strong>'+c.nom+'</strong>&nbsp;('+c.places+'pl)&nbsp;'+opts.map(function(o){return '<span style="font-size:10px;background:'+(OPT_CLR[o]||'#e2e8f0')+';border-radius:4px;padding:1px 5px">'+OPT_FULL[o]+'</span>';}).join(' ')+'</span>';}).join("");
+  }
+}
+// ── IMPORT ────────────────────────────────────────────────────────
+function dragOver(e){e.preventDefault();document.getElementById("upload-zone").classList.add("dragover");}
+function dragLeave(){document.getElementById("upload-zone").classList.remove("dragover");}
+
+function loadXlsx(inp){if(inp.files[0])parseXlsxFile(inp.files[0]);}
+function dropFile(e){e.preventDefault();dragLeave();if(e.dataTransfer.files[0])parseXlsxFile(e.dataTransfer.files[0]);}
+function parseXlsxFile(f){
+  if(typeof XLSX==="undefined"){alert("SheetJS non charge.");return;}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var wb=XLSX.read(e.target.result,{type:"array",raw:false,cellDates:true});
+      // Prendre le premier onglet
+      var wsName=wb.SheetNames[0];
+      var ws=wb.Sheets[wsName];
+      // Convertir en tableau de tableaux pour récupérer la ligne d'en-tête brute
+      var aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:false,defval:""});
+      if(!aoa.length){alert("Fichier vide ou non reconnu.");return;}
+      var rawHdrs=aoa[0];
+      var hdrs=rawHdrs.map(normalizeHdr);
+      var data=aoa.slice(1).filter(function(row){return row.some(function(c){return c&&String(c).trim();});}).map(function(row){
+        var o={};
+        hdrs.forEach(function(h,i){o[h]=row[i]!==undefined?String(row[i]).trim():"";});
+        ["voeu1","voeu2","voeu3"].forEach(function(k){if(o[k])o[k]=normalizeOpt(o[k]);});
+        if(!o.horodatage_soumission){
+          var b=new Date("2026-09-09T08:00:00");
+          b.setSeconds(b.getSeconds()+Math.random()*172800);
+          o.horodatage_soumission=b.toISOString().replace("T"," ").slice(0,19);
+        }
+        return o;
+      }).filter(function(r){return r.num_etudiant||r.nom;});
+      if(!data.length){alert("Aucune donnee valide trouvee. Verifiez que le fichier est bien l'export Google Sheets.");return;}
+      ST.rawData=data;showPreview(data,hdrs);refreshAffectTab();
+    }catch(err){alert("Erreur de lecture : "+err.message);}
+  };
+  reader.readAsArrayBuffer(f);
+}
+// Mapping en-têtes Google Form → noms internes
+var HDR_MAP={
+  "horodateur":"horodatage_soumission","horodatage":"horodatage_soumission","timestamp":"horodatage_soumission",
+  "adresse_e-mail":"email_google","adresse_email":"email_google","email":"email_google",
+  "votre_numero_etudiant":"num_etudiant","numero_etudiant":"num_etudiant","n_etudiant":"num_etudiant","matricule":"num_etudiant",
+  "question_2_nom":"nom","nom_de_famille":"nom","nom":"nom",
+  "question_3_prenom":"prenom","prenom":"prenom",
+  "voeu_n1_option_prioritaire":"voeu1","voeu_n_1_option_prioritaire":"voeu1","voeu_1":"voeu1","voeu1":"voeu1","premier_voeu":"voeu1",
+  "voeu_n_2":"voeu2","voeu_2":"voeu2","voeu2":"voeu2","deuxieme_voeu":"voeu2",
+  "voeu_n_3":"voeu3","voeu_3":"voeu3","voeu3":"voeu3","troisieme_voeu":"voeu3",
+  // Colonnes ajoutées par l'enseignant (xlsx retourné)
+  "validation_maths":"validation_maths","validation_mathematiques":"validation_maths",
+  "validation_spanish":"validation_spanish","validation_espagnol":"validation_spanish",
+  "niveau_lv2":"niveau_lv2_ens","niveau_definitif":"niveau_lv2_ens","niveau_lv2_ens":"niveau_lv2_ens",
+  // scores non transmis à l'admin (test papier remis à l'enseignant)
+  // niveaux declares : connus uniquement de l'etudiant et de l'enseignant
+};
+function normalizeHdr(h){
+  var clean=h.trim().toLowerCase()
+    .replace(/œ/g,"oe").replace(/æ/g,"ae")
+    .replace(/[àâä]/g,"a").replace(/[éèêë]/g,"e").replace(/[îï]/g,"i")
+    .replace(/[ôö]/g,"o").replace(/[ûüù]/g,"u").replace(/ç/g,"c")
+    .replace(/[^a-z0-9]/g,"_").replace(/_+/g,"_").replace(/^_|_$/g,"");
+  return HDR_MAP[clean]||clean;
+}
+function parseTxt(txt){
+  var raw=txt.trim();var sep=raw.indexOf(";")>=0?";":raw.indexOf("\t")>=0?"\t":",";
+  var lines=raw.split(/\r?\n/);
+  var rawHdrs=lines[0].split(sep).map(function(h){return h.trim().replace(/^"|"$/g,"");});
+  var hdrs=rawHdrs.map(normalizeHdr);
+  var data=lines.slice(1).filter(function(l){return l.trim();}).map(function(l){
+    var vals=l.split(sep).map(function(v){return v.trim().replace(/^"|"$/g,"");});
+    var o={};hdrs.forEach(function(h,i){o[h]=vals[i]||"";});
+    // Normaliser les libellés des vœux (options complètes du form → codes)
+    ["voeu1","voeu2","voeu3"].forEach(function(k){if(o[k])o[k]=normalizeOpt(o[k]);});
+    if(!o.horodatage_soumission){
+      var b=new Date("2026-09-09T08:00:00");
+      b.setSeconds(b.getSeconds()+Math.random()*172800);
+      o.horodatage_soumission=b.toISOString().replace("T"," ").slice(0,19);
+    }
+    return o;
+  }).filter(function(r){return r.num_etudiant||r.nom;});
+  if(!data.length){alert("Aucune donnee valide. Verifiez que le fichier est bien un export Excel Google Sheets (.xlsx).");return;}
+  ST.rawData=data;showPreview(data,hdrs);refreshAffectTab();
+}
+// Import XLSX enseignant (fusion avec rawData existant)
+function loadEnseignantXlsx(file){
+  if(typeof XLSX==="undefined"){alert("SheetJS non charge.");return;}
+  if(!ST.rawData||!ST.rawData.length){alert("Importez d'abord le fichier Google Form.");return;}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var wb=XLSX.read(e.target.result,{type:"array",raw:false,defval:""});
+      var merged=0;
+      wb.SheetNames.forEach(function(sheetName){
+        var ws=wb.Sheets[sheetName];
+        // Lire en aoa pour trouver la vraie ligne d'en-tête
+        // (le fichier a des lignes d'instructions avant les en-têtes)
+        var aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:false,defval:""});
+        if(!aoa.length)return;
+        // Trouver la ligne contenant "N° Etudiant" ou "num_etudiant"
+        var hdrRowIdx=-1;
+        for(var ri=0;ri<Math.min(aoa.length,8);ri++){
+          var row=aoa[ri];
+          var hasNum=row.some(function(c){
+            return c&&normalizeHdr(String(c))==="num_etudiant";
+          });
+          if(hasNum){hdrRowIdx=ri;break;}
+        }
+        if(hdrRowIdx<0)return; // Pas d'en-tête reconnu dans cet onglet
+        var hdrs=aoa[hdrRowIdx].map(function(c){return c?normalizeHdr(String(c)):"";});
+        // Construire les objets depuis les lignes de données
+        for(var di=hdrRowIdx+1;di<aoa.length;di++){
+          var dataRow=aoa[di];
+          if(!dataRow.some(function(c){return c&&String(c).trim();}))continue;
+          var row={};
+          hdrs.forEach(function(h,ci){row[h]=dataRow[ci]?String(dataRow[ci]).trim():"";});
+          var num=(row["num_etudiant"]||"").trim();
+          if(!num)continue;
+          var etu=ST.rawData.find(function(r){return(r.num_etudiant||"").trim()===num;});
+          if(!etu)continue;
+          ["validation_maths","validation_spanish","niveau_lv2_ens"].forEach(function(col){
+            if(row[col]){etu[col]=row[col].trim().toLowerCase();merged++;}
+          });
+        }
+      });
+      var okEl=document.getElementById("ens-import-ok");
+      if(merged>0){
+        if(okEl){
+          okEl.querySelector("span").textContent="Fichier fusionné ("+merged+" valeur(s) intégrée(s)). Données prêtes pour l'affectation.";
+          okEl.style.display="flex";
+          setTimeout(function(){okEl.style.display="none";},6000);
+        }
+      } else {
+        alert("Aucune valeur intégrée. Vérifiez :\n- La colonne N° Etudiant est présente\n- Les N° correspondent au fichier Google Form importé\n- Les colonnes VALIDATION_MATHS, VALIDATION_SPANISH ou NIVEAU_LV2 sont remplies");
+      }
+    }catch(err){alert("Erreur lecture : "+err.message);}
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+
+function showPreview(data,hdrs){
+  // S'assurer qu'on est sur l'onglet Import
+  adminTab("import");
+  var cols=hdrs.slice(0,7);
+  var okEl=document.getElementById("import-ok");
+  if(okEl)okEl.textContent=data.length+" etudiants charges ("+hdrs.length+" colonnes).";
+  var t=document.getElementById("preview-tbl");
+  if(t){
+    var thead=t.querySelector("thead tr");
+    var tbody=t.querySelector("tbody");
+    if(thead)thead.innerHTML=cols.map(function(h){return "<th>"+h+"</th>";}).join("");
+    if(tbody)tbody.innerHTML=data.slice(0,8).map(function(r){
+      return "<tr>"+cols.map(function(c){return "<td>"+(r[c]||"")+"</td>";}).join("")+"</tr>";
+    }).join("");
+  }
+  var prev=document.getElementById("import-preview");
+  if(prev)prev.style.display="block";
+}
+function loadDemo(){
+  var nms=["Martin","Bernard","Thomas","Petit","Richard","Durand","Dubois","Moreau","Laurent","Simon","Blanc","Leroy"];
+  var pns=["Emma","Lucas","Lea","Hugo","Chloe","Tom","Ines","Louis","Jade","Nathan","Alice","Paul"];
+  var opts=["voltaire","eco","maths","sport1","sport2","sport3","business_spanish","lv2_allemand","lv2_espagnol","lv2_chinois"];
+  var probs=[0.08,0.18,0.08,0.06,0.05,0.04,0.12,0.13,0.13,0.13];
+  var data=[];
+  for(var i=0;i<180;i++){
+    var rnd=Math.random(),cum=0,v1=opts[0];
+    for(var k=0;k<opts.length;k++){cum+=probs[k];if(rnd<cum){v1=opts[k];break;}}
+    var v2=Math.random()>0.35?opts[Math.floor(Math.random()*opts.length)]:"";
+    var v3=Math.random()>0.55?opts[Math.floor(Math.random()*opts.length)]:"";
+    var b=new Date("2026-09-09T08:00:00");b.setSeconds(b.getSeconds()+Math.floor(Math.random()*172800)+i*10);
+    // Déduire la langue depuis le code Form LV2
+    var lv2FormCodes={lv2_allemand:["lv2_de_debut","lv2_de_debut2","lv2_de_inter"],
+      lv2_chinois:["lv2_chinois"],lv2_espagnol:["lv2_es_debut","lv2_es_inter","lv2_es_avance"]};
+    var lv2Key=[v1,v2].find(function(v){return lv2FormCodes[v];});
+    var niv_lv2=lv2Key?(lv2FormCodes[lv2Key][i%lv2FormCodes[lv2Key].length]):"";
+    var isDM=(v1==="maths"&&i%5===0);var isDS=(v1==="business_spanish"&&i%4===0);
+    data.push({
+      num_etudiant:"ETU"+String(i+1).padStart(4,"0"),nom:nms[i%nms.length],prenom:pns[i%pns.length],
+      email:"etudiant"+(i+1)+"@univ.fr",
+      horodatage_soumission:b.toISOString().replace("T"," ").slice(0,19),
+      voeu1:v1,voeu2:v2,voeu3:v3,
+      validation_maths:v1==="maths"&&!isDM?(Math.random()>0.1?"oui":"non"):"",
+      validation_spanish:v1==="business_spanish"&&!isDS?(Math.random()>0.15?"oui":"non"):"",
+      niveau_lv2_ens:niv_lv2
+    });
+  }
+  data.sort(function(a,b){return a.horodatage_soumission.localeCompare(b.horodatage_soumission);});
+  ST.rawData=data;
+  showPreview(data,["num_etudiant","nom","prenom","email","horodatage_soumission","voeu1","voeu2"]);
+  refreshAffectTab();
+}
+// ── ALGO ──────────────────────────────────────────────────────────
+// ─── Normalisation Google Form → codes internes ────────────────────
+var NORM_MAP={
+  "certification voltaire":"voltaire","projet voltaire":"voltaire","voltaire":"voltaire",
+  "economie contemporaine":"eco","eco":"eco",
+  "remise a niveau mathematiques":"maths","remise a niveau maths":"maths","mathematiques":"maths","maths":"maths",
+  "sport 1":"sport1","sport1":"sport1","sport 2":"sport2","sport2":"sport2",
+  "sport 3":"sport3","sport3":"sport3","sport 4":"sport4","sport4":"sport4",
+  "sport 5":"sport5","sport5":"sport5",
+  "business spanish":"business_spanish","business_spanish":"business_spanish",
+  // LV2 : codes Form (langue uniquement, pas le niveau)
+  "lv2 allemand":"lv2_allemand","lv2_allemand":"lv2_allemand","allemand":"lv2_allemand",
+  "lv2 espagnol":"lv2_espagnol","lv2_espagnol":"lv2_espagnol","espagnol":"lv2_espagnol",
+  "lv2 chinois":"lv2_chinois","lv2_chinois":"lv2_chinois","chinois":"lv2_chinois",
+  // Codes niveau LV2 (retour enseignant) — aussi acceptés directement si présents
+  "lv2 de debut":"lv2_de_debut","lv2_de_debut":"lv2_de_debut",
+  "lv2 de debut2":"lv2_de_debut2","lv2_de_debut2":"lv2_de_debut2",
+  "lv2 de inter":"lv2_de_inter","lv2_de_inter":"lv2_de_inter",
+  "lv2 es debut":"lv2_es_debut","lv2_es_debut":"lv2_es_debut",
+  "lv2 es inter":"lv2_es_inter","lv2_es_inter":"lv2_es_inter",
+  "lv2 es avance":"lv2_es_avance","lv2_es_avance":"lv2_es_avance"
+};
+function normalizeOpt(raw){
+  if(!raw)return"";
+  var r=raw.trim().toLowerCase()
+    .replace(/œ/g,"oe").replace(/æ/g,"ae")
+    .replace(/[àâä]/g,"a").replace(/[éèêë]/g,"e").replace(/[îï]/g,"i")
+    .replace(/[ôö]/g,"o").replace(/[ûüù]/g,"u").replace(/ç/g,"c")
+    .replace(/\s*\(.*?\)/g,"").replace(/[^a-z0-9\s_-]/g,"").replace(/\s+/g," ").trim();
+  var best="",bestLen=0;
+  Object.keys(NORM_MAP).forEach(function(k){
+    if(r.indexOf(k)>=0&&k.length>bestLen){best=NORM_MAP[k];bestLen=k.length;}
+  });
+  return best||r;
+}
+function resolveOpt(raw,niv_ens){
+  var opt=normalizeOpt(raw);
+  // Si code Form LV2 (langue) → niveau enseignant obligatoire pour l'affectation finale
+  if(LV2_FORM.indexOf(opt)>=0){
+    if(niv_ens&&LV2_NIVEAUX.indexOf(niv_ens)>=0)return niv_ens;
+    return opt; // retourne le code Form si pas encore de niveau
+  }
+  // Si déjà un code niveau LV2 (rétrocompatibilité)
+  if(LV2_NIVEAUX.indexOf(opt)>=0&&niv_ens&&LV2_NIVEAUX.indexOf(niv_ens)>=0)return niv_ens;
+  return opt;
+}
+function canJoinGroup(optAff,combi){return[combi.opt1,combi.opt2,combi.opt3,combi.opt4].filter(Boolean).indexOf(optAff)>=0;}
+// ── LIBELLÉS DES MOTIFS DE NON-AFFECTATION ─────────────────────────
+var MOTIF_LABELS={
+  "niveau_lv2_non_affecte_par_enseignant": "Niveau LV2 non encore affecté par l\'enseignant",
+  "maths_refuse_par_enseignant":           "Refusé par l\'enseignant (niveau Maths insuffisant)",
+  "validation_maths_manquante":            "Validation enseignant manquante (Maths)",
+  "spanish_refuse_par_enseignant":         "Refusé par l\'enseignant (niveau Business Spanish insuffisant)",
+  "validation_spanish_manquante":          "Validation enseignant manquante (Business Spanish)",
+  "aucun_voeu_valide":                     "Aucun voeu valide ou compatible",
+  "affectation_par_defaut_eco":             "⚠ Affecté par défaut en Économie contemporaine (aucun voeu satisfaisable)",
+};
+function motifLabel(code){
+  if(!code)return"";
+  if(MOTIF_LABELS[code])return MOTIF_LABELS[code];
+  if(code.indexOf("aucun_groupe_dispo_")===0){
+    var opt=code.replace("aucun_groupe_dispo_","");
+    return"Aucun groupe disponible pour l\'option : "+(OPT_FULL[opt]||opt);
+  }
+  return code;
+}
+
+function runAffectation(){
+  if(!ST.rawData){alert("Importez d abord le Google Sheets.");return;}
+  if(!ST.combis.length){alert("Configurez les groupes.");return;}
+
+  document.getElementById("affect-prog").style.display="block";
+  document.getElementById("prog-bar").style.width="0%";
+  setTimeout(function(){
+    var cpt={};ST.combis.forEach(function(c){cpt[c.nom]=0;});
+    // Redoublants : option déjà validée, affectation directe sans vœu
+    var redoublants=ST.redoublants||[];
+    // Données étudiants triées par horodatage
+    var data=ST.rawData.slice().sort(function(a,b){
+      return(a.horodatage_soumission||"").localeCompare(b.horodatage_soumission||"");
+    });
+    var out=[];
+    // ── Passe 0 : affecter les redoublants en priorité absolue ──────
+    redoublants.forEach(function(r){
+      var opt=normalizeOpt(r.option_validee||"");
+      if(!opt)return;
+      var compat=ST.combis.filter(function(c){return canJoinGroup(opt,c)&&cpt[c.nom]<c.places;});
+      compat.sort(function(a,b){return(cpt[a.nom]/a.places)-(cpt[b.nom]/b.places);});
+      var grp=compat.length?compat[0].nom:null;
+      if(grp)cpt[grp]++;
+      out.push({
+        num_etudiant:r.num_etudiant,nom:r.nom,prenom:r.prenom,email:r.email||"",
+        horodatage_soumission:"(redoublant)",voeu1:opt,voeu2:"",voeu3:"",
+        option_affectee:opt,groupe:grp,voeu_realise:0,motif_refus:grp?null:"aucun_groupe_dispo_"+opt,
+        est_redoublant:true
+      });
+    });
+    // ── Passe 1 : étudiants normaux 1er arrivé / 1er servi ──────────
+    data.forEach(function(etu,i){
+      document.getElementById("prog-bar").style.width=Math.round((i+1)/data.length*80)+"%";
+      // Ignorer si déjà traité comme redoublant
+      if(redoublants.some(function(r){return r.num_etudiant===etu.num_etudiant;}))return;
+      var voeux=[etu.voeu1,etu.voeu2,etu.voeu3].filter(function(v){return v&&v.trim()&&v!=="-";});
+      var aff=null,grp=null,rang=null,motif=null;
+      for(var vi=0;vi<voeux.length;vi++){
+        var raw=voeux[vi];
+        var niv_ens=(etu.niveau_lv2_ens||"").trim();
+        var opt=resolveOpt(raw,niv_ens);
+        // Vérifications tests
+        // LV2 : si code Form (langue seulement), le niveau enseignant est requis
+        if(LV2_FORM.indexOf(opt)>=0){
+          if(!niv_ens){motif="niveau_lv2_non_affecte_par_enseignant";continue;}
+        }
+        if(opt==="maths"){
+          var valOk=etu.validation_maths==="oui"||etu.validation_maths==="accepte";
+          var valNon=etu.validation_maths==="non"||etu.validation_maths==="refuse";
+          if(valNon){motif="maths_refuse_par_enseignant";continue;}
+          if(!valOk){motif="validation_maths_manquante";continue;}
+        }
+        if(opt==="business_spanish"){
+          var valS=etu.validation_spanish;
+          if(valS==="non"||valS==="refuse"){motif="spanish_refuse_par_enseignant";continue;}
+          if(!valS){motif="validation_spanish_manquante";continue;}
+        }
+        // Groupe compatible le moins rempli
+        var compat=ST.combis.filter(function(c){return canJoinGroup(opt,c)&&c.places>0&&cpt[c.nom]<c.places;});
+        if(!compat.length){motif="aucun_groupe_dispo_"+opt;continue;}
+        compat.sort(function(a,b){return(cpt[a.nom]/a.places)-(cpt[b.nom]/b.places);});
+        var g=compat[0];cpt[g.nom]++;aff=opt;grp=g.nom;rang=vi+1;break;
+      }
+      // Si aucun voeu satisfait → affectation forcee en Eco par defaut
+      if(!aff){
+        var ecoCompat=ST.combis.filter(function(c){return canJoinGroup("eco",c)&&c.places>0&&cpt[c.nom]<c.places;});
+        ecoCompat.sort(function(a,b){return(cpt[a.nom]/a.places)-(cpt[b.nom]/b.places);});
+        if(ecoCompat.length){
+          var ge=ecoCompat[0];cpt[ge.nom]++;
+          aff="eco";grp=ge.nom;rang=null;
+          motif="affectation_par_defaut_eco"+(motif?"__raison__"+motif:"");
+        }
+      }
+      var rec={};Object.keys(etu).forEach(function(k){rec[k]=etu[k];});
+      rec.option_affectee=aff;rec.groupe=grp;rec.voeu_realise=rang;
+      rec.motif_refus=aff&&!motif?null:(motif||"aucun_voeu_valide");
+      rec.affectation_forcee=aff&&!rang?true:false;
+      rec.est_redoublant=false;
+      out.push(rec);
+    });
+    document.getElementById("prog-bar").style.width="100%";ST.results=out;
+
+        setTimeout(function(){
+          document.getElementById("affect-prog").style.display="none";
+          adminTab("resultats");
+          renderResults(out);
+          dbg("renderResults fin - panel display:"+document.getElementById("apanel-resultats").style.display+
+  " height:"+document.getElementById("apanel-resultats").offsetHeight+
+  " visibility:"+document.getElementById("apanel-resultats").style.visibility);
+
+        },400);
+  },50);
+}
+function renderResults(data){
+  // Rendre le panneau visible directement
+  var panel=document.getElementById("apanel-resultats");
+  dbg("panel trouve: "+(panel?"oui":"NON")+", display avant: "+(panel?panel.style.display:"?"));
+  if(panel){ 
+    panel.style.display="block";
+    panel.style.visibility="visible";
+    panel.style.opacity="1";
+    panel.style.height="auto";
+    panel.style.overflow="visible";
+    panel.style.position="relative";
+    panel.style.zIndex="999";
+  }
+  // Aussi forcer le parent
+  var adminArea=document.getElementById("admin-area")||document.getElementById("page-admin")||panel&&panel.parentNode;
+  if(adminArea&&adminArea.style){
+    adminArea.style.display="block";
+    adminArea.style.visibility="visible";
+  }
+  
+  // Stats
+  var aff=data.filter(function(r){return r.option_affectee;});
+  var forces=data.filter(function(r){return r.affectation_forcee;});
+  var total=data.length;
+  var pv1=aff.length?Math.round(100*aff.filter(function(r){return r.voeu_realise===1;}).length/aff.length):0;
+
+  var sc=document.getElementById("stat-cards");
+  if(sc) sc.innerHTML=
+    "<div class='stat-card'><div class='stat-label'>Total</div><div class='stat-value'>"+total+"</div></div>"+
+    "<div class='stat-card'><div class='stat-label'>Affectes</div><div class='stat-value' style='color:#16a34a'>"+aff.length+"</div></div>"+
+    "<div class='stat-card'><div class='stat-label'>Forces Eco</div><div class='stat-value' style='color:#f97316'>"+forces.length+"</div></div>"+
+    "<div class='stat-card'><div class='stat-label'>Voeu 1</div><div class='stat-value'>"+pv1+"%</div></div>";
+
+  // Groupes
+  var gcnt={};
+  aff.forEach(function(r){if(r.groupe)gcnt[r.groupe]=(gcnt[r.groupe]||0)+1;});
+  var tg=document.querySelector("#tbl-grps tbody");
+  if(tg) tg.innerHTML=ST.combis.map(function(c){
+    var n=gcnt[c.nom]||0;
+    var pct=c.places>0?Math.round(100*n/c.places):0;
+    var opts=[c.opt1,c.opt2,c.opt3,c.opt4].filter(Boolean).join(", ");
+    return "<tr><td><strong>"+c.nom+"</strong></td><td>"+opts+"</td><td>"+c.places+"</td><td>"+n+"</td><td>"+pct+"%</td></tr>";
+  }).join("");
+
+  // Options
+  var oc={};
+  aff.forEach(function(r){if(r.option_affectee)oc[r.option_affectee]=(oc[r.option_affectee]||0)+1;});
+  var to=document.querySelector("#tbl-opts tbody");
+  if(to) to.innerHTML=Object.keys(oc).sort(function(a,b){return oc[b]-oc[a];}).map(function(k){
+    return "<tr><td>"+(OPT_FULL[k]||k)+"</td><td>"+oc[k]+"</td></tr>";
+  }).join("");
+
+  // Forces / non affectes
+  var tn=document.querySelector("#tbl-na tbody");
+  if(tn) tn.innerHTML=forces.length===0
+    ?"<tr><td colspan='6' style='color:#94a3b8;padding:12px'>Aucun etudiant force en Eco.</td></tr>"
+    :forces.map(function(r){
+      return "<tr style='background:#fff7ed'><td>"+r.num_etudiant+"</td>"+
+        "<td>"+(r.nom||"")+" "+(r.prenom||"")+"</td>"+
+        "<td>"+(OPT_FULL[r.voeu1]||r.voeu1||"-")+"</td>"+
+        "<td>"+(OPT_FULL[r.voeu2]||r.voeu2||"-")+"</td>"+
+        "<td>"+(OPT_FULL[r.voeu3]||r.voeu3||"-")+"</td>"+
+        "<td style='font-size:12px;color:#c2410c'>"+(r.motif_refus||"").replace("affectation_par_defaut_eco__raison__","")+"</td></tr>";
+    }).join("");
+}
+
+// ── EXPORTS ───────────────────────────────────────────────────────
+function exportCSV(type){
+  if(!ST.results)return;
+  if(typeof XLSX==="undefined"){alert("SheetJS non charge.");return;}
+  var wb=XLSX.utils.book_new();
+  if(type==="aff"){
+    var aff=ST.results.filter(function(r){return r.option_affectee;});
+    var cols=["num_etudiant","nom","prenom","email","option_affectee","groupe","voeu_realise","voeu1","voeu2","voeu3","horodatage_soumission"];
+    var hdrs=["N° Etudiant","Nom","Prénom","Email","Option affectée","Groupe","Vœu réalisé","Vœu 1","Vœu 2","Vœu 3","Horodatage Form"];
+    var rows=[hdrs].concat(aff.map(function(r){return cols.map(function(c){return r[c]||"";}); }));
+    var ws=XLSX.utils.aoa_to_sheet(rows);
+    ws["!cols"]=[{wch:13},{wch:15},{wch:13},{wch:28},{wch:22},{wch:8},{wch:10},{wch:16},{wch:16},{wch:16},{wch:18}];
+    XLSX.utils.book_append_sheet(wb,ws,"Affectations");
+    XLSX.writeFile(wb,"affectation_options_"+new Date().toISOString().slice(0,10)+".xlsx");
+  } else {
+    var na=ST.results.filter(function(r){return !r.option_affectee;});
+    var cols2=["num_etudiant","nom","prenom","email","voeu1","voeu2","voeu3","motif_refus"];
+    var hdrs2=["N° Etudiant","Nom","Prénom","Email","Vœu 1","Vœu 2","Vœu 3","Motif du refus"];
+    var rows2=[hdrs2].concat(na.map(function(r){return cols2.map(function(c){return c==="motif_refus"?motifLabel(r[c]):(OPT_FULL[r[c]]||r[c]||"");}); }));
+    var ws2=XLSX.utils.aoa_to_sheet(rows2);
+    ws2["!cols"]=[{wch:13},{wch:15},{wch:13},{wch:28},{wch:16},{wch:16},{wch:16},{wch:30}];
+    XLSX.utils.book_append_sheet(wb,ws2,"Non affectes");
+    XLSX.writeFile(wb,"non_affectes_"+new Date().toISOString().slice(0,10)+".xlsx");
+  }
+}
+function exportRapport(){
+  if(!ST.results)return;
+  var aff=ST.results.filter(function(r){return r.option_affectee;});
+  var na=ST.results.filter(function(r){return !r.option_affectee;});
+  var total=ST.results.length;var pv1=aff.length?Math.round(100*aff.filter(function(r){return r.voeu_realise===1;}).length/aff.length):0;
+  var gcnt={};aff.forEach(function(r){gcnt[r.groupe]=(gcnt[r.groupe]||0)+1;});
+  var oc={};aff.forEach(function(r){oc[r.option_affectee]=(oc[r.option_affectee]||0)+1;});
+  var mc={};na.forEach(function(r){var m=motifLabel(r.motif_refus)||"Motif inconnu";mc[m]=(mc[m]||0)+1;});
+  var today=new Date().toLocaleDateString("fr-FR");
+  var L=["---",'title: "Rapport affectation Options 2026-2027"','date: "'+today+'"',"format:","  html:","    theme: flatly","    toc: true","---","","## Bilan global","","| Indicateur | Valeur |","|---|---|","| Etudiants | **"+total+"** |","| Affectes | **"+aff.length+"** ("+Math.round(100*aff.length/total)+"%) |","| Non affectes | **"+na.length+"** |","| Voeu 1 satisfait | **"+pv1+"** |","","## Repartition par groupe","","| Groupe | Options | Capacite | Affectes | Taux |","|---|---|---|---|---|"];
+  ST.combis.forEach(function(c){var n=gcnt[c.nom]||0;var opts=[c.opt1,c.opt2,c.opt3,c.opt4].filter(Boolean).map(function(o){return OPT_FULL[o];}).join(" + ");L.push("| "+c.nom+" | "+opts+" | "+c.places+" | "+n+" | "+Math.round(100*n/c.places)+"% |");});
+  L=L.concat(["","## Par option","","| Option | N |","|---|---|"]);
+  Object.entries(oc).sort(function(a,b){return b[1]-a[1];}).forEach(function(e){L.push("| "+(OPT_FULL[e[0]]||e[0])+" | "+e[1]+" |");});
+  L=L.concat(["","## Motifs de non-affectation",""]);
+  if(!Object.keys(mc).length)L.push("Tous affectes.");
+  else{L.push("| Motif | N |");L.push("|---|---|");Object.entries(mc).forEach(function(e){L.push("| "+e[0]+" | "+e[1]+" |");});}
+  dl(L.join("\n"),"rapport_affectation.qmd","text/plain");
+}
+function dl(content,fname,mime){var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([content],{type:mime+";charset=utf-8"}));a.download=fname;a.click();}
+// ── EXPORT EXCEL TESTS ────────────────────────────────────────────
+function exportResultatsExcel(){
+  if(!ST.results||!ST.results.length){alert("Lancez d'abord l'affectation.");return;}
+  if(typeof XLSX==="undefined"){alert("Librairie Excel non chargee.");return;}
+
+  var data   = ST.results;
+  var aff    = data.filter(function(r){return r.option_affectee;});
+  var na     = data.filter(function(r){return !r.option_affectee;});
+  var today  = new Date().toLocaleDateString("fr-FR");
+  var wb     = XLSX.utils.book_new();
+
+  // ── Onglet 1 : Bilan complet (affectés triés par groupe) ──
+  var colsB = ["num_etudiant","nom","prenom","email",
+               "horodatage_soumission","option_affectee","groupe",
+               "voeu_realise","voeu1","voeu2","voeu3","motif_refus"];
+  var hdrsB = ["N° Etudiant","Nom","Prénom","Email",
+               "Horodatage Form","Option affectée","Groupe",
+               "Vœu réalisé","Vœu 1","Vœu 2","Vœu 3","Motif refus"];
+  var sorted = aff.slice().sort(function(a,b){
+    return (a.groupe||"").localeCompare(b.groupe||"") ||
+           (a.nom||"").localeCompare(b.nom||"");
+  }).concat(na);
+  var rowsB  = [hdrsB].concat(sorted.map(function(r){
+    return colsB.map(function(c){
+      var v = r[c]||"";
+      if(c==="option_affectee") return OPT_FULL[v]||v||"— Non affecté —";
+      if(c==="voeu1"||c==="voeu2"||c==="voeu3") return OPT_FULL[v]||v||"";
+      return v;
+    });
+  }));
+  var wsB = XLSX.utils.aoa_to_sheet(rowsB);
+  wsB["!cols"]=[{wch:13},{wch:15},{wch:13},{wch:28},{wch:18},{wch:24},
+                {wch:8},{wch:10},{wch:22},{wch:22},{wch:22},{wch:30}];
+  wsB["!freeze"]={xSplit:0,ySplit:1};
+  XLSX.utils.book_append_sheet(wb,wsB,"Bilan affectation");
+
+  // ── Onglet 2 : Récap groupes (4 options) ──────────────────
+  var hdrsG = ["Groupe","Option 1","Option 2","Option 3","Option 4",
+               "Capacité","Affectés","Restants","Taux (%)"];
+  var gcnt  = {};
+  aff.forEach(function(r){gcnt[r.groupe]=(gcnt[r.groupe]||0)+1;});
+  var rowsG = [hdrsG].concat(ST.combis.map(function(c){
+    var n   = gcnt[c.nom]||0;
+    var pl  = c.places||0;
+    return [
+      c.nom,
+      OPT_FULL[c.opt1]||c.opt1||"—",
+      OPT_FULL[c.opt2]||c.opt2||"—",
+      OPT_FULL[c.opt3]||c.opt3||"—",
+      OPT_FULL[c.opt4]||c.opt4||"—",
+      pl, n, pl-n,
+      pl>0?Math.round(100*n/pl)+"%":"—"
+    ];
+  }));
+  // Ligne total
+  var totAff=aff.length, totPl=ST.combis.reduce(function(s,c){return s+(c.places||0);},0);
+  rowsG.push(["TOTAL","","","","",totPl,totAff,totPl-totAff,
+    totPl>0?Math.round(100*totAff/totPl)+"%":"—"]);
+  var wsG = XLSX.utils.aoa_to_sheet(rowsG);
+  wsG["!cols"]=[{wch:8},{wch:24},{wch:24},{wch:24},{wch:24},
+                {wch:10},{wch:10},{wch:10},{wch:10}];
+  XLSX.utils.book_append_sheet(wb,wsG,"Recap groupes");
+
+  // ── Onglet 3 : Non affectés ───────────────────────────────
+  var hdrsN = ["N° Etudiant","Nom","Prénom","Email",
+               "Vœu 1","Vœu 2","Vœu 3","Motif du refus"];
+  var rowsN = [hdrsN].concat(na.map(function(r){
+    return [r.num_etudiant,r.nom,r.prenom,r.email,
+            OPT_FULL[r.voeu1]||r.voeu1||"",
+            OPT_FULL[r.voeu2]||r.voeu2||"",
+            OPT_FULL[r.voeu3]||r.voeu3||"",
+            motifLabel(r.motif_refus)||""];
+  }));
+  if(na.length===0) rowsN.push(["✓ Tous les étudiants ont été affectés !",
+    "","","","","","",""]);
+  var wsN = XLSX.utils.aoa_to_sheet(rowsN);
+  wsN["!cols"]=[{wch:13},{wch:15},{wch:13},{wch:28},
+                {wch:24},{wch:24},{wch:24},{wch:32}];
+  XLSX.utils.book_append_sheet(wb,wsN,"Non affectés");
+
+  // ── Onglet 4 : Par option ─────────────────────────────────
+  var oc={};
+  aff.forEach(function(r){oc[r.option_affectee]=(oc[r.option_affectee]||0)+1;});
+  var rowsO = [["Option","Code","Nb étudiants","Part (%)"]].concat(
+    Object.entries(oc).sort(function(a,b){return b[1]-a[1];}).map(function(e){
+      return [OPT_FULL[e[0]]||e[0], e[0], e[1],
+              Math.round(100*e[1]/aff.length)+"%"];
+    })
+  );
+  rowsO.push(["TOTAL","",aff.length,"100%"]);
+  var wsO = XLSX.utils.aoa_to_sheet(rowsO);
+  wsO["!cols"]=[{wch:28},{wch:18},{wch:14},{wch:12}];
+  XLSX.utils.book_append_sheet(wb,wsO,"Par option");
+
+  // ── Onglet 5 : Statistiques ───────────────────────────────
+  var pv1 = aff.filter(function(r){return r.voeu_realise===1;}).length;
+  var pv2 = aff.filter(function(r){return r.voeu_realise===2;}).length;
+  var ngr = (function(){var s={};aff.forEach(function(r){s[r.groupe]=1;});return Object.keys(s).length;})();
+  var rowsSt = [
+    ["Tableau de bord — Affectation Options 2026-2027"],
+    ["Généré le "+today],
+    [],
+    ["Indicateur","Valeur"],
+    ["Étudiants ayant soumis", data.length],
+    ["Affectés", aff.length],
+    ["Non affectés", na.length],
+    ["Taux d'affectation", Math.round(100*aff.length/data.length)+"%"],
+    ["Vœu 1 satisfait", Math.round(100*pv1/aff.length)+"%"+" ("+pv1+" étud.)"],
+    ["Vœu 2 satisfait", Math.round(100*pv2/aff.length)+"%"+" ("+pv2+" étud.)"],
+    ["Groupes utilisés", ngr],
+    [],
+    ["Motifs de non-affectation","Nb"],
+  ];
+  var mc={};
+  na.forEach(function(r){var m=motifLabel(r.motif_refus)||"Motif inconnu";mc[m]=(mc[m]||0)+1;});
+  if(!Object.keys(mc).length) rowsSt.push(["(tous affectés)","—"]);
+  else Object.entries(mc).forEach(function(e){rowsSt.push([e[0],e[1]]);});
+  var wsSt = XLSX.utils.aoa_to_sheet(rowsSt);
+  wsSt["!cols"]=[{wch:36},{wch:22}];
+  XLSX.utils.book_append_sheet(wb,wsSt,"Statistiques");
+
+  // Téléchargement
+  var fname = "affectation_options_"+new Date().toISOString().slice(0,10)+".xlsx";
+  XLSX.writeFile(wb,fname);
+}
+
+// ── REDOUBLANTS ───────────────────────────────────────────────────
+function renderRedoublants(){
+  var tbody=document.getElementById("redoub-tbody");
+  if(!tbody)return;
+  var preview=document.getElementById("redoub-preview");
+  if(!ST.redoublants.length){if(preview)preview.style.display="none";return;}
+  if(preview)preview.style.display="block";
+  tbody.innerHTML=ST.redoublants.map(function(r){
+    var label=OPT_FULL[r.option_validee]||r.option_validee||"—";
+    var bg=OPT_CLR[r.option_validee]||"#f8fafc";
+    return "<tr style='background:"+bg+"'>"+
+      "<td style='padding:7px 12px'>"+escHtml(r.num_etudiant||"")+"</td>"+
+      "<td style='padding:7px 12px'>"+escHtml(r.nom||"")+"</td>"+
+      "<td style='padding:7px 12px'>"+escHtml(r.prenom||"")+"</td>"+
+      "<td style='padding:7px 12px'>"+escHtml(label)+"</td>"+
+      "<td style='padding:7px 12px;font-family:monospace;font-size:12px;color:#475569'>"+escHtml(r.option_validee||"")+"</td>"+
+      "</tr>";
+  }).join("");
+}
+function importRedoublantsXlsx(file){
+  if(!file)return;
+  if(typeof XLSX==="undefined"){alert("SheetJS non charge.");return;}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var wb=XLSX.read(e.target.result,{type:"array",raw:false,defval:""});
+      var ws=wb.Sheets[wb.SheetNames[0]];
+      var rows=XLSX.utils.sheet_to_json(ws,{raw:false,defval:""});
+      if(!rows.length){alert("Fichier vide.");return;}
+      var results=[];
+      rows.forEach(function(row){
+        // Normaliser les clés
+        var norm={};
+        Object.keys(row).forEach(function(k){norm[normalizeHdr(k)]=String(row[k]||"").trim();});
+        var num=norm.num_etudiant||norm.numero_etudiant||norm.matricule||"";
+        var nom=norm.nom||"";
+        var prenom=norm.prenom||"";
+        var opt=normalizeOpt(norm.option_validee||norm.option||norm.code_option||"");
+        if(!num)return;
+        results.push({num_etudiant:num,nom:nom,prenom:prenom,option_validee:opt});
+      });
+      if(!results.length){alert("Aucun etudiant reconnu. Verifiez les colonnes : num_etudiant, nom, prenom, option_validee.");return;}
+      ST.redoublants=results;
+      renderRedoublants();
+      var okEl=document.getElementById("redoub-ok");
+      if(okEl){okEl.style.display="flex";okEl.textContent=results.length+" redoublant(s) importes.";}
+    }catch(err){alert("Erreur lecture : "+err.message);}
+  };
+  reader.readAsArrayBuffer(file);
+}
+function clearRedoublants(){
+  ST.redoublants=[];
+  renderRedoublants();
+  var p=document.getElementById("redoub-preview");
+  if(p)p.style.display="none";
+}
+
+// ── IMPRESSION TEST ÉTUDIANT ───────────────────────────────────────
+var TEST_LABELS={maths:"Remise a niveau — Mathematiques",spanish:"Business Spanish",
+  "lv2-de":"LV2 — Allemand","lv2-zh":"LV2 — Chinois","lv2-es":"LV2 — Espagnol"};
+function printTestResult(testId){
+  var scoreEl=document.getElementById("score-"+testId);
+  var scoreText=scoreEl?scoreEl.textContent:"";
+  if(!scoreText){
+    // Cas débutant : pas de score-box affiché, message de l'ok-span
+    var okEl=document.getElementById("ok-"+testId);
+    if(okEl)scoreText=okEl.textContent;
+  }
+  var today=new Date().toLocaleDateString("fr-FR");
+  var testLabel=TEST_LABELS[testId]||testId;
+  // Récupérer la date limite depuis la config admin
+  var dateLimite="";
+  // Lire date et salle selon la discipline du test
+  var discMap={"maths":"maths","spanish":"spanish","lv2-de":"lv2","lv2-zh":"lv2","lv2-es":"lv2"};
+  var disc=discMap[testId]||"maths";
+  var dateInp=document.getElementById("adm-date-"+disc);
+  if(dateInp&&dateInp.value.trim())dateLimite=dateInp.value.trim();
+  var salleInp=document.getElementById("adm-salle-"+disc);
+  var salle=salleInp&&salleInp.value.trim()?salleInp.value.trim():"";
+  var win=window.open("","_blank","width=620,height=560");
+  win.document.write("<!DOCTYPE html><html><head><title>Résultat test — "+testLabel+"</title>"
+    +"<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;max-width:520px;margin:32px auto;padding:24px;color:#0f172a}"
+    +"h1{font-size:19px;color:#0f2942;border-bottom:2px solid #0f2942;padding-bottom:10px;margin-bottom:16px}"
+    +".meta{font-size:13px;color:#64748b;margin-bottom:6px}"
+    +".score{font-size:17px;font-weight:bold;padding:14px 18px;border-radius:8px;margin:16px 0;background:#f1f5f9;border-left:4px solid #3b82f6}"
+    +".notice{background:#fef9c3;border:1px solid #fde68a;border-radius:8px;padding:14px 16px;margin:16px 0;font-size:13px;line-height:1.7}"
+    +".notice strong{color:#713f12}"
+    +".footer{margin-top:28px;padding-top:12px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8}"
+    +"@media print{button{display:none}.no-print{display:none}}"
+    +"button{margin-top:18px;padding:10px 22px;background:#0f2942;color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px}"
+    +"</style></head><body>"
+    +"<h1>Résultat de test de niveau</h1>"
+    +"<p class='meta'>Portail Options Pédagogiques 2026-2027</p>"
+    +"<p class='meta'>Test : <strong>"+testLabel+"</strong></p>"
+    +"<p class='meta'>Généré le : "+today+"</p>"
+    +"<div class='score'>"+scoreText+"</div>"
+    +"<div class='notice'>"
+    +"<strong>&#128204; À remettre à votre enseignant</strong><br>"
+    +(dateLimite?"Ce document est à présenter à votre enseignant <strong>avant le "+dateLimite+"</strong>.<br>":"Ce document est à présenter à votre enseignant avant la date limite communiquée.<br>")
+    +(salle?"<strong>Lieu :</strong> "+salle+"<br>":"")
+    +"Imprimez ce document ou enregistrez-le en PDF (Ctrl+P)."
+    +"</div>"
+    +"<div class='footer'>Portail Options Pédagogiques — Université 2026-2027</div>"
+    +"<button onclick='window.print()'>&#128424; Imprimer / Enregistrer en PDF</button>"
+    +"</body></html>");
+  win.document.close();
+}
+
+
+function showPrintBtn(testId){
+  var btn=document.getElementById("btn-print-"+testId);
+  if(btn)btn.style.display="inline-flex";
+}
+
+// ── EXPORT XLSX ENSEIGNANT (format standardisé avec codes valides) ──
+function exportTestsExcelEnseignant(){
+  if(!ST.rawData||!ST.rawData.length){alert("Importez d\'abord le fichier Excel Google Form.");return;}
+  if(typeof XLSX==="undefined"){alert("SheetJS non charge.");return;}
+
+  var data=ST.rawData;
+  var wb=XLSX.utils.book_new();
+  var today=new Date().toLocaleDateString("fr-FR");
+
+  function getEmail(e){return e.email_google||e.email||"";}
+  function getRang(e,opt){return e.voeu1===opt?1:e.voeu2===opt?2:e.voeu3===opt?3:0;}
+  function hasOpt(e,opt){return getRang(e,opt)>0;}
+
+  // Colonnes fixes
+  var HDR_OUI_NON =["N° Etudiant","Nom","Prenom","Email","Horodatage Form","Voeu (rang)","Validation (OUI/NON)"];
+  var HDR_LV2     =["N° Etudiant","Nom","Prenom","Email","Horodatage Form","Voeu (rang)","Niveau LV2"];
+  var NC=7;
+
+  // Ajouter une validation dropdown sur une colonne entière d'un worksheet
+  // colIndex = index 0-based, nRows = nombre de lignes de données, choices = tableau de strings
+  function addDropdown(ws,colIndex,startDataRow,nRows,choices){
+    if(!nRows)return;
+    var col=XLSX.utils.encode_col(colIndex);
+    var ref=col+(startDataRow+1)+":"+col+(startDataRow+nRows);
+    if(!ws["!dataValidation"])ws["!dataValidation"]=[];
+    ws["!dataValidation"].push({
+      sqref:ref,
+      type:"list",
+      formula1:'"'+choices.join(",")+'"',
+      showDropDown:false,
+      showErrorMessage:true,
+      errorTitle:"Valeur invalide",
+      error:"Choisissez une valeur dans la liste deroulante."
+    });
+  }
+
+  // Construire une feuille avec instruction en ligne 1, en-têtes en ligne 2, données ligne 3+
+  function makeSheet(hdr,dataRows,instrText){
+    var rows=[
+      [instrText].concat(new Array(hdr.length-1).fill("")),
+      hdr
+    ].concat(dataRows);
+    var ws=XLSX.utils.aoa_to_sheet(rows);
+    ws["!merges"]=[{s:{r:0,c:0},e:{r:0,c:hdr.length-1}}];
+    return ws;
+  }
+
+  // ── Onglet Maths ─────────────────────────────────────────────────
+  var mathsData=data.filter(function(e){return hasOpt(e,"maths");})
+    .sort(function(a,b){return(a.nom||"").localeCompare(b.nom||"");});
+  var wsM=makeSheet(
+    HDR_OUI_NON,
+    mathsData.map(function(e){
+      return[e.num_etudiant,e.nom,e.prenom,getEmail(e),
+             e.horodatage_soumission,"Voeu "+getRang(e,"maths"),""];
+    }),
+    "Maths — "+today+" — Saisir OUI (accepte) ou NON (niveau insuffisant)"
+  );
+  wsM["!cols"]=[{wch:13},{wch:18},{wch:14},{wch:30},{wch:18},{wch:10},{wch:22}];
+  wsM["!freeze"]={xSplit:0,ySplit:2};
+  addDropdown(wsM,6,2,mathsData.length,["OUI","NON"]);
+  XLSX.utils.book_append_sheet(wb,wsM,"Tests - Maths");
+
+  // ── Onglet Business Spanish ──────────────────────────────────────
+  var spanData=data.filter(function(e){return hasOpt(e,"business_spanish");})
+    .sort(function(a,b){return(a.nom||"").localeCompare(b.nom||"");});
+  var wsS=makeSheet(
+    HDR_OUI_NON,
+    spanData.map(function(e){
+      return[e.num_etudiant,e.nom,e.prenom,getEmail(e),
+             e.horodatage_soumission,"Voeu "+getRang(e,"business_spanish"),""];
+    }),
+    "Business Spanish — "+today+" — OUI = niveau B1+ | NON = niveau insuffisant"
+  );
+  wsS["!cols"]=[{wch:13},{wch:18},{wch:14},{wch:30},{wch:18},{wch:10},{wch:22}];
+  wsS["!freeze"]={xSplit:0,ySplit:2};
+  addDropdown(wsS,6,2,spanData.length,["OUI","NON"]);
+  XLSX.utils.book_append_sheet(wb,wsS,"Tests - Business Spanish");
+
+  // ── Onglets LV2 : un par langue ──────────────────────────────────
+  var LV2_LANGS=[
+    {code:"lv2_allemand", label:"LV2 Allemand",
+     niveaux:["lv2_de_debut","lv2_de_debut2","lv2_de_inter"]},
+    {code:"lv2_chinois",  label:"LV2 Chinois",
+     niveaux:["lv2_chinois"]},
+    {code:"lv2_espagnol", label:"LV2 Espagnol",
+     niveaux:["lv2_es_debut","lv2_es_inter","lv2_es_avance"]},
+  ];
+  LV2_LANGS.forEach(function(lang){
+    var lv2Data=data.filter(function(e){return hasOpt(e,lang.code);})
+      .sort(function(a,b){return(a.nom||"").localeCompare(b.nom||"");});
+    if(!lv2Data.length)return;
+    var wsL=makeSheet(
+      HDR_LV2,
+      lv2Data.map(function(e){
+        return[e.num_etudiant,e.nom,e.prenom,getEmail(e),
+               e.horodatage_soumission,"Voeu "+getRang(e,lang.code),""];
+      }),
+      lang.label+" — "+today+" — Codes valides : "+lang.niveaux.join(" | ")
+    );
+    wsL["!cols"]=[{wch:13},{wch:18},{wch:14},{wch:30},{wch:18},{wch:10},{wch:26}];
+    wsL["!freeze"]={xSplit:0,ySplit:2};
+    addDropdown(wsL,6,2,lv2Data.length,lang.niveaux);
+    XLSX.utils.book_append_sheet(wb,wsL,"Tests - "+lang.label);
+  });
+
+  // Téléchargement
+  var fname="liste_enseignants_"+new Date().toISOString().slice(0,10)+".xlsx";
+  XLSX.writeFile(wb,fname);
+  ["export-tests-ok","export-tests-top-ok"].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){el.style.display="flex";setTimeout(function(){el.style.display="none";},4000);}
+  });
+}
+
+
+function updateEnsPageFromConfig(){
+  function setEns(id,inputId,fallback){
+    var el=document.getElementById(id);
+    var src=document.getElementById(inputId);
+    if(!el)return;
+    el.textContent=src&&src.value.trim()?src.value.trim():fallback;
+  }
+  // Dates limites par discipline
+  var dateEl=document.getElementById("ens-info-date");
+  if(dateEl){
+    var dates=[];
+    var discNames={maths:"Maths",spanish:"Spanish",lv2:"LV2"};
+    ["maths","spanish","lv2"].forEach(function(d){
+      var el=document.getElementById("adm-date-"+d);
+      if(el&&el.value.trim())dates.push(discNames[d]+" : "+el.value.trim());
+    });
+    dateEl.textContent=dates.length
+      ?dates.join(" | ")
+      :"— Non renseignee (configurer dans Administration)";
+  }
+  // Responsables
+  setEns("ens-resp-maths","adm-ens-maths","Responsable : non renseigne");
+  setEns("ens-resp-spanish","adm-ens-spanish","Responsable : non renseigne");
+  setEns("ens-resp-lv2","adm-ens-lv2","Responsable : non renseigne");
+}
+
+// ── ÉDITEUR DE QUESTIONS ─────────────────────────────────────────
+var CURRENT_QEDIT_DISC = "maths";
+
+function renderQEditor(disc, containerId, saveBtn){
+  CURRENT_QEDIT_DISC = disc;
+  var container = document.getElementById(containerId);
+  if(!container) return;
+  var qs = TEST_CONFIG[disc] || [];
+  var DISC_LABELS = {maths:"Maths",spanish:"Business Spanish",
+    lv2_de:"LV2 Allemand",lv2_zh:"LV2 Chinois",lv2_es:"LV2 Espagnol"};
+  container.innerHTML = '<div style="font-size:12px;font-weight:600;color:#475569;margin-bottom:12px">'
+    + (DISC_LABELS[disc]||disc) + ' — ' + qs.length + ' question(s)</div>'
+    + qs.map(function(q,i){
+    return '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px 16px;margin-bottom:10px">'
+      + '<div style="font-size:11px;font-weight:600;color:#94a3b8;margin-bottom:8px">Question '+(i+1)+'</div>'
+      + '<div class="pf-field"><label class="pf-label">Intitulé de la question</label>'
+      + '<input class="pf-input" id="qe-q-'+i+'" value="'+escHtml(q.q)+'"></div>'
+      + q.opts.map(function(o){
+          return '<div style="display:flex;gap:6px;margin-bottom:6px;align-items:center">'
+            + '<span style="width:14px;font-size:12px;font-weight:600;color:#475569">'+o.a+'.</span>'
+            + '<input class="pf-input" id="qe-opt-'+i+'-'+o.a+'" value="'+escHtml(o.l)+'" style="flex:1">'
+          + '</div>';
+        }).join('')
+      + '<div class="pf-field" style="margin-top:8px"><label class="pf-label">Bonne réponse (a, b ou c)</label>'
+      + '<input class="pf-input" id="qe-correct-'+i+'" value="'+q.correct+'" style="width:60px;font-family:monospace">'
+      + '</div></div>';
+    }).join('');
+}
+
+function escHtml(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+function showQEditor(disc){
+  renderQEditor(disc, "q-editor-container");
+  document.querySelectorAll("[id^='qedit-tab-']").forEach(function(b){b.classList.remove("btn-primary");b.classList.add("btn-secondary");});
+  var tab=document.getElementById("qedit-tab-"+disc);
+  if(tab){tab.classList.remove("btn-secondary");tab.classList.add("btn-primary");}
+}
+function showQEditorEns(disc){
+  renderQEditor(disc, "q-editor-ens-container");
+  document.querySelectorAll("[id^='qedit-ens-tab-']").forEach(function(b){b.classList.remove("btn-primary");b.classList.add("btn-secondary");});
+  var tab=document.getElementById("qedit-ens-tab-"+disc);
+  if(tab){tab.classList.remove("btn-secondary");tab.classList.add("btn-primary");}
+}
+
+function collectQEditor(disc, containerId){
+  // Lire les valeurs depuis l'éditeur et mettre à jour TEST_CONFIG
+  var qs = TEST_CONFIG[disc] || [];
+  qs.forEach(function(q,i){
+    var qEl = document.getElementById("qe-q-"+i);
+    if(qEl) q.q = qEl.value;
+    q.opts.forEach(function(o){
+      var oEl = document.getElementById("qe-opt-"+i+"-"+o.a);
+      if(oEl) o.l = oEl.value;
+    });
+    var cEl = document.getElementById("qe-correct-"+i);
+    if(cEl) q.correct = cEl.value.trim().toLowerCase();
+  });
+  TEST_CONFIG[disc] = qs;
+  rebuildFromConfig();
+  reloadAllTests();
+}
+
+function saveQEditor(){
+  collectQEditor(CURRENT_QEDIT_DISC, "q-editor-container");
+  var ok=document.getElementById("qedit-ok");
+  if(ok){ok.style.display="flex";setTimeout(function(){ok.style.display="none";},3000);}
+}
+function saveQEditorEns(){
+  collectQEditor(CURRENT_QEDIT_DISC, "q-editor-ens-container");
+  var ok=document.getElementById("qedit-ens-ok");
+  if(ok){ok.style.display="flex";setTimeout(function(){ok.style.display="none";},3000);}
+}
+
+function addQuestion(){
+  var disc=CURRENT_QEDIT_DISC;
+  if(!TEST_CONFIG[disc]) TEST_CONFIG[disc]=[];
+  var i=TEST_CONFIG[disc].length+1;
+  TEST_CONFIG[disc].push({
+    id:disc.replace("lv2_","")+(i),
+    q:"Nouvelle question "+i,
+    opts:[{a:"a",l:"Option A"},{a:"b",l:"Option B"},{a:"c",l:"Option C"}],
+    correct:"a"
+  });
+  showQEditor(disc);
+}
+function addQuestionEns(){
+  var disc=CURRENT_QEDIT_DISC;
+  if(!TEST_CONFIG[disc]) TEST_CONFIG[disc]=[];
+  var i=TEST_CONFIG[disc].length+1;
+  TEST_CONFIG[disc].push({
+    id:disc.replace("lv2_","")+(i),
+    q:"Nouvelle question "+i,
+    opts:[{a:"a",l:"Option A"},{a:"b",l:"Option B"},{a:"c",l:"Option C"}],
+    correct:"a"
+  });
+  showQEditorEns(disc);
+}
+
+// ── EXPORT / IMPORT JSON ──────────────────────────────────────────
+function exportConfigJSON(){
+  var json = JSON.stringify(TEST_CONFIG, null, 2);
+  var blob = new Blob([json], {type:"application/json"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "test_config_"+new Date().toISOString().slice(0,10)+".json";
+  a.click();
+}
+function importConfigJSON(inp){
+  if(!inp.files[0]) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      var data = JSON.parse(e.target.result);
+      // Valider la structure minimale
+      var valid = typeof data === "object" && Object.keys(data).length > 0;
+      if(!valid){alert("Fichier JSON invalide."); return;}
+      Object.keys(data).forEach(function(k){ TEST_CONFIG[k] = data[k]; });
+      rebuildFromConfig();
+      reloadAllTests();
+      // Rafraîchir l'éditeur affiché
+      if(document.getElementById("q-editor-container")&&document.getElementById("q-editor-container").innerHTML)
+        showQEditor(CURRENT_QEDIT_DISC);
+      if(document.getElementById("q-editor-ens-container")&&document.getElementById("q-editor-ens-container").innerHTML)
+        showQEditorEns(CURRENT_QEDIT_DISC);
+      alert("Configuration importée. Les tests sont mis à jour.");
+    } catch(err){
+      alert("Erreur de lecture JSON : "+err.message);
+    }
+  };
+  reader.readAsText(inp.files[0]);
+}
+
+// ── IMPORT RETOUR ENSEIGNANT + AFFECTATION (bouton unique) ────────
+function importEnseignantEtAffecter(file){
+  if(!file)return;
+  if(typeof XLSX==="undefined"){alert("SheetJS non charge.");return;}
+  if(!ST.rawData||!ST.rawData.length){alert("Importez d\'abord le fichier Google Form.");return;}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var wb=XLSX.read(e.target.result,{type:"array",raw:false,defval:""});
+      var merged=0;
+      wb.SheetNames.forEach(function(shName){
+        var ws=wb.Sheets[shName];
+        var aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:false,defval:""});
+        if(!aoa.length)return;
+        // Trouver la ligne d\'en-tête réelle (le fichier a des instructions avant)
+        var hdrIdx=-1;
+        for(var ri=0;ri<Math.min(aoa.length,8);ri++){
+          if(aoa[ri].some(function(c){return c&&normalizeHdr(String(c))==="num_etudiant";})){
+            hdrIdx=ri;break;
+          }
+        }
+        if(hdrIdx<0)return;
+        var hdrs=aoa[hdrIdx].map(function(c){return c?normalizeHdr(String(c)):"";});
+        for(var di=hdrIdx+1;di<aoa.length;di++){
+          var dataRow=aoa[di];
+          if(!dataRow.some(function(c){return c&&String(c).trim();}))continue;
+          var row={};
+          hdrs.forEach(function(h,ci){row[h]=dataRow[ci]?String(dataRow[ci]).trim():"";});
+          var num=(row["num_etudiant"]||"").trim();
+          if(!num)continue;
+          var etu=ST.rawData.find(function(r){return(r.num_etudiant||"").trim()===num;});
+          if(!etu)continue;
+          ["validation_maths","validation_spanish","niveau_lv2_ens"].forEach(function(col){
+            if(row[col]){etu[col]=row[col].toLowerCase();merged++;}
+          });
+        }
+      });
+      if(merged===0){
+        alert("Aucune valeur integree. Verifiez :\n- Colonne N° Etudiant presente\n- N° correspondent au fichier Google Form\n- Colonnes VALIDATION/NIVEAU remplies");
+        return;
+      }
+      var okEl=document.getElementById("ens-import-ok");
+      if(okEl){
+        okEl.querySelector("span").textContent="Fichier fusionné ("+merged+" valeur(s)). Lancement de l\'affectation...";
+        okEl.style.display="flex";
+      }
+      setTimeout(function(){showAffect();setTimeout(function(){runAffectation();},400);},800);
+    }catch(err){alert("Erreur : "+err.message);}
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+
+// ── INIT ──────────────────────────────────────────────────────────
+window.addEventListener("load",function(){
+  initJauges();
+  renderSportCatalogue();
+  var saved=localStorage.getItem("gform_url");
+  if(saved)applyGformUrl(saved);
+  else document.getElementById("gform-config-zone").style.display="block";
+});
+</script>
+</body>
+</html>
