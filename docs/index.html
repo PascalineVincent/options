@@ -36,7 +36,7 @@ p{margin:0}
 .pf-sfooter-btn+.pf-sfooter-btn{border-top:1px solid rgba(255,255,255,.06);margin-top:4px;padding-top:11px}
 .copy-small{font-size:10px;color:rgba(255,255,255,.2);margin-top:10px}
 /* pages */
-.pf-page{display:none;padding:36px 42px 60px;max-width:920px}
+.pf-page{padding:36px 42px 60px;max-width:920px}
 .pf-page.active{display:block}
 .pf-page-title{font-family:"DM Serif Display",serif;font-size:27px;color:#0f2942;font-weight:400;margin-bottom:4px}
 .pf-page-sub{font-size:13px;color:#64748b;margin-bottom:26px;line-height:1.6}
@@ -295,7 +295,7 @@ body{display:flex!important;flex-direction:row!important}
 </div>
 
 <!-- CATALOGUE -->
-<div class="pf-page" id="page-catalogue">
+<div class="pf-page" id="page-catalogue" style="display:none">
   <p class="pf-page-title">Catalogue des options</p>
   <p class="pf-page-sub">Toutes les options 2026-2027 avec leurs places, temporalite et conditions d'acces.</p>
   <div class="sh">Options au semestre</div>
@@ -319,7 +319,7 @@ body{display:flex!important;flex-direction:row!important}
   <div style="margin-top:22px"><button class="btn btn-primary" onclick="goTo('voeux')">Saisir mes voeux &#8594;</button></div>
 </div>
 <!-- VOEUX -->
-<div class="pf-page" id="page-voeux">
+<div class="pf-page" id="page-voeux" style="display:none">
   <p class="pf-page-title">Saisir mes voeux</p>
   <p class="pf-page-sub">Vos voeux sont collectes via Google Form. Cliquez sur le bouton ci-dessous pour acceder au formulaire.</p>
   <div class="gform-card">
@@ -357,7 +357,7 @@ body{display:flex!important;flex-direction:row!important}
   <div style="margin-top:18px"><button class="btn btn-primary" onclick="goTo('tests')">Aller aux tests de niveau &#8594;</button></div>
 </div>
 <!-- TESTS -->
-<div class="pf-page" id="page-tests">
+<div class="pf-page" id="page-tests" style="display:none">
   <p class="pf-page-title">Tests de niveau</p>
   <p class="pf-page-sub">Cochez les tests correspondant a vos voeux, declarez votre niveau, puis repondez aux questions si necessaire.</p>
 
@@ -571,7 +571,7 @@ body{display:flex!important;flex-direction:row!important}
 </div>
 <!-- ENS LOGIN -->
 <!-- ENS LOGIN -->
-<div class="pf-page" id="page-ens-login">
+<div class="pf-page" id="page-ens-login" style="display:none">
   <div class="login-wrap"><div class="login-card">
     <h2>Espace enseignant</h2>
     <p style="font-size:13px;color:#64748b;margin-bottom:22px">Informations &middot; Instructions de retour des evaluations</p>
@@ -583,7 +583,7 @@ body{display:flex!important;flex-direction:row!important}
 </div>
 
 <!-- ENS : page d'informations -->
-<div class="pf-page" id="page-enseignant">
+<div class="pf-page" id="page-enseignant" style="display:none">
   <p class="pf-page-title">Espace enseignant</p>
   <p class="pf-page-sub" id="ens-sub-date">Instructions pour le retour des evaluations de niveau &middot; Annee 2026-2027</p>
 
@@ -738,7 +738,7 @@ body{display:flex!important;flex-direction:row!important}
 </div>
 
 <!-- ADMIN LOGIN -->
-<div class="pf-page" id="page-admin-login">
+<div class="pf-page" id="page-admin-login" style="display:none">
   <div class="login-wrap"><div class="login-card">
     <h2>Administration</h2>
     <p style="font-size:13px;color:#64748b;margin-bottom:22px">Configuration &middot; groupes &middot; affectation &middot; exports</p>
@@ -750,7 +750,7 @@ body{display:flex!important;flex-direction:row!important}
 </div>
 
 <!-- ADMIN DASHBOARD -->
-<div class="pf-page" id="page-admin">
+<div class="pf-page" id="page-admin" style="display:none">
   <p class="pf-page-title">Administration</p>
   <p class="pf-page-sub">Configurez les places et les groupes <strong>avant</strong> de lancer l'affectation.</p>
   <div class="admin-tabs">
@@ -1041,13 +1041,16 @@ body{display:flex!important;flex-direction:row!important}
         <div style="font-size:12px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Groupes configures</div>
         <div id="affect-groupes-recap" style="display:flex;flex-wrap:wrap;gap:7px"></div>
       </div>
-      <button class="btn btn-primary btn-lg" onclick="runAffectation()">&#9654; Lancer l'affectation</button>
+      <button class="btn btn-primary btn-lg" onclick="alert('rawData='+(ST.rawData?ST.rawData.length:'null')+' combis='+ST.combis.length);runAffectation()">&#9654; Lancer l'affectation</button>
       <div id="affect-prog" style="display:none;margin-top:14px">
         <div style="font-size:13px;color:#64748b;margin-bottom:5px">Calcul en cours...</div>
         <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
       </div>
     </div>
   </div>
+
+  </div><!-- fermeture apanel-import manquante 2 -->
+  </div><!-- fermeture apanel-import manquante 1 -->
 
   <!-- RESULTATS -->
   <div id="apanel-resultats" style="display:none">
@@ -1193,11 +1196,15 @@ var PLACES={voltaire:{max:80,pris:0},eco:{max:100,pris:0},maths:{max:40,pris:0},
 
 // ── NAVIGATION ────────────────────────────────────────────────────
 function goTo(id){
-  document.querySelectorAll(".pf-page").forEach(function(p){p.classList.remove("active");});
+  ["catalogue","voeux","tests","ens-login","enseignant","admin-login","admin"].forEach(function(p){
+    var el=document.getElementById("page-"+p);
+    if(el){el.style.display="none";el.classList.remove("active");}
+  });
   document.querySelectorAll(".pf-nav-btn").forEach(function(b){b.classList.remove("active");});
-  var pg=document.getElementById("page-"+id);if(pg)pg.classList.add("active");
+  var pg=document.getElementById("page-"+id);
+  if(pg){pg.style.display="block";pg.classList.add("active");}
   var nm={accueil:0,catalogue:1,voeux:2,tests:3};
-  if(nm[id]!==undefined)document.querySelectorAll(".pf-nav-btn")[nm[id]].classList.add("active");
+  if(nm[id]!==undefined){var btns=document.querySelectorAll(".pf-nav-btn");if(btns[nm[id]])btns[nm[id]].classList.add("active");}
   if(id==="enseignant"){updateEnsPageFromConfig();}
   if(id==="admin")refreshAffectTab();
   window.scrollTo(0,0);
@@ -1770,80 +1777,72 @@ function runAffectation(){
     document.getElementById("prog-bar").style.width="100%";ST.results=out;
 
         setTimeout(function(){
-          document.getElementById("affect-prog").style.display="none";
-          adminTab("resultats");
+          var prog=document.getElementById("affect-prog");
+          if(prog) prog.style.display="none";
+          // D'abord remplir les données
+          ST.results=out;
           renderResults(out);
-          dbg("renderResults fin - panel display:"+document.getElementById("apanel-resultats").style.display+
-  " height:"+document.getElementById("apanel-resultats").offsetHeight+
-  " visibility:"+document.getElementById("apanel-resultats").style.visibility);
-
+          // Puis naviguer vers l'onglet résultats
+          adminTab("resultats");
         },400);
   },50);
 }
 function renderResults(data){
-  // Rendre le panneau visible directement
-  var panel=document.getElementById("apanel-resultats");
-  dbg("panel trouve: "+(panel?"oui":"NON")+", display avant: "+(panel?panel.style.display:"?"));
-  if(panel){ 
-    panel.style.display="block";
-    panel.style.visibility="visible";
-    panel.style.opacity="1";
-    panel.style.height="auto";
-    panel.style.overflow="visible";
-    panel.style.position="relative";
-    panel.style.zIndex="999";
-  }
-  // Aussi forcer le parent
-  var adminArea=document.getElementById("admin-area")||document.getElementById("page-admin")||panel&&panel.parentNode;
-  if(adminArea&&adminArea.style){
-    adminArea.style.display="block";
-    adminArea.style.visibility="visible";
-  }
-  
-  // Stats
-  var aff=data.filter(function(r){return r.option_affectee;});
-  var forces=data.filter(function(r){return r.affectation_forcee;});
-  var total=data.length;
-  var pv1=aff.length?Math.round(100*aff.filter(function(r){return r.voeu_realise===1;}).length/aff.length):0;
+  try {
+    // Forcer visibilité via tous les moyens possibles
+    var ids=["page-admin","apanel-resultats","res-content"];
+    ids.forEach(function(id){
+      var el=document.getElementById(id);
+      if(el){el.style.display="block";el.style.visibility="visible";el.style.opacity="1";}
+    });
+    
+    // Stats
+    var aff=data.filter(function(r){return r.option_affectee;});
+    var forces=data.filter(function(r){return r.affectation_forcee;});
+    var pv1=aff.length?Math.round(100*aff.filter(function(r){return r.voeu_realise===1;}).length/aff.length):0;
 
-  var sc=document.getElementById("stat-cards");
-  if(sc) sc.innerHTML=
-    "<div class='stat-card'><div class='stat-label'>Total</div><div class='stat-value'>"+total+"</div></div>"+
-    "<div class='stat-card'><div class='stat-label'>Affectes</div><div class='stat-value' style='color:#16a34a'>"+aff.length+"</div></div>"+
-    "<div class='stat-card'><div class='stat-label'>Forces Eco</div><div class='stat-value' style='color:#f97316'>"+forces.length+"</div></div>"+
-    "<div class='stat-card'><div class='stat-label'>Voeu 1</div><div class='stat-value'>"+pv1+"%</div></div>";
+    var sc=document.getElementById("stat-cards");
+    if(sc) sc.innerHTML=
+      "<div class='stat-card'><div class='stat-label'>Total</div><div class='stat-value'>"+data.length+"</div></div>"+
+      "<div class='stat-card'><div class='stat-label'>Affectes</div><div class='stat-value' style='color:#16a34a'>"+aff.length+"</div></div>"+
+      "<div class='stat-card'><div class='stat-label'>Forces Eco</div><div class='stat-value' style='color:#f97316'>"+forces.length+"</div></div>"+
+      "<div class='stat-card'><div class='stat-label'>Voeu 1</div><div class='stat-value'>"+pv1+"%</div></div>";
 
-  // Groupes
-  var gcnt={};
-  aff.forEach(function(r){if(r.groupe)gcnt[r.groupe]=(gcnt[r.groupe]||0)+1;});
-  var tg=document.querySelector("#tbl-grps tbody");
-  if(tg) tg.innerHTML=ST.combis.map(function(c){
-    var n=gcnt[c.nom]||0;
-    var pct=c.places>0?Math.round(100*n/c.places):0;
-    var opts=[c.opt1,c.opt2,c.opt3,c.opt4].filter(Boolean).join(", ");
-    return "<tr><td><strong>"+c.nom+"</strong></td><td>"+opts+"</td><td>"+c.places+"</td><td>"+n+"</td><td>"+pct+"%</td></tr>";
-  }).join("");
-
-  // Options
-  var oc={};
-  aff.forEach(function(r){if(r.option_affectee)oc[r.option_affectee]=(oc[r.option_affectee]||0)+1;});
-  var to=document.querySelector("#tbl-opts tbody");
-  if(to) to.innerHTML=Object.keys(oc).sort(function(a,b){return oc[b]-oc[a];}).map(function(k){
-    return "<tr><td>"+(OPT_FULL[k]||k)+"</td><td>"+oc[k]+"</td></tr>";
-  }).join("");
-
-  // Forces / non affectes
-  var tn=document.querySelector("#tbl-na tbody");
-  if(tn) tn.innerHTML=forces.length===0
-    ?"<tr><td colspan='6' style='color:#94a3b8;padding:12px'>Aucun etudiant force en Eco.</td></tr>"
-    :forces.map(function(r){
-      return "<tr style='background:#fff7ed'><td>"+r.num_etudiant+"</td>"+
-        "<td>"+(r.nom||"")+" "+(r.prenom||"")+"</td>"+
-        "<td>"+(OPT_FULL[r.voeu1]||r.voeu1||"-")+"</td>"+
-        "<td>"+(OPT_FULL[r.voeu2]||r.voeu2||"-")+"</td>"+
-        "<td>"+(OPT_FULL[r.voeu3]||r.voeu3||"-")+"</td>"+
-        "<td style='font-size:12px;color:#c2410c'>"+(r.motif_refus||"").replace("affectation_par_defaut_eco__raison__","")+"</td></tr>";
+    // Groupes
+    var gcnt={};
+    aff.forEach(function(r){if(r.groupe)gcnt[r.groupe]=(gcnt[r.groupe]||0)+1;});
+    var tg=document.querySelector("#tbl-grps tbody");
+    if(tg) tg.innerHTML=ST.combis.map(function(c){
+      var n=gcnt[c.nom]||0;
+      var pct=c.places>0?Math.round(100*n/c.places):0;
+      var opts=[c.opt1,c.opt2,c.opt3,c.opt4].filter(Boolean).join(", ");
+      return "<tr><td><strong>"+c.nom+"</strong></td><td>"+opts+"</td><td>"+c.places+"</td><td>"+n+"</td><td>"+pct+"%</td></tr>";
     }).join("");
+
+    // Options
+    var oc={};
+    aff.forEach(function(r){if(r.option_affectee)oc[r.option_affectee]=(oc[r.option_affectee]||0)+1;});
+    var to=document.querySelector("#tbl-opts tbody");
+    if(to) to.innerHTML=Object.keys(oc).sort(function(a,b){return oc[b]-oc[a];}).map(function(k){
+      return "<tr><td>"+(OPT_FULL[k]||k)+"</td><td>"+oc[k]+"</td></tr>";
+    }).join("");
+
+    // Forces Eco
+    var tn=document.querySelector("#tbl-na tbody");
+    if(tn) tn.innerHTML=forces.length===0
+      ?"<tr><td colspan='6' style='color:#94a3b8;padding:12px'>Aucun etudiant force en Eco.</td></tr>"
+      :forces.map(function(r){
+        return "<tr style='background:#fff7ed'><td>"+r.num_etudiant+"</td>"+
+          "<td>"+(r.nom||"")+" "+(r.prenom||"")+"</td>"+
+          "<td>"+(OPT_FULL[r.voeu1]||r.voeu1||"-")+"</td>"+
+          "<td>"+(OPT_FULL[r.voeu2]||r.voeu2||"-")+"</td>"+
+          "<td>"+(OPT_FULL[r.voeu3]||r.voeu3||"-")+"</td>"+
+          "<td style='font-size:12px;color:#c2410c'>"+(r.motif_refus||"").replace("affectation_par_defaut_eco__raison__","")+"</td></tr>";
+      }).join("");
+
+  } catch(e) {
+    alert("renderResults erreur: "+e.message+" (ligne "+e.stack.split(":").slice(-2,-1)[0]+")");
+  }
 }
 
 // ── EXPORTS ───────────────────────────────────────────────────────
@@ -2459,6 +2458,8 @@ function importEnseignantEtAffecter(file){
 
 // ── INIT ──────────────────────────────────────────────────────────
 window.addEventListener("load",function(){
+  goTo("accueil");
+  // S'assurer que page-accueil est visible
   initJauges();
   renderSportCatalogue();
   var saved=localStorage.getItem("gform_url");
