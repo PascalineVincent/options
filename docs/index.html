@@ -284,8 +284,8 @@ body{display:flex!important;flex-direction:row!important}
   <div class="sh">En 3 etapes</div>
   <div class="tl">
     <div class="tl-item"><div class="tl-dot tl-past">&#128214;</div><div class="tl-body"><div class="tl-date">Etape 1</div><div class="tl-name">Consulter le catalogue</div><div class="tl-desc">Lisez la presentation de chaque option, ses places et sa temporalite avant de choisir.</div></div></div>
-    <div class="tl-item"><div class="tl-dot tl-now">&#128203;</div><div class="tl-body"><div class="tl-date">Etape 2 &mdash; avant le 10 septembre</div><div class="tl-name">Soumettre vos voeux via Google Form</div><div class="tl-desc">Cliquez sur le bouton dans <strong>Saisir mes voeux</strong>. Classez jusqu'a 3 options. L'horodatage determine la priorite (1er arrive / 1er servi).</div></div></div>
-    <div class="tl-item"><div class="tl-dot tl-now">&#9998;</div><div class="tl-body"><div class="tl-date">Etape 3 &mdash; avant le 10 septembre</div><div class="tl-name">Passer les tests de niveau requis</div><div class="tl-desc">Si vous avez choisi <strong>Maths, Business Spanish ou LV2</strong> : allez dans <strong>Tests de niveau</strong>, cochez le test et suivez les instructions. Si vous etes debutant complet, declarez-le simplement &mdash; aucune question ne s'affichera.</div></div></div>
+    <div class="tl-item"><div class="tl-dot tl-now">&#128203;</div><div class="tl-body"><div class="tl-date">Etape 2 &mdash; <span id="tl-date-voeux-2">avant le 10 septembre</span></div><div class="tl-name">Soumettre vos voeux via Google Form</div><div class="tl-desc">Cliquez sur le bouton dans <strong>Saisir mes voeux</strong>. Classez jusqu'a 3 options. L'horodatage determine la priorite (1er arrive / 1er servi).</div></div></div>
+    <div class="tl-item"><div class="tl-dot tl-now">&#9998;</div><div class="tl-body"><div class="tl-date">Etape 3 &mdash; <span id="tl-date-voeux-3">avant le 10 septembre</span></div><div class="tl-name">Passer les tests de niveau requis</div><div class="tl-desc">Si vous avez choisi <strong>Maths, Business Spanish ou LV2</strong> : allez dans <strong>Tests de niveau</strong>, cochez le test et suivez les instructions. Si vous etes debutant complet, declarez-le simplement &mdash; aucune question ne s'affichera.</div></div></div>
     <div class="tl-item"><div class="tl-dot tl-future">&#9881;</div><div class="tl-body"><div class="tl-date">J2-J4 de la rentree</div><div class="tl-name">Affectation et communication des groupes</div><div class="tl-desc">Chaque etudiant est place dans un groupe selon ses voeux et les combinaisons d'options configurees par l'administration.</div></div></div>
   </div>
   <div style="margin-top:24px;display:flex;gap:11px;flex-wrap:wrap">
@@ -349,7 +349,7 @@ body{display:flex!important;flex-direction:row!important}
       <div style="font-size:13px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Apres soumission</div>
       <ul class="steps-list">
         <li class="step-item"><div class="step-num">1</div><div><div class="step-title">Verifiez la confirmation Google</div><div class="step-desc">Un email de confirmation vous est envoye. Conservez-le comme preuve.</div></div></li>
-        <li class="step-item"><div class="step-num">2</div><div><div class="step-title">Passez les tests de niveau si necessaire</div><div class="step-desc">Si vous avez choisi Maths, Business Spanish ou LV2 : allez dans <strong>Tests de niveau</strong>, cochez le test et suivez les instructions avant le 10 septembre.</div></div></li>
+        <li class="step-item"><div class="step-num">2</div><div><div class="step-title">Passez les tests de niveau si necessaire</div><div class="step-desc">Si vous avez choisi Maths, Business Spanish ou LV2 : allez dans <strong>Tests de niveau</strong>, cochez le test et suivez les instructions avant le <span id="tl-date-voeux-tests">10 septembre</span>.</div></div></li>
         <li class="step-item"><div class="step-num">3</div><div><div class="step-title">Attendez votre affectation</div><div class="step-desc">Communication par email universitaire en J4 de la rentree.</div></div></li>
       </ul>
     </div>
@@ -882,7 +882,26 @@ body{display:flex!important;flex-direction:row!important}
     </div>
 
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px">
-      <button class="btn btn-success" onclick="saveConfig()">&#10003; Enregistrer et mettre a jour les jauges</button>
+<!-- Date limite voeux -->
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">
+        &#128197; Date limite de soumission des vœux
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="pf-field">
+          <label class="pf-label">Date limite (affichée aux étudiants)</label>
+          <input class="pf-input" id="adm-date-voeux" type="text" placeholder="ex : 10 septembre 2026"
+            oninput="updateDateVoeux()">
+        </div>
+        <div class="pf-field" style="display:flex;align-items:flex-end">
+          <div style="font-size:12px;color:#64748b;padding-bottom:6px">
+            Apparaît dans la timeline des étapes 2 et 3 sur la page d'accueil.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-success" onclick="saveConfig()">&#10003; Enregistrer et mettre a jour les jauges</button>
       <button class="btn btn-secondary" onclick="adminTab('groupes')">Etape suivante : Groupes &amp; combinaisons &#8594;</button>
     </div>
   </div>
@@ -1324,6 +1343,7 @@ function renderSportCatalogue(){
   });
 }
 function saveConfig(){
+  updateDateVoeux();
   updateSportLabels();
   updateJaugesFromAdmin();
   renderSportCatalogue();
@@ -1336,6 +1356,18 @@ function saveConfig(){
   // Mettre à jour le bloc infos pratiques sur la page Tests
   updateTestsInfo();
   alert("Configuration enregistree. Catalogue, jauges et informations pratiques mis a jour.");
+}
+function updateDateVoeux(){
+  var val = (document.getElementById("adm-date-voeux")||{}).value || "";
+  var label = val.trim() || "10 septembre";
+  // Mettre à jour les étapes 2 et 3 de la timeline
+  ["tl-date-voeux-2","tl-date-voeux-3"].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.textContent = "avant le " + label;
+  });
+  // Aussi mettre à jour la mention dans la page tests
+  var tlTests = document.getElementById("tl-date-voeux-tests");
+  if(tlTests) tlTests.textContent = label;
 }
 function updateTestsInfo(){
   function sf(id,valId,inputId){
@@ -2468,4 +2500,6 @@ window.addEventListener("load",function(){
 });
 </script>
 </body>
-</html>
+</html
+
+>
