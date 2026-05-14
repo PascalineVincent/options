@@ -901,6 +901,30 @@ body{display:flex!important;flex-direction:row!important}
       </div>
     </div>
 
+    <!-- Mots de passe -->
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">&#128274; Changer les mots de passe</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:#0f2942;margin-bottom:8px">Espace Administration</div>
+          <div class="pf-field" style="margin-bottom:8px"><label class="pf-label">Nouveau mot de passe</label><input class="pf-input" id="pwd-admin-1" type="password" placeholder="Min. 6 caractères"></div>
+          <div class="pf-field" style="margin-bottom:8px"><label class="pf-label">Confirmer</label><input class="pf-input" id="pwd-admin-2" type="password" placeholder="Répéter"></div>
+          <button class="btn btn-secondary btn-sm" onclick="saveNewPwd('admin')">Enregistrer</button>
+          <div id="pwd-admin-ok" class="banner bs" style="display:none;margin-top:8px;padding:6px 10px;font-size:12px">Mot de passe mis à jour.</div>
+          <div id="pwd-admin-err" style="display:none;color:#dc2626;font-size:12px;margin-top:6px"></div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:600;color:#0f2942;margin-bottom:8px">Espace Enseignant</div>
+          <div class="pf-field" style="margin-bottom:8px"><label class="pf-label">Nouveau mot de passe</label><input class="pf-input" id="pwd-ens-1" type="password" placeholder="Min. 6 caractères"></div>
+          <div class="pf-field" style="margin-bottom:8px"><label class="pf-label">Confirmer</label><input class="pf-input" id="pwd-ens-2" type="password" placeholder="Répéter"></div>
+          <button class="btn btn-secondary btn-sm" onclick="saveNewPwd('ens')">Enregistrer</button>
+          <div id="pwd-ens-ok" class="banner bs" style="display:none;margin-top:8px;padding:6px 10px;font-size:12px">Mot de passe mis à jour.</div>
+          <div id="pwd-ens-err" style="display:none;color:#dc2626;font-size:12px;margin-top:6px"></div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:#94a3b8;margin-top:12px">&#9432; Stockés sous forme de hash SHA-256. Par défaut : <code>options2026!</code> (admin) / <code>enseignant2026!</code> (enseignant).</div>
+    </div>
+
     <button class="btn btn-success" onclick="saveConfig()">&#10003; Enregistrer et mettre a jour les jauges</button>
       <button class="btn btn-secondary" onclick="adminTab('groupes')">Etape suivante : Groupes &amp; combinaisons &#8594;</button>
     </div>
@@ -1215,7 +1239,7 @@ var PLACES={voltaire:{max:80,pris:0},eco:{max:100,pris:0},maths:{max:40,pris:0},
 
 // ── NAVIGATION ────────────────────────────────────────────────────
 function goTo(id){
-  ["catalogue","voeux","tests","ens-login","enseignant","admin-login","admin"].forEach(function(p){
+  ["accueil","catalogue","voeux","tests","ens-login","enseignant","admin-login","admin"].forEach(function(p){
     var el=document.getElementById("page-"+p);
     if(el){el.style.display="none";el.classList.remove("active");}
   });
@@ -1289,9 +1313,37 @@ function showScore(scoreElId,score,tot,extra){var pct=Math.round(100*score/tot);
 function submitTest(type){var qids=TEST_Q[type];if(!qids)return;var score=gradeQs(qids);showScore("score-"+type,score,qids.length,"");ST.testsDone[type]=true;ST.answers["score_"+type]=score+"/"+qids.length;document.getElementById("ok-"+type).style.display="inline";showPrintBtn(type);}
 function submitLV2Test(lang){var qids=TEST_Q[lang];if(!qids)return;var score=gradeQs(qids);showScore("score-lv2-"+lang,score,qids.length,"(indicatif)");ST.testsDone.lv2=true;ST.answers.score_lv2=score+"/"+qids.length;ST.answers.lang_lv2=lang;document.getElementById("ok-lv2-"+lang).style.display="inline";showPrintBtn("lv2-"+lang);}
 // ── ENSEIGNANT ────────────────────────────────────────────────────
-function checkEns(){if((document.getElementById("ens-pwd")||{}).value==="enseignant2026!"){document.getElementById("ens-err").style.display="none";updateEnsPageFromConfig();goTo("enseignant");}else{document.getElementById("ens-err").style.display="flex";}}
+async function checkEns(){
+  var pwd = (document.getElementById("ens-pwd")||{}).value||"";
+  var hash = await sha256(pwd);
+  var storedRaw = null;
+  try { storedRaw = localStorage.getItem("ens_pwd_hash"); } catch(e){}
+  var stored = storedRaw || await sha256("enseignant2026!");
+  if(hash === stored){
+    document.getElementById("ens-err").style.display="none";
+    updateEnsPageFromConfig();goTo("enseignant");
+  } else {
+    document.getElementById("ens-err").style.display="flex";
+  }
+}
 function ensTab(name){["maths","spanish","lv2"].forEach(function(t){document.getElementById("epanel-"+t).style.display=t===name?"block":"none";document.getElementById("etab-"+t).classList.toggle("active",t===name);});renderEns(name);}
-function checkAdmin(){if(document.getElementById("admin-pwd").value==="options2026!"){document.getElementById("admin-err").style.display="none";var saved=localStorage.getItem("gform_url");if(saved&&document.getElementById("adm-gform-url"))document.getElementById("adm-gform-url").value=saved;if(!ST.combis.length)initDefaultCombis();renderCombisUI();renderRedoublants();goTo("admin");}else{document.getElementById("admin-err").style.display="flex";}}
+async function checkAdmin(){
+  var pwd = document.getElementById("admin-pwd").value;
+  var hash = await sha256(pwd);
+  var storedRaw = null;
+  try { storedRaw = localStorage.getItem("admin_pwd_hash"); } catch(e){}
+  var stored = storedRaw || await sha256("options2026!");
+  if(hash === stored){
+    document.getElementById("admin-err").style.display="none";
+    var saved = null;
+    try { saved = localStorage.getItem("gform_url"); } catch(e){}
+    if(saved&&document.getElementById("adm-gform-url"))document.getElementById("adm-gform-url").value=saved;
+    if(!ST.combis.length)initDefaultCombis();
+    renderCombisUI();renderRedoublants();goTo("admin");
+  } else {
+    document.getElementById("admin-err").style.display="flex";
+  }
+}
 function adminTab(name){var pageAdmin=document.getElementById("page-admin");if(pageAdmin&&pageAdmin.style.display==="none")pageAdmin.style.display="block";["config","groupes","import","affect","resultats"].forEach(function(t){var p=document.getElementById("apanel-"+t);var b=document.getElementById("atab-"+t);if(p)p.style.display=t===name?"block":"none";if(b)b.classList.toggle("active",t===name);});if(name==="affect")refreshAffectTab();}
 function updateSportLabels(){
   for(var i=1;i<=5;i++){
@@ -1341,6 +1393,25 @@ function renderSportCatalogue(){
     div.innerHTML='<div class="opt-card-inner"><div class="opt-stripe" style="background:'+color+'"></div><div class="opt-body"><div class="opt-name">'+(nom||"Sport "+idx)+'</div><div class="opt-badges"><span class="badge badge-sem">Semestre</span>'+(places===0?'<span class="badge badge-tbd">Places a confirmer</span>':'')+'</div><div class="opt-desc">Activite sportive — semestre. Creneaux communiques a la rentree.</div><div class="opt-footer">'+jaugeHtml+'</div></div></div>';
     container.appendChild(div);
   });
+}
+// ── SÉCURITÉ ──────────────────────────────────────────────────────
+async function sha256(msg){
+  var buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+async function saveNewPwd(role){
+  var p1 = document.getElementById("pwd-"+role+"-1").value;
+  var p2 = document.getElementById("pwd-"+role+"-2").value;
+  var ok  = document.getElementById("pwd-"+role+"-ok");
+  var err = document.getElementById("pwd-"+role+"-err");
+  if(!p1||p1.length<6){err.textContent="Minimum 6 caractères.";err.style.display="block";ok.style.display="none";return;}
+  if(p1!==p2){err.textContent="Les mots de passe ne correspondent pas.";err.style.display="block";ok.style.display="none";return;}
+  var hash = await sha256(p1);
+  try { localStorage.setItem(role+"_pwd_hash", hash); } catch(e) { alert("Impossible de sauvegarder : " + e.message); return; }
+  err.style.display="none";
+  ok.style.display="block";
+  document.getElementById("pwd-"+role+"-1").value="";
+  document.getElementById("pwd-"+role+"-2").value="";
 }
 function saveConfig(){
   updateDateVoeux();
