@@ -372,7 +372,7 @@ p{margin:0}
       <!-- Maths -->
       <div id="ti-bloc-maths" style="display:none;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 18px">
         <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:8px">&#9998; Remise a niveau — Mathematiques</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;font-size:13px">
           <div id="ti-ens-maths" style="display:none">
             <span style="font-size:10px;font-weight:600;color:#92400e;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Enseignant</span>
             <span id="ti-ens-maths-val" style="color:#0f172a"></span>
@@ -380,6 +380,10 @@ p{margin:0}
           <div id="ti-date-maths" style="display:none">
             <span style="font-size:10px;font-weight:600;color:#92400e;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Date limite</span>
             <span id="ti-date-maths-val" style="color:#0f172a;font-weight:500"></span>
+          </div>
+          <div id="ti-modalite-maths" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#92400e;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Modalite</span>
+            <span id="ti-modalite-maths-val" style="color:#0f172a"></span>
           </div>
           <div id="ti-salle-maths" style="display:none">
             <span style="font-size:10px;font-weight:600;color:#92400e;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Salle / Creneau</span>
@@ -391,7 +395,7 @@ p{margin:0}
       <!-- Business Spanish -->
       <div id="ti-bloc-spanish" style="display:none;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:14px 18px">
         <div style="font-size:12px;font-weight:700;color:#9a3412;margin-bottom:8px">&#9998; Business Spanish</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;font-size:13px">
           <div id="ti-ens-spanish" style="display:none">
             <span style="font-size:10px;font-weight:600;color:#9a3412;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Enseignant</span>
             <span id="ti-ens-spanish-val" style="color:#0f172a"></span>
@@ -399,6 +403,10 @@ p{margin:0}
           <div id="ti-date-spanish" style="display:none">
             <span style="font-size:10px;font-weight:600;color:#9a3412;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Date limite</span>
             <span id="ti-date-spanish-val" style="color:#0f172a;font-weight:500"></span>
+          </div>
+          <div id="ti-modalite-spanish" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#9a3412;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Modalite</span>
+            <span id="ti-modalite-spanish-val" style="color:#0f172a"></span>
           </div>
           <div id="ti-salle-spanish" style="display:none">
             <span style="font-size:10px;font-weight:600;color:#9a3412;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Salle / Creneau</span>
@@ -410,7 +418,7 @@ p{margin:0}
       <!-- LV2 -->
       <div id="ti-bloc-lv2" style="display:none;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:10px;padding:14px 18px">
         <div style="font-size:12px;font-weight:700;color:#4c1d95;margin-bottom:8px">&#9998; LV2 — Langue vivante 2</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:13px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;font-size:13px">
           <div id="ti-ens-lv2" style="display:none">
             <span style="font-size:10px;font-weight:600;color:#4c1d95;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Enseignants</span>
             <span id="ti-ens-lv2-val" style="color:#0f172a"></span>
@@ -418,6 +426,10 @@ p{margin:0}
           <div id="ti-date-lv2" style="display:none">
             <span style="font-size:10px;font-weight:600;color:#4c1d95;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Date limite</span>
             <span id="ti-date-lv2-val" style="color:#0f172a;font-weight:500"></span>
+          </div>
+          <div id="ti-modalite-lv2" style="display:none">
+            <span style="font-size:10px;font-weight:600;color:#4c1d95;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Modalite</span>
+            <span id="ti-modalite-lv2-val" style="color:#0f172a"></span>
           </div>
           <div id="ti-salle-lv2" style="display:none">
             <span style="font-size:10px;font-weight:600;color:#4c1d95;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px">Salle / Creneau</span>
@@ -622,9 +634,18 @@ p{margin:0}
           <strong>Ce que vous recevez :</strong> un fichier Excel listant les etudiants ayant choisi cette option (nom, prenom, email, rang du voeu).<br>
           L'etudiant vous apporte son <strong>test imprime depuis la plateforme</strong>. Apres evaluation, remplir la colonne <code style="background:#f1f5f9;padding:1px 6px;border-radius:4px;font-size:12px">VALIDATION_MATHS</code> : <strong>OUI</strong> (etudiant accepte) ou <strong>NON</strong> (renvoye vers son voeu suivant).
         </div>
-        <div class="banner bw" style="margin-bottom:0">
+        <div class="banner bw" style="margin-bottom:14px">
           <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92z" clip-rule="evenodd"/></svg>
           <div>Les etudiants ayant declare etre <strong>debutants complets</strong> vous apportent quand meme un document imprime (declaration, sans quiz a corriger). Validez-les normalement en OUI dans la colonne.</div>
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Date et lieu de remise du test (visible par les etudiants)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <div class="pf-field"><label class="pf-label">Date limite</label><input class="pf-input" id="ens-date-maths" type="text" placeholder="ex : 12 septembre 2026"></div>
+            <div class="pf-field"><label class="pf-label">Modalite</label><select class="pf-input" id="ens-modalite-maths"><option value="">— Non precisee —</option><option value="distance">A distance (chez soi)</option><option value="presentiel">En presentiel (lieu indique)</option></select></div>
+          </div>
+          <div class="pf-field" style="margin-bottom:10px"><label class="pf-label">Salle / lieu / creneau (utile surtout si presentiel)</label><input class="pf-input" id="ens-salle-maths" type="text" placeholder="ex : Salle B204 — lundi 8h-10h"></div>
+          <button class="btn btn-secondary btn-sm" onclick="saveEnsTestInfo('maths')">Enregistrer ces informations</button>
         </div>
       </div>
     </div>
@@ -643,9 +664,18 @@ p{margin:0}
           <strong>Ce que vous recevez :</strong> liste des etudiants ayant choisi Business Spanish (nom, prenom, email, rang du voeu).<br>
           L'etudiant vous apporte son <strong>test imprime depuis la plateforme</strong>. Apres evaluation, remplir la colonne <code style="background:#f1f5f9;padding:1px 6px;border-radius:4px;font-size:12px">VALIDATION_SPANISH</code> : <strong>OUI</strong> (niveau B1 suffisant) ou <strong>NON</strong>. Les etudiants ayant declare un niveau A1/A2 figurent quand meme dans cette liste (aucun filtrage automatique cote plateforme) — remplissez NON pour eux, sinon leur voeu reste simplement bloque sans etre traite.
         </div>
-        <div class="banner bi" style="margin-bottom:0">
+        <div class="banner bi" style="margin-bottom:14px">
           <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
           <div>Le cours etant dispense <strong>entierement en espagnol</strong>, le seuil recommande est B1. Un etudiant valide (oui) avec un score faible sera tout de meme affecte — a votre discretion.</div>
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Date et lieu de remise du test (visible par les etudiants)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <div class="pf-field"><label class="pf-label">Date limite</label><input class="pf-input" id="ens-date-spanish" type="text" placeholder="ex : 12 septembre 2026"></div>
+            <div class="pf-field"><label class="pf-label">Modalite</label><select class="pf-input" id="ens-modalite-spanish"><option value="">— Non precisee —</option><option value="distance">A distance (chez soi)</option><option value="presentiel">En presentiel (lieu indique)</option></select></div>
+          </div>
+          <div class="pf-field" style="margin-bottom:10px"><label class="pf-label">Salle / lieu / creneau (utile surtout si presentiel)</label><input class="pf-input" id="ens-salle-spanish" type="text" placeholder="ex : Amphi C — mardi 14h-16h"></div>
+          <button class="btn btn-secondary btn-sm" onclick="saveEnsTestInfo('spanish')">Enregistrer ces informations</button>
         </div>
       </div>
     </div>
@@ -691,9 +721,18 @@ p{margin:0}
             </div>
           </div>
         </div>
-        <div class="banner bp" style="margin-bottom:0">
+        <div class="banner bp" style="margin-bottom:14px">
           <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/></svg>
           <div>Les etudiants ayant declare etre <strong>debutants complets</strong> figurent tout de meme dans votre liste, et vous apportent desormais un document imprime (declaration, sans quiz a corriger). Saisissez simplement leur code de groupe debutant (<code>lv2_de_debut</code>, <code>lv2_chinois</code> ou <code>lv2_es_debut</code>) dans NIVEAU_LV2.</div>
+        </div>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Date et lieu de remise du test (visible par les etudiants)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <div class="pf-field"><label class="pf-label">Date limite</label><input class="pf-input" id="ens-date-lv2" type="text" placeholder="ex : 15 septembre 2026"></div>
+            <div class="pf-field"><label class="pf-label">Modalite</label><select class="pf-input" id="ens-modalite-lv2"><option value="">— Non precisee —</option><option value="distance">A distance (chez soi)</option><option value="presentiel">En presentiel (lieu indique)</option></select></div>
+          </div>
+          <div class="pf-field" style="margin-bottom:10px"><label class="pf-label">Salle / lieu / creneau (utile surtout si presentiel)</label><input class="pf-input" id="ens-salle-lv2" type="text" placeholder="ex : Salle 101 — jeudi 10h-12h"></div>
+          <button class="btn btn-secondary btn-sm" onclick="saveEnsTestInfo('lv2')">Enregistrer ces informations</button>
         </div>
       </div>
     </div>
@@ -834,7 +873,8 @@ p{margin:0}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
           <div class="pf-field"><label class="pf-label">Enseignant responsable</label><input class="pf-input" id="adm-ens-maths" type="text" placeholder="ex : M. Dupont — m.dupont@univ.fr"></div>
           <div class="pf-field"><label class="pf-label">Date limite de remise du test</label><input class="pf-input" id="adm-date-maths" type="text" placeholder="ex : 12 septembre 2026"></div>
-          <div class="pf-field" style="grid-column:1/-1"><label class="pf-label">Salle / créneau</label><input class="pf-input" id="adm-salle-maths" type="text" placeholder="ex : Salle B204 — lundi 8h-10h"></div>
+          <div class="pf-field"><label class="pf-label">Modalite du test</label><select class="pf-input" id="adm-modalite-maths" onchange="updateTestsInfo()"><option value="">— Non precisee —</option><option value="distance">A distance (chez soi)</option><option value="presentiel">En presentiel (lieu indique)</option></select></div>
+          <div class="pf-field"><label class="pf-label">Salle / lieu / creneau</label><input class="pf-input" id="adm-salle-maths" type="text" placeholder="ex : Salle B204 — lundi 8h-10h"></div>
         </div>
       </div>
 
@@ -844,7 +884,8 @@ p{margin:0}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
           <div class="pf-field"><label class="pf-label">Enseignant responsable</label><input class="pf-input" id="adm-ens-spanish" type="text" placeholder="ex : Mme Garcia — m.garcia@univ.fr"></div>
           <div class="pf-field"><label class="pf-label">Date limite de remise du test</label><input class="pf-input" id="adm-date-spanish" type="text" placeholder="ex : 12 septembre 2026"></div>
-          <div class="pf-field" style="grid-column:1/-1"><label class="pf-label">Salle / créneau</label><input class="pf-input" id="adm-salle-spanish" type="text" placeholder="ex : Amphi C — mardi 14h-16h"></div>
+          <div class="pf-field"><label class="pf-label">Modalite du test</label><select class="pf-input" id="adm-modalite-spanish" onchange="updateTestsInfo()"><option value="">— Non precisee —</option><option value="distance">A distance (chez soi)</option><option value="presentiel">En presentiel (lieu indique)</option></select></div>
+          <div class="pf-field"><label class="pf-label">Salle / lieu / creneau</label><input class="pf-input" id="adm-salle-spanish" type="text" placeholder="ex : Amphi C — mardi 14h-16h"></div>
         </div>
       </div>
 
@@ -854,11 +895,17 @@ p{margin:0}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
           <div class="pf-field" style="grid-column:1/-1"><label class="pf-label">Enseignants responsables (All. / Chinois / Esp.)</label><input class="pf-input" id="adm-ens-lv2" type="text" placeholder="ex : All. : M. Müller | Zh. : Mme Chen | Esp. : M. Lopez"></div>
           <div class="pf-field"><label class="pf-label">Date limite de remise du test</label><input class="pf-input" id="adm-date-lv2" type="text" placeholder="ex : 15 septembre 2026"></div>
-          <div class="pf-field"><label class="pf-label">Salle / créneau</label><input class="pf-input" id="adm-salle-lv2" type="text" placeholder="ex : Salle 101 — jeudi 10h-12h"></div>
+          <div class="pf-field"><label class="pf-label">Modalite du test</label><select class="pf-input" id="adm-modalite-lv2" onchange="updateTestsInfo()"><option value="">— Non precisee —</option><option value="distance">A distance (chez soi)</option><option value="presentiel">En presentiel (lieu indique)</option></select></div>
+          <div class="pf-field"><label class="pf-label">Salle / lieu / creneau</label><input class="pf-input" id="adm-salle-lv2" type="text" placeholder="ex : Salle 101 — jeudi 10h-12h"></div>
         </div>
       </div>
     </div>
 
+    <div style="font-size:11px;color:#94a3b8;margin-top:10px;line-height:1.6">
+      &#9888; Ces champs ne sont pas envoyes a un serveur : ils ne sont conserves que dans <strong>ce navigateur</strong> (memoire locale).
+      Si plusieurs personnes gerent la plateforme depuis des ordinateurs differents, mettez-vous d'accord sur qui saisit ces informations
+      en dernier avant chaque mise en ligne, ou faites-le depuis le meme poste que celui utilise pour generer le site.
+    </div>
     <!-- Éditeur de questions des tests -->
     <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 22px;margin-top:14px">
       <div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.07em;padding-bottom:8px;border-bottom:2px solid #ddd6fe;margin-bottom:14px">&#9998; Questions des tests de niveau</div>
@@ -1351,6 +1398,14 @@ function updateTestsInfo(){
     if(wrap)wrap.style.display=val?"block":"none";
     if(span)span.textContent=val;
   }
+  function sfModalite(id,valId,inputId){
+    var el=document.getElementById(inputId);
+    var val=el?el.value:"";
+    var wrap=document.getElementById(id);
+    var span=document.getElementById(valId);
+    if(wrap)wrap.style.display=val?"block":"none";
+    if(span)span.textContent=MODALITE_LABELS[val]||val;
+  }
   function showBloc(blocId,fields){
     var hasAny=fields.some(function(id){var el=document.getElementById(id);return el&&el.value.trim();});
     var bloc=document.getElementById(blocId);
@@ -1359,16 +1414,19 @@ function updateTestsInfo(){
   // Maths
   sf("ti-ens-maths","ti-ens-maths-val","adm-ens-maths");
   sf("ti-date-maths","ti-date-maths-val","adm-date-maths");
+  sfModalite("ti-modalite-maths","ti-modalite-maths-val","adm-modalite-maths");
   sf("ti-salle-maths","ti-salle-maths-val","adm-salle-maths");
   showBloc("ti-bloc-maths",["adm-ens-maths","adm-date-maths","adm-salle-maths"]);
   // Spanish
   sf("ti-ens-spanish","ti-ens-spanish-val","adm-ens-spanish");
   sf("ti-date-spanish","ti-date-spanish-val","adm-date-spanish");
+  sfModalite("ti-modalite-spanish","ti-modalite-spanish-val","adm-modalite-spanish");
   sf("ti-salle-spanish","ti-salle-spanish-val","adm-salle-spanish");
   showBloc("ti-bloc-spanish",["adm-ens-spanish","adm-date-spanish","adm-salle-spanish"]);
   // LV2
   sf("ti-ens-lv2","ti-ens-lv2-val","adm-ens-lv2");
   sf("ti-date-lv2","ti-date-lv2-val","adm-date-lv2");
+  sfModalite("ti-modalite-lv2","ti-modalite-lv2-val","adm-modalite-lv2");
   sf("ti-salle-lv2","ti-salle-lv2-val","adm-salle-lv2");
   showBloc("ti-bloc-lv2",["adm-ens-lv2","adm-date-lv2","adm-salle-lv2"]);
   // Bloc global
@@ -2133,6 +2191,8 @@ function printTestResult(testId){
   if(dateInp&&dateInp.value.trim())dateLimite=dateInp.value.trim();
   var salleInp=document.getElementById("adm-salle-"+disc);
   var salle=salleInp&&salleInp.value.trim()?salleInp.value.trim():"";
+  var modaliteInp=document.getElementById("adm-modalite-"+disc);
+  var modalite=modaliteInp&&modaliteInp.value?(MODALITE_LABELS[modaliteInp.value]||""):"";
   var win=window.open("","_blank","width=620,height=560");
   win.document.write("<!DOCTYPE html><html><head><title>Résultat test — "+testLabel+"</title>"
     +"<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;max-width:520px;margin:32px auto;padding:24px;color:#0f172a}"
@@ -2153,6 +2213,7 @@ function printTestResult(testId){
     +"<div class='notice'>"
     +"<strong>&#128204; À remettre à votre enseignant</strong><br>"
     +(dateLimite?"Ce document est à présenter à votre enseignant <strong>avant le "+dateLimite+"</strong>.<br>":"Ce document est à présenter à votre enseignant avant la date limite communiquée.<br>")
+    +(modalite?"<strong>Modalité :</strong> "+modalite+"<br>":"")
     +(salle?"<strong>Lieu :</strong> "+salle+"<br>":"")
     +"Imprimez ce document ou enregistrez-le en PDF (Ctrl+P)."
     +"</div>"
@@ -2313,6 +2374,7 @@ function exportTestsExcelEnseignant(){
 }
 
 
+var MODALITE_LABELS={distance:"A distance (chez soi)",presentiel:"En presentiel (lieu indique)"};
 function updateEnsPageFromConfig(){
   function setEns(id,inputId,fallback){
     var el=document.getElementById(id);
@@ -2337,6 +2399,44 @@ function updateEnsPageFromConfig(){
   setEns("ens-resp-maths","adm-ens-maths","Responsable : non renseigne");
   setEns("ens-resp-spanish","adm-ens-spanish","Responsable : non renseigne");
   setEns("ens-resp-lv2","adm-ens-lv2","Responsable : non renseigne");
+  // Pré-remplir les champs editables enseignant avec les valeurs actuelles
+  ["maths","spanish","lv2"].forEach(function(d){
+    ["date","modalite","salle"].forEach(function(f){
+      var src=document.getElementById("adm-"+f+"-"+d);
+      var dst=document.getElementById("ens-"+f+"-"+d);
+      if(src&&dst)dst.value=src.value||"";
+    });
+  });
+}
+// L'enseignant enregistre ses informations pratiques (date / modalite / salle).
+// Ces valeurs alimentent directement les champs admin partages, utilises par
+// la page Tests de niveau cote etudiant et par le PDF imprime.
+// NB : comme la plateforme n'a pas de serveur, ceci n'est conserve que dans
+// CE navigateur (memoire locale) — voir l'avertissement affiche a l'ecran.
+function saveEnsTestInfo(disc){
+  ["date","modalite","salle"].forEach(function(f){
+    var src=document.getElementById("ens-"+f+"-"+disc);
+    var dst=document.getElementById("adm-"+f+"-"+disc);
+    if(src&&dst){
+      dst.value=src.value||"";
+      try{localStorage.setItem("test_info_"+f+"_"+disc,src.value||"");}catch(e){}
+    }
+  });
+  updateTestsInfo();
+  alert("Informations enregistrees pour les etudiants (dans ce navigateur). Pensez a transmettre ces memes informations a l'administration si elle gere le site depuis un autre poste.");
+}
+// Au chargement, restaurer les informations precedemment enregistrees dans ce navigateur
+function restoreTestInfoFromStorage(){
+  ["maths","spanish","lv2"].forEach(function(d){
+    ["date","modalite","salle"].forEach(function(f){
+      var dst=document.getElementById("adm-"+f+"-"+d);
+      if(!dst)return;
+      try{
+        var v=localStorage.getItem("test_info_"+f+"_"+d);
+        if(v)dst.value=v;
+      }catch(e){}
+    });
+  });
 }
 
 // ── ÉDITEUR DE QUESTIONS ─────────────────────────────────────────
@@ -2531,6 +2631,8 @@ window.addEventListener("load",function(){
   var saved=localStorage.getItem("gform_url");
   if(saved)applyGformUrl(saved);
   else document.getElementById("gform-config-zone").style.display="block";
+  restoreTestInfoFromStorage();
+  updateTestsInfo();
 });
 </script>
 </body>
