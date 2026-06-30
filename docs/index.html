@@ -1474,10 +1474,29 @@ function parseXlsxFile(f){
         return o;
       }).filter(function(r){return r.num_etudiant||r.nom;});
       if(!data.length){alert("Aucune donnee valide trouvee. Verifiez que le fichier est bien l'export Google Sheets.");return;}
-      ST.rawData=data;showPreview(data,hdrs);refreshAffectTab();
+      var dedup=dedupeByStudent(data);
+      if(dedup.removed>0){
+        alert(dedup.removed+" soumission(s) en double detectee(s) (meme N\u00b0 etudiant soumis plusieurs fois). Seule la soumission la plus recente de chaque etudiant a ete conservee.");
+      }
+      ST.rawData=dedup.data;showPreview(dedup.data,hdrs);refreshAffectTab();
     }catch(err){alert("Erreur de lecture : "+err.message);}
   };
   reader.readAsArrayBuffer(f);
+}
+// Un etudiant = une seule ligne. S'il a soumis le formulaire plusieurs fois,
+// seule sa soumission la plus recente (horodatage le plus tardif) est conservee.
+function dedupeByStudent(data){
+  var byNum={};
+  data.forEach(function(r){
+    var num=(r.num_etudiant||"").trim();
+    var key=num||("__noid__"+(r.nom||"")+"_"+(r.prenom||""));
+    var prev=byNum[key];
+    if(!prev||(r.horodatage_soumission||"")>=(prev.horodatage_soumission||"")){
+      byNum[key]=r;
+    }
+  });
+  var out=Object.keys(byNum).map(function(k){return byNum[k];});
+  return {data:out,removed:data.length-out.length};
 }
 // Mapping en-têtes Google Form → noms internes
 var HDR_MAP={
@@ -2157,15 +2176,30 @@ function exportTestsExcelEnseignant(){
   var data=ST.rawData;
   var wb=XLSX.utils.book_new();
   var today=new Date().toLocaleDateString("fr-FR");
+  var MARGE=1.5; // marge de confort : capacite x 1.5
 
   function getEmail(e){return e.email_google||e.email||"";}
   function getRang(e,opt){return e.voeu1===opt?1:e.voeu2===opt?2:e.voeu3===opt?3:0;}
   function hasOpt(e,opt){return getRang(e,opt)>0;}
+  // Capacite totale (places) de tous les groupes incluant cette option
+  function totalCapacity(opt){
+    return (ST.combis||[]).reduce(function(s,c){
+      return s+([c.opt1,c.opt2,c.opt3,c.opt4].indexOf(opt)>=0?(+c.places||0):0);
+    },0);
+  }
+  // Trie par priorite : voeu 1 avant voeu 2 avant voeu 3, puis par ordre d'arrivee
+  function sortByPriority(list,opt){
+    return list.slice().sort(function(a,b){
+      var ra=getRang(a,opt),rb=getRang(b,opt);
+      if(ra!==rb)return ra-rb;
+      return (a.horodatage_soumission||"").localeCompare(b.horodatage_soumission||"");
+    });
+  }
 
   // Colonnes fixes
-  var HDR_OUI_NON =["N° Etudiant","Nom","Prenom","Email","Horodatage Form","Voeu (rang)","Validation (OUI/NON)"];
-  var HDR_LV2     =["N° Etudiant","Nom","Prenom","Email","Horodatage Form","Voeu (rang)","Niveau LV2"];
-  var NC=7;
+  var HDR_OUI_NON =["Priorite","N° Etudiant","Nom","Prenom","Email","Horodatage Form","Voeu (rang)","Validation (OUI/NON)"];
+  var HDR_LV2     =["Priorite","N° Etudiant","Nom","Prenom","Email","Horodatage Form","Voeu (rang)","Niveau LV2"];
+  var NC=8;
 
   // Ajouter une validation dropdown sur une colonne entière d'un worksheet
   // colIndex = index 0-based, nRows = nombre de lignes de données, choices = tableau de strings
@@ -2185,6 +2219,23 @@ function exportTestsExcelEnseignant(){
     });
   }
 
+  // Construit les lignes de données triées par priorite, avec une ligne de
+  // separation visuelle a la marge de confort (capacite x 1.5)
+  function buildRowsWithCutoff(list,opt,rowFn){
+    var sorted=sortByPriority(list,opt);
+    var cap=totalCapacity(opt);
+    var cutoff=cap>0?Math.ceil(cap*MARGE):0;
+    var rows=[];
+    sorted.forEach(function(e,i){
+      if(cutoff>0&&i===cutoff&&cutoff<sorted.length){
+        var sep="— Au-dela de cette ligne : marge de confort depassee (capacite "+cap+" x "+MARGE+" \u2248 "+cutoff+" candidats prioritaires ci-dessus). A traiter en priorite basse / liste d'attente —";
+        rows.push([sep].concat(new Array(NC-1).fill("")));
+      }
+      rows.push(rowFn(e,i+1));
+    });
+    return {rows:rows,cap:cap,cutoff:cutoff,total:sorted.length};
+  }
+
   // Construire une feuille avec instruction en ligne 1, en-têtes en ligne 2, données ligne 3+
   function makeSheet(hdr,dataRows,instrText){
     var rows=[
@@ -2197,35 +2248,33 @@ function exportTestsExcelEnseignant(){
   }
 
   // ── Onglet Maths ─────────────────────────────────────────────────
-  var mathsData=data.filter(function(e){return hasOpt(e,"maths");})
-    .sort(function(a,b){return(a.nom||"").localeCompare(b.nom||"");});
+  var mathsList=data.filter(function(e){return hasOpt(e,"maths");});
+  var mb=buildRowsWithCutoff(mathsList,"maths",function(e,p){
+    return[p,e.num_etudiant,e.nom,e.prenom,getEmail(e),
+           e.horodatage_soumission,"Voeu "+getRang(e,"maths"),""];
+  });
   var wsM=makeSheet(
-    HDR_OUI_NON,
-    mathsData.map(function(e){
-      return[e.num_etudiant,e.nom,e.prenom,getEmail(e),
-             e.horodatage_soumission,"Voeu "+getRang(e,"maths"),""];
-    }),
-    "Maths — "+today+" — Saisir OUI (accepte) ou NON (niveau insuffisant)"
+    HDR_OUI_NON, mb.rows,
+    "Maths — "+today+" — "+mb.total+" candidats, "+mb.cap+" places (marge confort \u2248 "+mb.cutoff+") — Trie par priorite (voeu puis ordre d'arrivee). Saisir OUI (accepte) ou NON (niveau insuffisant)"
   );
-  wsM["!cols"]=[{wch:13},{wch:18},{wch:14},{wch:30},{wch:18},{wch:10},{wch:22}];
+  wsM["!cols"]=[{wch:9},{wch:13},{wch:18},{wch:14},{wch:30},{wch:18},{wch:10},{wch:22}];
   wsM["!freeze"]={xSplit:0,ySplit:2};
-  addDropdown(wsM,6,2,mathsData.length,["OUI","NON"]);
+  addDropdown(wsM,7,2,mb.rows.length,["OUI","NON"]);
   XLSX.utils.book_append_sheet(wb,wsM,"Tests - Maths");
 
   // ── Onglet Business Spanish ──────────────────────────────────────
-  var spanData=data.filter(function(e){return hasOpt(e,"business_spanish");})
-    .sort(function(a,b){return(a.nom||"").localeCompare(b.nom||"");});
+  var spanList=data.filter(function(e){return hasOpt(e,"business_spanish");});
+  var sb=buildRowsWithCutoff(spanList,"business_spanish",function(e,p){
+    return[p,e.num_etudiant,e.nom,e.prenom,getEmail(e),
+           e.horodatage_soumission,"Voeu "+getRang(e,"business_spanish"),""];
+  });
   var wsS=makeSheet(
-    HDR_OUI_NON,
-    spanData.map(function(e){
-      return[e.num_etudiant,e.nom,e.prenom,getEmail(e),
-             e.horodatage_soumission,"Voeu "+getRang(e,"business_spanish"),""];
-    }),
-    "Business Spanish — "+today+" — OUI = niveau B1+ | NON = niveau insuffisant"
+    HDR_OUI_NON, sb.rows,
+    "Business Spanish — "+today+" — "+sb.total+" candidats, "+sb.cap+" places (marge confort \u2248 "+sb.cutoff+") — Trie par priorite. OUI = niveau B1+ | NON = niveau insuffisant"
   );
-  wsS["!cols"]=[{wch:13},{wch:18},{wch:14},{wch:30},{wch:18},{wch:10},{wch:22}];
+  wsS["!cols"]=[{wch:9},{wch:13},{wch:18},{wch:14},{wch:30},{wch:18},{wch:10},{wch:22}];
   wsS["!freeze"]={xSplit:0,ySplit:2};
-  addDropdown(wsS,6,2,spanData.length,["OUI","NON"]);
+  addDropdown(wsS,7,2,sb.rows.length,["OUI","NON"]);
   XLSX.utils.book_append_sheet(wb,wsS,"Tests - Business Spanish");
 
   // ── Onglets LV2 : un par langue ──────────────────────────────────
@@ -2238,20 +2287,19 @@ function exportTestsExcelEnseignant(){
      niveaux:["lv2_es_debut","lv2_es_inter","lv2_es_avance"]},
   ];
   LV2_LANGS.forEach(function(lang){
-    var lv2Data=data.filter(function(e){return hasOpt(e,lang.code);})
-      .sort(function(a,b){return(a.nom||"").localeCompare(b.nom||"");});
-    if(!lv2Data.length)return;
+    var lv2List=data.filter(function(e){return hasOpt(e,lang.code);});
+    if(!lv2List.length)return;
+    var lb=buildRowsWithCutoff(lv2List,lang.code,function(e,p){
+      return[p,e.num_etudiant,e.nom,e.prenom,getEmail(e),
+             e.horodatage_soumission,"Voeu "+getRang(e,lang.code),""];
+    });
     var wsL=makeSheet(
-      HDR_LV2,
-      lv2Data.map(function(e){
-        return[e.num_etudiant,e.nom,e.prenom,getEmail(e),
-               e.horodatage_soumission,"Voeu "+getRang(e,lang.code),""];
-      }),
-      lang.label+" — "+today+" — Codes valides : "+lang.niveaux.join(" | ")
+      HDR_LV2, lb.rows,
+      lang.label+" — "+today+" — "+lb.total+" candidats, "+lb.cap+" places (marge confort \u2248 "+lb.cutoff+") — Trie par priorite. Codes valides : "+lang.niveaux.join(" | ")
     );
-    wsL["!cols"]=[{wch:13},{wch:18},{wch:14},{wch:30},{wch:18},{wch:10},{wch:26}];
+    wsL["!cols"]=[{wch:9},{wch:13},{wch:18},{wch:14},{wch:30},{wch:18},{wch:10},{wch:26}];
     wsL["!freeze"]={xSplit:0,ySplit:2};
-    addDropdown(wsL,6,2,lv2Data.length,lang.niveaux);
+    addDropdown(wsL,7,2,lb.rows.length,lang.niveaux);
     XLSX.utils.book_append_sheet(wb,wsL,"Tests - "+lang.label);
   });
 
