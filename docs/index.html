@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Portail Options Pédagogiques 2026-2027</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portail Options Pédagogiques 2026-2027</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+  
+  /* Corrections standalone */
+  html, body { height: 100%; margin: 0; padding: 0; }
+  body { display: flex !important; flex-direction: row !important; }
+  </style>
+</head>
+<body>
 <style>
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"DM Sans",system-ui,sans-serif!important;background:#f1f5f9!important;color:#0f172a}
 .quarto-title-block{display:none!important}
@@ -36,7 +43,7 @@ p{margin:0}
 .pf-sfooter-btn+.pf-sfooter-btn{border-top:1px solid rgba(255,255,255,.06);margin-top:4px;padding-top:11px}
 .copy-small{font-size:10px;color:rgba(255,255,255,.2);margin-top:10px}
 /* pages */
-.pf-page{padding:36px 42px 60px;max-width:920px}
+.pf-page{display:none;padding:36px 42px 60px;max-width:920px}
 .pf-page.active{display:block}
 .pf-page-title{font-family:"DM Serif Display",serif;font-size:27px;color:#0f2942;font-weight:400;margin-bottom:4px}
 .pf-page-sub{font-size:13px;color:#64748b;margin-bottom:26px;line-height:1.6}
@@ -228,12 +235,8 @@ p{margin:0}
 .tl-name{font-size:14px;font-weight:500;color:#0f172a}
 .tl-desc{font-size:13px;color:#64748b;line-height:1.5;margin-top:2px}
 .res-hidden{display:none!important}.show-results .res-hidden{display:block!important}.show-results #res-noaffect{display:none!important}
-
-html,body{height:100%;margin:0;padding:0}
-body{display:flex!important;flex-direction:row!important}
 </style>
-</head>
-<body>
+
 <div class="pf-shell">
 <nav class="pf-sidebar">
   <div class="pf-logo">
@@ -284,8 +287,8 @@ body{display:flex!important;flex-direction:row!important}
   <div class="sh">En 3 etapes</div>
   <div class="tl">
     <div class="tl-item"><div class="tl-dot tl-past">&#128214;</div><div class="tl-body"><div class="tl-date">Etape 1</div><div class="tl-name">Consulter le catalogue</div><div class="tl-desc">Lisez la presentation de chaque option, ses places et sa temporalite avant de choisir.</div></div></div>
-    <div class="tl-item"><div class="tl-dot tl-now">&#128203;</div><div class="tl-body"><div class="tl-date">Etape 2 &mdash; <span id="tl-date-voeux-2">avant le 10 septembre</span></div><div class="tl-name">Soumettre vos voeux via Google Form</div><div class="tl-desc">Cliquez sur le bouton dans <strong>Saisir mes voeux</strong>. Classez jusqu'a 3 options. L'horodatage determine la priorite (1er arrive / 1er servi).</div></div></div>
-    <div class="tl-item"><div class="tl-dot tl-now">&#9998;</div><div class="tl-body"><div class="tl-date">Etape 3 &mdash; <span id="tl-date-voeux-3">avant le 10 septembre</span></div><div class="tl-name">Passer les tests de niveau requis</div><div class="tl-desc">Si vous avez choisi <strong>Maths, Business Spanish ou LV2</strong> : allez dans <strong>Tests de niveau</strong>, cochez le test et suivez les instructions. Si vous etes debutant complet, declarez-le simplement &mdash; aucune question ne s'affichera.</div></div></div>
+    <div class="tl-item"><div class="tl-dot tl-now">&#128203;</div><div class="tl-body"><div class="tl-date">Etape 2 &mdash; avant le 10 septembre</div><div class="tl-name">Soumettre vos voeux via Google Form</div><div class="tl-desc">Cliquez sur le bouton dans <strong>Saisir mes voeux</strong>. Classez jusqu'a 3 options. L'horodatage determine la priorite (1er arrive / 1er servi).</div></div></div>
+    <div class="tl-item"><div class="tl-dot tl-now">&#9998;</div><div class="tl-body"><div class="tl-date">Etape 3 &mdash; avant le 10 septembre</div><div class="tl-name">Passer les tests de niveau requis</div><div class="tl-desc">Si vous avez choisi <strong>Maths, Business Spanish ou LV2</strong> : allez dans <strong>Tests de niveau</strong>, cochez le test et suivez les instructions. Si vous etes debutant complet, declarez-le simplement &mdash; aucune question ne s'affichera.</div></div></div>
     <div class="tl-item"><div class="tl-dot tl-future">&#9881;</div><div class="tl-body"><div class="tl-date">J2-J4 de la rentree</div><div class="tl-name">Affectation et communication des groupes</div><div class="tl-desc">Chaque etudiant est place dans un groupe selon ses voeux et les combinaisons d'options configurees par l'administration.</div></div></div>
   </div>
   <div style="margin-top:24px;display:flex;gap:11px;flex-wrap:wrap">
@@ -295,7 +298,7 @@ body{display:flex!important;flex-direction:row!important}
 </div>
 
 <!-- CATALOGUE -->
-<div class="pf-page" id="page-catalogue" style="display:none">
+<div class="pf-page" id="page-catalogue">
   <p class="pf-page-title">Catalogue des options</p>
   <p class="pf-page-sub">Toutes les options 2026-2027 avec leurs places, temporalite et conditions d'acces.</p>
   <div class="sh">Options au semestre</div>
@@ -319,7 +322,7 @@ body{display:flex!important;flex-direction:row!important}
   <div style="margin-top:22px"><button class="btn btn-primary" onclick="goTo('voeux')">Saisir mes voeux &#8594;</button></div>
 </div>
 <!-- VOEUX -->
-<div class="pf-page" id="page-voeux" style="display:none">
+<div class="pf-page" id="page-voeux">
   <p class="pf-page-title">Saisir mes voeux</p>
   <p class="pf-page-sub">Vos voeux sont collectes via Google Form. Cliquez sur le bouton ci-dessous pour acceder au formulaire.</p>
   <div class="gform-card">
@@ -349,7 +352,7 @@ body{display:flex!important;flex-direction:row!important}
       <div style="font-size:13px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Apres soumission</div>
       <ul class="steps-list">
         <li class="step-item"><div class="step-num">1</div><div><div class="step-title">Verifiez la confirmation Google</div><div class="step-desc">Un email de confirmation vous est envoye. Conservez-le comme preuve.</div></div></li>
-        <li class="step-item"><div class="step-num">2</div><div><div class="step-title">Passez les tests de niveau si necessaire</div><div class="step-desc">Si vous avez choisi Maths, Business Spanish ou LV2 : allez dans <strong>Tests de niveau</strong>, cochez le test et suivez les instructions avant le <span id="tl-date-voeux-tests">10 septembre</span>.</div></div></li>
+        <li class="step-item"><div class="step-num">2</div><div><div class="step-title">Passez les tests de niveau si necessaire</div><div class="step-desc">Si vous avez choisi Maths, Business Spanish ou LV2 : allez dans <strong>Tests de niveau</strong>, cochez le test et suivez les instructions avant le 10 septembre.</div></div></li>
         <li class="step-item"><div class="step-num">3</div><div><div class="step-title">Attendez votre affectation</div><div class="step-desc">Communication par email universitaire en J4 de la rentree.</div></div></li>
       </ul>
     </div>
@@ -357,7 +360,7 @@ body{display:flex!important;flex-direction:row!important}
   <div style="margin-top:18px"><button class="btn btn-primary" onclick="goTo('tests')">Aller aux tests de niveau &#8594;</button></div>
 </div>
 <!-- TESTS -->
-<div class="pf-page" id="page-tests" style="display:none">
+<div class="pf-page" id="page-tests">
   <p class="pf-page-title">Tests de niveau</p>
   <p class="pf-page-sub">Cochez les tests correspondant a vos voeux, declarez votre niveau, puis repondez aux questions si necessaire.</p>
 
@@ -571,7 +574,7 @@ body{display:flex!important;flex-direction:row!important}
 </div>
 <!-- ENS LOGIN -->
 <!-- ENS LOGIN -->
-<div class="pf-page" id="page-ens-login" style="display:none">
+<div class="pf-page" id="page-ens-login">
   <div class="login-wrap"><div class="login-card">
     <h2>Espace enseignant</h2>
     <p style="font-size:13px;color:#64748b;margin-bottom:22px">Informations &middot; Instructions de retour des evaluations</p>
@@ -583,7 +586,7 @@ body{display:flex!important;flex-direction:row!important}
 </div>
 
 <!-- ENS : page d'informations -->
-<div class="pf-page" id="page-enseignant" style="display:none">
+<div class="pf-page" id="page-enseignant">
   <p class="pf-page-title">Espace enseignant</p>
   <p class="pf-page-sub" id="ens-sub-date">Instructions pour le retour des evaluations de niveau &middot; Annee 2026-2027</p>
 
@@ -738,7 +741,7 @@ body{display:flex!important;flex-direction:row!important}
 </div>
 
 <!-- ADMIN LOGIN -->
-<div class="pf-page" id="page-admin-login" style="display:none">
+<div class="pf-page" id="page-admin-login">
   <div class="login-wrap"><div class="login-card">
     <h2>Administration</h2>
     <p style="font-size:13px;color:#64748b;margin-bottom:22px">Configuration &middot; groupes &middot; affectation &middot; exports</p>
@@ -750,7 +753,7 @@ body{display:flex!important;flex-direction:row!important}
 </div>
 
 <!-- ADMIN DASHBOARD -->
-<div class="pf-page" id="page-admin" style="display:none">
+<div class="pf-page" id="page-admin">
   <p class="pf-page-title">Administration</p>
   <p class="pf-page-sub">Configurez les places et les groupes <strong>avant</strong> de lancer l'affectation.</p>
   <div class="admin-tabs">
@@ -882,50 +885,7 @@ body{display:flex!important;flex-direction:row!important}
     </div>
 
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px">
-<!-- Date limite voeux -->
-    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;margin-bottom:20px">
-      <div style="font-size:12px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">
-        &#128197; Date limite de soumission des vœux
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="pf-field">
-          <label class="pf-label">Date limite (affichée aux étudiants)</label>
-          <input class="pf-input" id="adm-date-voeux" type="text" placeholder="ex : 10 septembre 2026"
-            oninput="updateDateVoeux()">
-        </div>
-        <div class="pf-field" style="display:flex;align-items:flex-end">
-          <div style="font-size:12px;color:#64748b;padding-bottom:6px">
-            Apparaît dans la timeline des étapes 2 et 3 sur la page d'accueil.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mots de passe -->
-    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;margin-bottom:20px">
-      <div style="font-size:12px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">&#128274; Changer les mots de passe</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-        <div>
-          <div style="font-size:12px;font-weight:600;color:#0f2942;margin-bottom:8px">Espace Administration</div>
-          <div class="pf-field" style="margin-bottom:8px"><label class="pf-label">Nouveau mot de passe</label><input class="pf-input" id="pwd-admin-1" type="password" placeholder="Min. 6 caractères"></div>
-          <div class="pf-field" style="margin-bottom:8px"><label class="pf-label">Confirmer</label><input class="pf-input" id="pwd-admin-2" type="password" placeholder="Répéter"></div>
-          <button class="btn btn-secondary btn-sm" onclick="saveNewPwd('admin')">Enregistrer</button>
-          <div id="pwd-admin-ok" class="banner bs" style="display:none;margin-top:8px;padding:6px 10px;font-size:12px">Mot de passe mis à jour.</div>
-          <div id="pwd-admin-err" style="display:none;color:#dc2626;font-size:12px;margin-top:6px"></div>
-        </div>
-        <div>
-          <div style="font-size:12px;font-weight:600;color:#0f2942;margin-bottom:8px">Espace Enseignant</div>
-          <div class="pf-field" style="margin-bottom:8px"><label class="pf-label">Nouveau mot de passe</label><input class="pf-input" id="pwd-ens-1" type="password" placeholder="Min. 6 caractères"></div>
-          <div class="pf-field" style="margin-bottom:8px"><label class="pf-label">Confirmer</label><input class="pf-input" id="pwd-ens-2" type="password" placeholder="Répéter"></div>
-          <button class="btn btn-secondary btn-sm" onclick="saveNewPwd('ens')">Enregistrer</button>
-          <div id="pwd-ens-ok" class="banner bs" style="display:none;margin-top:8px;padding:6px 10px;font-size:12px">Mot de passe mis à jour.</div>
-          <div id="pwd-ens-err" style="display:none;color:#dc2626;font-size:12px;margin-top:6px"></div>
-        </div>
-      </div>
-      <div style="font-size:11px;color:#94a3b8;margin-top:12px">&#9432; Stockés sous forme de hash SHA-256. Par défaut : <code>options2026!</code> (admin) / <code>enseignant2026!</code> (enseignant).</div>
-    </div>
-
-    <button class="btn btn-success" onclick="saveConfig()">&#10003; Enregistrer et mettre a jour les jauges</button>
+      <button class="btn btn-success" onclick="saveConfig()">&#10003; Enregistrer et mettre a jour les jauges</button>
       <button class="btn btn-secondary" onclick="adminTab('groupes')">Etape suivante : Groupes &amp; combinaisons &#8594;</button>
     </div>
   </div>
@@ -1073,6 +1033,8 @@ body{display:flex!important;flex-direction:row!important}
     </div>
       </div>
     </div>
+    </div>
+  </div>
   </div>
 
     <!-- AFFECT -->
@@ -1084,16 +1046,13 @@ body{display:flex!important;flex-direction:row!important}
         <div style="font-size:12px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Groupes configures</div>
         <div id="affect-groupes-recap" style="display:flex;flex-wrap:wrap;gap:7px"></div>
       </div>
-      <button class="btn btn-primary btn-lg" onclick="alert('rawData='+(ST.rawData?ST.rawData.length:'null')+' combis='+ST.combis.length);runAffectation()">&#9654; Lancer l'affectation</button>
+      <button class="btn btn-primary btn-lg" onclick="runAffectation()">&#9654; Lancer l'affectation</button>
       <div id="affect-prog" style="display:none;margin-top:14px">
         <div style="font-size:13px;color:#64748b;margin-bottom:5px">Calcul en cours...</div>
         <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
       </div>
     </div>
   </div>
-
-  </div><!-- fermeture apanel-import manquante 2 -->
-  </div><!-- fermeture apanel-import manquante 1 -->
 
   <!-- RESULTATS -->
   <div id="apanel-resultats" style="display:none">
@@ -1234,20 +1193,23 @@ OPT_FULL["lv2_espagnol"]="LV2 Espagnol";
 OPT_FULL["lv2_chinois"]="LV2 Chinois";
 OPT_LIST.forEach(function(o){OPT_FULL[o.v]=o.label;});
 // ── ETAT ──────────────────────────────────────────────────────────
+function dbg(msg){
+  var el=document.getElementById("debug-log");
+  if(!el)return;
+  el.style.display="block";
+  el.innerHTML+=msg+"<br>";
+  console.log(msg);
+}
 var ST={answers:{},testsDone:{},testsChecked:{maths:false,spanish:false,lv2:false},levelMaths:null,levelSpanish:null,levelLV2:null,langLV2:null,rawData:null,results:null,niveaux:{},combis:[],gformUrl:"",redoublants:[]};
 var PLACES={voltaire:{max:80,pris:0},eco:{max:100,pris:0},maths:{max:40,pris:0},sport1:{max:0,pris:0},sport2:{max:0,pris:0},sport3:{max:0,pris:0},sport4:{max:0,pris:0},sport5:{max:0,pris:0},business_spanish:{max:40,pris:0},lv2_de_debut:{max:20,pris:0},lv2_de_debut2:{max:20,pris:0},lv2_de_inter:{max:20,pris:0},lv2_chinois:{max:25,pris:0},lv2_es_debut:{max:25,pris:0},lv2_es_inter:{max:25,pris:0},lv2_es_avance:{max:20,pris:0}};
 
 // ── NAVIGATION ────────────────────────────────────────────────────
 function goTo(id){
-  ["accueil","catalogue","voeux","tests","ens-login","enseignant","admin-login","admin"].forEach(function(p){
-    var el=document.getElementById("page-"+p);
-    if(el){el.style.display="none";el.classList.remove("active");}
-  });
+  document.querySelectorAll(".pf-page").forEach(function(p){p.classList.remove("active");});
   document.querySelectorAll(".pf-nav-btn").forEach(function(b){b.classList.remove("active");});
-  var pg=document.getElementById("page-"+id);
-  if(pg){pg.style.display="block";pg.classList.add("active");}
+  var pg=document.getElementById("page-"+id);if(pg)pg.classList.add("active");
   var nm={accueil:0,catalogue:1,voeux:2,tests:3};
-  if(nm[id]!==undefined){var btns=document.querySelectorAll(".pf-nav-btn");if(btns[nm[id]])btns[nm[id]].classList.add("active");}
+  if(nm[id]!==undefined)document.querySelectorAll(".pf-nav-btn")[nm[id]].classList.add("active");
   if(id==="enseignant"){updateEnsPageFromConfig();}
   if(id==="admin")refreshAffectTab();
   window.scrollTo(0,0);
@@ -1313,37 +1275,9 @@ function showScore(scoreElId,score,tot,extra){var pct=Math.round(100*score/tot);
 function submitTest(type){var qids=TEST_Q[type];if(!qids)return;var score=gradeQs(qids);showScore("score-"+type,score,qids.length,"");ST.testsDone[type]=true;ST.answers["score_"+type]=score+"/"+qids.length;document.getElementById("ok-"+type).style.display="inline";showPrintBtn(type);}
 function submitLV2Test(lang){var qids=TEST_Q[lang];if(!qids)return;var score=gradeQs(qids);showScore("score-lv2-"+lang,score,qids.length,"(indicatif)");ST.testsDone.lv2=true;ST.answers.score_lv2=score+"/"+qids.length;ST.answers.lang_lv2=lang;document.getElementById("ok-lv2-"+lang).style.display="inline";showPrintBtn("lv2-"+lang);}
 // ── ENSEIGNANT ────────────────────────────────────────────────────
-async function checkEns(){
-  var pwd = (document.getElementById("ens-pwd")||{}).value||"";
-  var hash = await sha256(pwd);
-  var storedRaw = null;
-  try { storedRaw = localStorage.getItem("ens_pwd_hash"); } catch(e){}
-  var stored = storedRaw || await sha256("enseignant2026!");
-  if(hash === stored){
-    document.getElementById("ens-err").style.display="none";
-    updateEnsPageFromConfig();goTo("enseignant");
-  } else {
-    document.getElementById("ens-err").style.display="flex";
-  }
-}
+function checkEns(){if((document.getElementById("ens-pwd")||{}).value==="enseignant2026!"){document.getElementById("ens-err").style.display="none";updateEnsPageFromConfig();goTo("enseignant");}else{document.getElementById("ens-err").style.display="flex";}}
 function ensTab(name){["maths","spanish","lv2"].forEach(function(t){document.getElementById("epanel-"+t).style.display=t===name?"block":"none";document.getElementById("etab-"+t).classList.toggle("active",t===name);});renderEns(name);}
-async function checkAdmin(){
-  var pwd = document.getElementById("admin-pwd").value;
-  var hash = await sha256(pwd);
-  var storedRaw = null;
-  try { storedRaw = localStorage.getItem("admin_pwd_hash"); } catch(e){}
-  var stored = storedRaw || await sha256("options2026!");
-  if(hash === stored){
-    document.getElementById("admin-err").style.display="none";
-    var saved = null;
-    try { saved = localStorage.getItem("gform_url"); } catch(e){}
-    if(saved&&document.getElementById("adm-gform-url"))document.getElementById("adm-gform-url").value=saved;
-    if(!ST.combis.length)initDefaultCombis();
-    renderCombisUI();renderRedoublants();goTo("admin");
-  } else {
-    document.getElementById("admin-err").style.display="flex";
-  }
-}
+function checkAdmin(){if(document.getElementById("admin-pwd").value==="options2026!"){document.getElementById("admin-err").style.display="none";var saved=localStorage.getItem("gform_url");if(saved&&document.getElementById("adm-gform-url"))document.getElementById("adm-gform-url").value=saved;if(!ST.combis.length)initDefaultCombis();renderCombisUI();renderRedoublants();goTo("admin");}else{document.getElementById("admin-err").style.display="flex";}}
 function adminTab(name){var pageAdmin=document.getElementById("page-admin");if(pageAdmin&&pageAdmin.style.display==="none")pageAdmin.style.display="block";["config","groupes","import","affect","resultats"].forEach(function(t){var p=document.getElementById("apanel-"+t);var b=document.getElementById("atab-"+t);if(p)p.style.display=t===name?"block":"none";if(b)b.classList.toggle("active",t===name);});if(name==="affect")refreshAffectTab();}
 function updateSportLabels(){
   for(var i=1;i<=5;i++){
@@ -1394,27 +1328,7 @@ function renderSportCatalogue(){
     container.appendChild(div);
   });
 }
-// ── SÉCURITÉ ──────────────────────────────────────────────────────
-async function sha256(msg){
-  var buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
-}
-async function saveNewPwd(role){
-  var p1 = document.getElementById("pwd-"+role+"-1").value;
-  var p2 = document.getElementById("pwd-"+role+"-2").value;
-  var ok  = document.getElementById("pwd-"+role+"-ok");
-  var err = document.getElementById("pwd-"+role+"-err");
-  if(!p1||p1.length<6){err.textContent="Minimum 6 caractères.";err.style.display="block";ok.style.display="none";return;}
-  if(p1!==p2){err.textContent="Les mots de passe ne correspondent pas.";err.style.display="block";ok.style.display="none";return;}
-  var hash = await sha256(p1);
-  try { localStorage.setItem(role+"_pwd_hash", hash); } catch(e) { alert("Impossible de sauvegarder : " + e.message); return; }
-  err.style.display="none";
-  ok.style.display="block";
-  document.getElementById("pwd-"+role+"-1").value="";
-  document.getElementById("pwd-"+role+"-2").value="";
-}
 function saveConfig(){
-  updateDateVoeux();
   updateSportLabels();
   updateJaugesFromAdmin();
   renderSportCatalogue();
@@ -1427,18 +1341,6 @@ function saveConfig(){
   // Mettre à jour le bloc infos pratiques sur la page Tests
   updateTestsInfo();
   alert("Configuration enregistree. Catalogue, jauges et informations pratiques mis a jour.");
-}
-function updateDateVoeux(){
-  var val = (document.getElementById("adm-date-voeux")||{}).value || "";
-  var label = val.trim() || "10 septembre";
-  // Mettre à jour les étapes 2 et 3 de la timeline
-  ["tl-date-voeux-2","tl-date-voeux-3"].forEach(function(id){
-    var el = document.getElementById(id);
-    if(el) el.textContent = "avant le " + label;
-  });
-  // Aussi mettre à jour la mention dans la page tests
-  var tlTests = document.getElementById("tl-date-voeux-tests");
-  if(tlTests) tlTests.textContent = label;
 }
 function updateTestsInfo(){
   function sf(id,valId,inputId){
@@ -1798,12 +1700,13 @@ function motifLabel(code){
 }
 
 function runAffectation(){
-  if(!ST.rawData){alert("Importez d abord le Google Sheets.");return;}
-  if(!ST.combis.length){alert("Configurez les groupes.");return;}
+  if(!ST.rawData){dbg("BLOQUE: rawData null");alert("Importez d abord le Google Sheets.");return;}
+  if(!ST.combis.length){dbg("BLOQUE: combis vide");alert("Configurez les groupes.");return;}
 
   document.getElementById("affect-prog").style.display="block";
   document.getElementById("prog-bar").style.width="0%";
   setTimeout(function(){
+    dbg("Calcul: "+ST.rawData.length+" etudiants, "+ST.combis.length+" groupes");
     var cpt={};ST.combis.forEach(function(c){cpt[c.nom]=0;});
     // Redoublants : option déjà validée, affectation directe sans vœu
     var redoublants=ST.redoublants||[];
@@ -1878,74 +1781,88 @@ function runAffectation(){
       out.push(rec);
     });
     document.getElementById("prog-bar").style.width="100%";ST.results=out;
+        dbg("Calcul termine: "+out.length+" resultats");
 
         setTimeout(function(){
-          var prog=document.getElementById("affect-prog");
-          if(prog) prog.style.display="none";
-          // D'abord remplir les données
-          ST.results=out;
-          renderResults(out);
-          // Puis naviguer vers l'onglet résultats
+          document.getElementById("affect-prog").style.display="none";
+          dbg("adminTab resultats");
           adminTab("resultats");
+          dbg("renderResults debut");
+          renderResults(out);
+          dbg("renderResults fin - panel display:"+document.getElementById("apanel-resultats").style.display+
+  " height:"+document.getElementById("apanel-resultats").offsetHeight+
+  " visibility:"+document.getElementById("apanel-resultats").style.visibility);
+
         },400);
   },50);
 }
 function renderResults(data){
-  try {
-    // Forcer visibilité via tous les moyens possibles
-    var ids=["page-admin","apanel-resultats","res-content"];
-    ids.forEach(function(id){
-      var el=document.getElementById(id);
-      if(el){el.style.display="block";el.style.visibility="visible";el.style.opacity="1";}
-    });
-    
-    // Stats
-    var aff=data.filter(function(r){return r.option_affectee;});
-    var forces=data.filter(function(r){return r.affectation_forcee;});
-    var pv1=aff.length?Math.round(100*aff.filter(function(r){return r.voeu_realise===1;}).length/aff.length):0;
-
-    var sc=document.getElementById("stat-cards");
-    if(sc) sc.innerHTML=
-      "<div class='stat-card'><div class='stat-label'>Total</div><div class='stat-value'>"+data.length+"</div></div>"+
-      "<div class='stat-card'><div class='stat-label'>Affectes</div><div class='stat-value' style='color:#16a34a'>"+aff.length+"</div></div>"+
-      "<div class='stat-card'><div class='stat-label'>Forces Eco</div><div class='stat-value' style='color:#f97316'>"+forces.length+"</div></div>"+
-      "<div class='stat-card'><div class='stat-label'>Voeu 1</div><div class='stat-value'>"+pv1+"%</div></div>";
-
-    // Groupes
-    var gcnt={};
-    aff.forEach(function(r){if(r.groupe)gcnt[r.groupe]=(gcnt[r.groupe]||0)+1;});
-    var tg=document.querySelector("#tbl-grps tbody");
-    if(tg) tg.innerHTML=ST.combis.map(function(c){
-      var n=gcnt[c.nom]||0;
-      var pct=c.places>0?Math.round(100*n/c.places):0;
-      var opts=[c.opt1,c.opt2,c.opt3,c.opt4].filter(Boolean).join(", ");
-      return "<tr><td><strong>"+c.nom+"</strong></td><td>"+opts+"</td><td>"+c.places+"</td><td>"+n+"</td><td>"+pct+"%</td></tr>";
-    }).join("");
-
-    // Options
-    var oc={};
-    aff.forEach(function(r){if(r.option_affectee)oc[r.option_affectee]=(oc[r.option_affectee]||0)+1;});
-    var to=document.querySelector("#tbl-opts tbody");
-    if(to) to.innerHTML=Object.keys(oc).sort(function(a,b){return oc[b]-oc[a];}).map(function(k){
-      return "<tr><td>"+(OPT_FULL[k]||k)+"</td><td>"+oc[k]+"</td></tr>";
-    }).join("");
-
-    // Forces Eco
-    var tn=document.querySelector("#tbl-na tbody");
-    if(tn) tn.innerHTML=forces.length===0
-      ?"<tr><td colspan='6' style='color:#94a3b8;padding:12px'>Aucun etudiant force en Eco.</td></tr>"
-      :forces.map(function(r){
-        return "<tr style='background:#fff7ed'><td>"+r.num_etudiant+"</td>"+
-          "<td>"+(r.nom||"")+" "+(r.prenom||"")+"</td>"+
-          "<td>"+(OPT_FULL[r.voeu1]||r.voeu1||"-")+"</td>"+
-          "<td>"+(OPT_FULL[r.voeu2]||r.voeu2||"-")+"</td>"+
-          "<td>"+(OPT_FULL[r.voeu3]||r.voeu3||"-")+"</td>"+
-          "<td style='font-size:12px;color:#c2410c'>"+(r.motif_refus||"").replace("affectation_par_defaut_eco__raison__","")+"</td></tr>";
-      }).join("");
-
-  } catch(e) {
-    alert("renderResults erreur: "+e.message+" (ligne "+e.stack.split(":").slice(-2,-1)[0]+")");
+  dbg("renderResults: data="+data.length);
+  // Rendre le panneau visible directement
+  var panel=document.getElementById("apanel-resultats");
+  dbg("panel trouve: "+(panel?"oui":"NON")+", display avant: "+(panel?panel.style.display:"?"));
+  if(panel){ 
+    panel.style.display="block";
+    panel.style.visibility="visible";
+    panel.style.opacity="1";
+    panel.style.height="auto";
+    panel.style.overflow="visible";
+    panel.style.position="relative";
+    panel.style.zIndex="999";
+    dbg("panel display apres: "+panel.style.display+", offsetHeight:"+panel.offsetHeight);
   }
+  // Aussi forcer le parent
+  var adminArea=document.getElementById("admin-area")||document.getElementById("page-admin")||panel&&panel.parentNode;
+  if(adminArea&&adminArea.style){
+    adminArea.style.display="block";
+    adminArea.style.visibility="visible";
+    dbg("parent: "+adminArea.id+" display="+adminArea.style.display);
+  }
+  
+  // Stats
+  var aff=data.filter(function(r){return r.option_affectee;});
+  var forces=data.filter(function(r){return r.affectation_forcee;});
+  var total=data.length;
+  var pv1=aff.length?Math.round(100*aff.filter(function(r){return r.voeu_realise===1;}).length/aff.length):0;
+
+  var sc=document.getElementById("stat-cards");
+  if(sc) sc.innerHTML=
+    "<div class='stat-card'><div class='stat-label'>Total</div><div class='stat-value'>"+total+"</div></div>"+
+    "<div class='stat-card'><div class='stat-label'>Affectes</div><div class='stat-value' style='color:#16a34a'>"+aff.length+"</div></div>"+
+    "<div class='stat-card'><div class='stat-label'>Forces Eco</div><div class='stat-value' style='color:#f97316'>"+forces.length+"</div></div>"+
+    "<div class='stat-card'><div class='stat-label'>Voeu 1</div><div class='stat-value'>"+pv1+"%</div></div>";
+
+  // Groupes
+  var gcnt={};
+  aff.forEach(function(r){if(r.groupe)gcnt[r.groupe]=(gcnt[r.groupe]||0)+1;});
+  var tg=document.querySelector("#tbl-grps tbody");
+  if(tg) tg.innerHTML=ST.combis.map(function(c){
+    var n=gcnt[c.nom]||0;
+    var pct=c.places>0?Math.round(100*n/c.places):0;
+    var opts=[c.opt1,c.opt2,c.opt3,c.opt4].filter(Boolean).join(", ");
+    return "<tr><td><strong>"+c.nom+"</strong></td><td>"+opts+"</td><td>"+c.places+"</td><td>"+n+"</td><td>"+pct+"%</td></tr>";
+  }).join("");
+
+  // Options
+  var oc={};
+  aff.forEach(function(r){if(r.option_affectee)oc[r.option_affectee]=(oc[r.option_affectee]||0)+1;});
+  var to=document.querySelector("#tbl-opts tbody");
+  if(to) to.innerHTML=Object.keys(oc).sort(function(a,b){return oc[b]-oc[a];}).map(function(k){
+    return "<tr><td>"+(OPT_FULL[k]||k)+"</td><td>"+oc[k]+"</td></tr>";
+  }).join("");
+
+  // Forces / non affectes
+  var tn=document.querySelector("#tbl-na tbody");
+  if(tn) tn.innerHTML=forces.length===0
+    ?"<tr><td colspan='6' style='color:#94a3b8;padding:12px'>Aucun etudiant force en Eco.</td></tr>"
+    :forces.map(function(r){
+      return "<tr style='background:#fff7ed'><td>"+r.num_etudiant+"</td>"+
+        "<td>"+(r.nom||"")+" "+(r.prenom||"")+"</td>"+
+        "<td>"+(OPT_FULL[r.voeu1]||r.voeu1||"-")+"</td>"+
+        "<td>"+(OPT_FULL[r.voeu2]||r.voeu2||"-")+"</td>"+
+        "<td>"+(OPT_FULL[r.voeu3]||r.voeu3||"-")+"</td>"+
+        "<td style='font-size:12px;color:#c2410c'>"+(r.motif_refus||"").replace("affectation_par_defaut_eco__raison__","")+"</td></tr>";
+    }).join("");
 }
 
 // ── EXPORTS ───────────────────────────────────────────────────────
@@ -2561,8 +2478,6 @@ function importEnseignantEtAffecter(file){
 
 // ── INIT ──────────────────────────────────────────────────────────
 window.addEventListener("load",function(){
-  goTo("accueil");
-  // S'assurer que page-accueil est visible
   initJauges();
   renderSportCatalogue();
   var saved=localStorage.getItem("gform_url");
@@ -2571,6 +2486,4 @@ window.addEventListener("load",function(){
 });
 </script>
 </body>
-</html
-
->
+</html>
